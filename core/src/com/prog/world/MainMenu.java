@@ -4,8 +4,6 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.prog.collision.MenuContactListener;
 import com.prog.entity.Button;
 import com.prog.entity.Entity;
