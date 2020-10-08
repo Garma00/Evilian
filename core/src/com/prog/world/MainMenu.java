@@ -54,25 +54,23 @@ public class MainMenu extends Livello implements Screen
         if(c.index == 1)
         {
             for(Entity e : entities)
-            {
                 if(!world.isLocked())
                 {
                     //System.out.println("entrato" + e.body);
                     e.body.setActive(false);
                     world.destroyBody(e.body);
                 }
-            }
-            
-            root.setScreen(new Livello1(-9, false, "map.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
             
             entities.clear();
-        
+            //cambio screen dopo aver pulito tutto
+            root.setScreen(new Livello1(-9, false, "map.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
         }
             
     }
     
     @Override
     public void resize(int i, int i1) {
+        cam.setToOrtho(false, i, i1);
     }
 
     @Override
