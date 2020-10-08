@@ -53,19 +53,17 @@ public class MainMenu extends Livello implements Screen
     {
         if(c.index == 1)
         {
-            root.setScreen(new Livello1(-9, false, "map.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
             for(Entity e : entities)
             {
                 if(!world.isLocked())
                 {
-                    System.out.println("entrato" + e.body);
+                    //System.out.println("entrato" + e.body);
                     e.body.setActive(false);
                     world.destroyBody(e.body);
                 }
             }
-            /*for(Body b :c.toClean)
-                world.destroyBody(b);
-            */
+            
+            root.setScreen(new Livello1(-9, false, "map.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
             
             entities.clear();
         
