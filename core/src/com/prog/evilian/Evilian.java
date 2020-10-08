@@ -17,7 +17,7 @@ public class Evilian extends Game
         {
             batch=new SpriteBatch();
             //da cambiare livello1 con il menu'
-            this.setScreen(new Livello1(-9,true,"map.tmx",SCREEN_WIDTH,SCREEN_HEIGHT));
+            this.setScreen(new Livello1(-9,true,"map.tmx",SCREEN_WIDTH,SCREEN_HEIGHT,this));
 	}
 
 	@Override

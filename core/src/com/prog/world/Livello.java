@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
+import com.prog.evilian.Evilian;
 
 public class Livello {
     public static World world;
@@ -24,9 +25,12 @@ public class Livello {
     public OrthogonalTiledMapRenderer mapRenderer;
     public OrthographicCamera cam;
     public Array<Entity> entities;
+    public Evilian root;
     
-    public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight)
+    public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
     {
+        //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
+        root=game;
         //creiamo il mondo
         //NOTA:inserire gravita' negativa da parametro
         world=new World(new Vector2(0,gravity),Sleep);

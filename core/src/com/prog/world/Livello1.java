@@ -1,15 +1,18 @@
 package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.prog.collision.CustomContactListener;
+import com.prog.evilian.Evilian;
 
 public class Livello1 extends Livello implements Screen{
     
-    public Livello1(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight)
+    
+    public Livello1(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight, Evilian game)
     {
-        super(gravity, Sleep, path, cameraWidth, cameraHeight);
+        super(gravity, Sleep, path, cameraWidth, cameraHeight,game);
         world.setContactListener(new CustomContactListener());
     }
 
@@ -24,6 +27,9 @@ public class Livello1 extends Livello implements Screen{
         //guardo la lista entities e faccio gli handleinput
         //DA FARE
         
+        //handleinput del livello
+        handleInput();
+        
         //guardo entities e faccio gli update
         //DA FARE
         
@@ -32,6 +38,8 @@ public class Livello1 extends Livello implements Screen{
         
         //guardo entities e renderizzo cose
         //DA FARE
+        mapRenderer.setView(cam);
+        mapRenderer.render();
     }
 
     @Override
@@ -54,5 +62,15 @@ public class Livello1 extends Livello implements Screen{
     public void dispose()
     {
         super.dispose();
+    }
+    
+    public void handleInput()
+    {
+        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
+        {
+            dispose();
+            root.dispose();
+            Gdx.app.exit();
+        }
     }
 }
