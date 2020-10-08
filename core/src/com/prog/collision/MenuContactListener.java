@@ -33,6 +33,27 @@ public class MenuContactListener implements ContactListener{
                 
         }
         
+        if(c.getFixtureA().getUserData() == "mouse")
+        {
+            if(c.getFixtureB().getUserData() == "opzioni")
+            {
+                //System.out.println("opzioni");
+                index = 2;
+                
+            }
+                
+        }
+        
+        if(c.getFixtureB().getUserData() == "mouse")
+        {
+            if(c.getFixtureA().getUserData() == "opzioni")
+            {
+                //System.out.println("Gioca");
+                index = 2;
+            }
+                
+        }
+        
     }
 
     //chiamato quando due fixture finiscono di collidere
