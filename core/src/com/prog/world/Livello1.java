@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.prog.collision.CustomContactListener;
+import com.prog.collision.MenuContactListener;
 import com.prog.evilian.Evilian;
 
 public class Livello1 extends Livello implements Screen{
@@ -13,7 +13,7 @@ public class Livello1 extends Livello implements Screen{
     public Livello1(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight, Evilian game)
     {
         super(gravity, Sleep, path, cameraWidth, cameraHeight,game);
-        world.setContactListener(new CustomContactListener());
+        world.setContactListener(new MenuContactListener());
         
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());

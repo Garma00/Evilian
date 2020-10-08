@@ -3,6 +3,7 @@ package com.prog.evilian;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.prog.world.Livello1;
+import com.prog.world.MainMenu;
 
 public class Evilian extends Game 
 {
@@ -17,7 +18,7 @@ public class Evilian extends Game
         {
             batch=new SpriteBatch();
             //da cambiare livello1 con il menu'
-            this.setScreen(new Livello1(-9,true,"map.tmx",SCREEN_WIDTH,SCREEN_HEIGHT,this));
+            this.setScreen(new MainMenu(SCREEN_WIDTH,SCREEN_HEIGHT,this));
 	}
 
 	@Override

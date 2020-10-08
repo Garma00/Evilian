@@ -29,6 +29,7 @@ public class Livello {
     public Evilian root;
     public Box2DDebugRenderer debug;
     
+    
     public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
     {
         //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
@@ -48,6 +49,16 @@ public class Livello {
         cam.setToOrtho(false,cameraWidth,cameraHeight);
         
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
+    }
+    
+    public Livello(boolean Sleep, int cameraWidth, int cameraHeight, Evilian game)
+    {
+        root = game;
+        debug = new Box2DDebugRenderer();
+        world = new World(new Vector2(0, 0), Sleep);
+        entities = new Array<Entity>();
+        cam = new OrthographicCamera();
+        cam.setToOrtho(false,cameraWidth,cameraHeight);
     }
     
     public void dispose()
