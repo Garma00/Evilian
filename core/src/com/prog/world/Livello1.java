@@ -14,6 +14,9 @@ public class Livello1 extends Livello implements Screen{
     {
         super(gravity, Sleep, path, cameraWidth, cameraHeight,game);
         world.setContactListener(new CustomContactListener());
+        
+        //prendo i poligoni della mappa e li inserisco nel mondo
+        parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
     }
 
     @Override
@@ -40,6 +43,8 @@ public class Livello1 extends Livello implements Screen{
         //DA FARE
         mapRenderer.setView(cam);
         mapRenderer.render();
+        
+        debug.render(world, cam.combined);
     }
 
     @Override
