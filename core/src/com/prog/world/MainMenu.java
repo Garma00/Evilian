@@ -63,7 +63,7 @@ public class MainMenu extends Livello implements Screen
             
             entities.clear();
             //cambio screen dopo aver pulito tutto
-            root.setScreen(new Livello1(-9, false, "map.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
+            root.setScreen(new Livello1(-9, false, "map2.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
         }
             
     }
