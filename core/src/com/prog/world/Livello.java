@@ -1,6 +1,7 @@
 package com.prog.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -15,6 +16,9 @@ import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 
@@ -25,9 +29,11 @@ public class Livello {
     //renderer mappa ortogonale(esiste anche l'isometric ma non serve al nostro gioco)
     public OrthogonalTiledMapRenderer mapRenderer;
     public OrthographicCamera cam;
+    public Viewport camvp;
     public Array<Entity> entities;
     public Evilian root;
     public Box2DDebugRenderer debug;
+    public static TextureAtlas atlas;
     
     
     public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
@@ -43,10 +49,13 @@ public class Livello {
         //il file dovra' avere estensione .tmx
         map= new TmxMapLoader().load(path);
         //si puo' inserire uno scale come secondo parametro
-        mapRenderer=new OrthogonalTiledMapRenderer(map);
+        mapRenderer=new OrthogonalTiledMapRenderer(map,1/Evilian.PPM);
         cam=new OrthographicCamera();
         
-        cam.setToOrtho(false,cameraWidth,cameraHeight);
+        cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
+        //inizializzo la viewport come fit (non importa la grandezza della finestra, vedremo sempre la stessa regione(con barre nere se neceessarie ai lati))
+        camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        atlas=new TextureAtlas("osvaldo.atlas");
         
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     }
@@ -58,7 +67,9 @@ public class Livello {
         world = new World(new Vector2(0, 0), Sleep);
         entities = new Array<Entity>();
         cam = new OrthographicCamera();
-        cam.setToOrtho(false,cameraWidth,cameraHeight);
+        cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
+        camvp=new FillViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        atlas=new TextureAtlas("osvaldo.atlas");
     }
     
     public void dispose()
@@ -95,7 +106,7 @@ public class Livello {
         Vector2[] worldVertices= new Vector2[vertici.length/2];
         
         for(int i=0;i< worldVertices.length;i++)
-            worldVertices[i]=new Vector2(vertici[i*2],vertici[i*2+1]);
+            worldVertices[i]=new Vector2(vertici[i*2]/Evilian.PPM,vertici[i*2+1]/Evilian.PPM);
         
         ChainShape cs=new ChainShape();
         cs.createChain(worldVertices);

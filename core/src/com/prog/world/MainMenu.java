@@ -61,14 +61,14 @@ public class MainMenu extends Livello implements Screen
             
             entities.clear();
             //cambio screen dopo aver pulito tutto
-            root.setScreen(new Livello1(-9, false, "map2.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
+            root.setScreen(new Livello1(-10f, false, "map2.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
         }
             
     }
     
     @Override
-    public void resize(int i, int i1) {
-        cam.setToOrtho(false, i, i1);
+    public void resize(int width, int height) {
+        camvp.update(width, height);
     }
 
     @Override
