@@ -1,5 +1,7 @@
 package com.prog.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -16,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
+import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
 
 public class Livello {
@@ -28,13 +31,16 @@ public class Livello {
     public Array<Entity> entities;
     public Evilian root;
     public Box2DDebugRenderer debug;
+    public Mouse mouse;
     
     
     public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
     {
+        
         //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
         root=game;
         debug=new Box2DDebugRenderer();
+        
         //creiamo il mondo
         //NOTA:inserire gravita' negativa da parametro
         world=new World(new Vector2(0,gravity),Sleep);
@@ -47,7 +53,7 @@ public class Livello {
         cam=new OrthographicCamera();
         
         cam.setToOrtho(false,cameraWidth,cameraHeight);
-        
+        mouse = new Mouse(cam);
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     }
     
@@ -59,6 +65,7 @@ public class Livello {
         entities = new Array<Entity>();
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth,cameraHeight);
+        mouse = new Mouse(cam);
     }
     
     public void dispose()
@@ -102,6 +109,15 @@ public class Livello {
         return cs;
     }
     
-    
+    public void handleInput()
+    {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+            root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
+            dispose();
+            root.dispose();
+            Gdx.app.exit();
+        }
+    }
     
 }
