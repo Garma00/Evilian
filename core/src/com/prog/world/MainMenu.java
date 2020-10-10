@@ -4,12 +4,17 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+
 import com.badlogic.gdx.graphics.Texture;
+
 import com.prog.collision.MenuContactListener;
 import com.prog.entity.Button;
+import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
+import static com.prog.world.ManagerScreen.index;
+
 
 //dichiara una istanza di custom contact listener
 public class MainMenu extends Livello implements Screen
@@ -66,8 +71,25 @@ public class MainMenu extends Livello implements Screen
     //questo metodo potrebbe essere astratto ed essere riscritto per opzioni, salva ecc
     public void draw()
     {
+
         batch.draw(bg, 0, 0, root.SCREEN_WIDTH, root.SCREEN_HEIGHT);
-    
+
+        if(index == 1)
+        {
+            for(Entity e : entities)
+                if(!world.isLocked())
+                {
+                    //System.out.println("entrato" + e.body);
+                    e.body.setActive(false);
+                    world.destroyBody(e.body);
+                }
+            
+            entities.clear();
+            //cambio screen dopo aver pulito tutto
+            root.setScreen(new Livello1(-9, false, "map2.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
+        }
+            
+
     }
     
     @Override
