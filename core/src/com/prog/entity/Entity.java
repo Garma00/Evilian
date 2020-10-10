@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.prog.evilian.Evilian;
 import static com.prog.world.Livello.world;
 
 public abstract class Entity {
@@ -50,17 +51,17 @@ public abstract class Entity {
                 break;
         }
         
-        bdef.position.set(x,y);
+        bdef.position.set(x/Evilian.PPM,y/Evilian.PPM);
         bdef.fixedRotation=true;
 
         body=world.createBody(bdef);
         
-        attachFixture(body,new Vector2(0,0),width,height,userData,density,restitution,friction);
+        attachFixture(body,new Vector2(0,0),false,width,height,userData,density,restitution,friction);
         
         return body;
     }
     
-    //overriding
+    //overloading
     public Body createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction)
     {
         BodyDef bdef= new BodyDef();
@@ -78,26 +79,27 @@ public abstract class Entity {
                 break;
         }
         
-        bdef.position.set(x,y);
+        bdef.position.set(x/Evilian.PPM,y/Evilian.PPM);
         
         body=world.createBody(bdef);
         
-        attachFixture(body,new Vector2(0,0),userData,radius,density,restitution,friction);
+        attachFixture(body,new Vector2(0,0),false,userData,radius,density,restitution,friction);
         
         return body;
         
     }
     
-    public void attachFixture(Body b,Vector2 relativePos, float width, float height, String userData,float density, float restitution, float friction)
+    public void attachFixture(Body b,Vector2 relativePos, boolean isSensor, float width, float height, String userData,float density, float restitution, float friction)
     {
         PolygonShape shape=new PolygonShape();
         // diviso 2 perche' la setasbox parte dal centro
-        shape.setAsBox(width/2, height/2,relativePos,0);
+        shape.setAsBox((width/2)/Evilian.PPM, (height/2)/Evilian.PPM,relativePos,0);
         
         FixtureDef fdef=new FixtureDef();
         fdef.density=density;
         fdef.friction=friction;
         fdef.restitution=restitution;
+        fdef.isSensor=isSensor;
         
         fdef.shape=shape;
         
@@ -106,18 +108,19 @@ public abstract class Entity {
         shape.dispose();
     }
     
-    //overriding
-    public void attachFixture(Body b,Vector2 relativePos, String userData,float radius, float density, float restitution, float friction)
+    //overloading
+    public void attachFixture(Body b,Vector2 relativePos, boolean isSensor, String userData,float radius, float density, float restitution, float friction)
     {
         CircleShape shape=new CircleShape();
         // diviso 2 perche' la setasbox parte dal centro
-        shape.setRadius(radius);
+        shape.setRadius(radius/Evilian.PPM);
         shape.setPosition(relativePos);
         
         FixtureDef fdef=new FixtureDef();
         fdef.density=density;
         fdef.friction=friction;
         fdef.restitution=restitution;
+        fdef.isSensor=isSensor;
         
         fdef.shape=shape;
         

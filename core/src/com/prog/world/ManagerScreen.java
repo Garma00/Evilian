@@ -26,7 +26,7 @@ public class ManagerScreen
         {
             case 1:
                 if(clear(entities))
-                    game.setScreen(new Livello1(-9, false, "map.tmx", game.SCREEN_WIDTH, game.SCREEN_HEIGHT, game));
+                    game.setScreen(new Livello1(-9, false, "map2.tmx", game.SCREEN_WIDTH, game.SCREEN_HEIGHT, game));
                 else
                     return;
                 break;

@@ -11,6 +11,7 @@ public class Evilian extends Game
         public static SpriteBatch batch;
         public final int SCREEN_WIDTH=800;
         public final int SCREEN_HEIGHT=600;
+        public static final float PPM=100f;
         
     
 	@Override

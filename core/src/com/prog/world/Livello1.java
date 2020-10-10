@@ -1,22 +1,34 @@
 package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.prog.collision.MenuContactListener;
+import com.prog.collision.LevelContactListener;
+import com.prog.entity.Entity;
+import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
+import static com.prog.evilian.Evilian.batch;
 
 public class Livello1 extends Livello implements Screen{
-    
+    Player p;
+    float delta;
+    LevelContactListener lcl;
     
     public Livello1(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight, Evilian game)
     {
         super(gravity, Sleep, path, cameraWidth, cameraHeight,game);
-        world.setContactListener(new MenuContactListener());
+        lcl=new LevelContactListener();
+        world.setContactListener(lcl);
         
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
+        
+        //ho bisgno di passare il listener come parametro per avere il flag inAir
+        p=new Player(lcl);
+        
+        entities.add(p);
+        
+        //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravità applicata essendo un body
         world.destroyBody(mouse.body);
     }
 
@@ -26,31 +38,42 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void render(float f) {
-        world.step(1/60f,6,2);
+        delta=Gdx.graphics.getDeltaTime();
+        
         cam.update();
-        //guardo la lista entities e faccio gli handleinput
-        //DA FARE
+        
+        //handleinput entita'
+        for(Entity e:entities)
+            e.handleInput();
         
         //handleinput del livello
         handleInput();
         
         //guardo entities e faccio gli update
-        //DA FARE
+        for(Entity e:entities)
+            e.update(delta);
         
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
-        //guardo entities e renderizzo cose
-        //DA FARE
+        //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
         mapRenderer.render();
         
+        //guardo entities e renderizzo cose
+        batch.begin();
+        for(Entity e:entities)
+            e.draw();
+        batch.end();
+        
         debug.render(world, cam.combined);
+        
+        world.step(1/60f,6,2);
     }
 
     @Override
-    public void resize(int i, int i1) {
-        cam.setToOrtho(false, i, i1);
+    public void resize(int width, int height) {
+        camvp.update(width,height);
     }
 
     @Override
