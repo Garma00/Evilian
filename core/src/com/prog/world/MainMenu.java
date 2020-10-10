@@ -13,7 +13,6 @@ import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
-import static com.prog.world.ManagerScreen.index;
 
 
 //dichiara una istanza di custom contact listener
@@ -29,10 +28,10 @@ public class MainMenu extends Livello implements Screen
         
         c = new MenuContactListener();//istanzio il contactlistener
         world.setContactListener(c);
-        
+
         entities.add(mouse);
-        entities.add(new Button(root.SCREEN_WIDTH / 2 -75, root.SCREEN_HEIGHT / 2 - 25, 150, 50, "gioca"));
-        entities.add(new Button(root.SCREEN_WIDTH / 2 -75, root.SCREEN_HEIGHT / 4 - 25, 150, 50, "opzioni"));
+        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "gioca.png"));
+        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png"));
         bg = new Texture("bg.png");
     }
 
@@ -73,22 +72,10 @@ public class MainMenu extends Livello implements Screen
     {
 
         batch.draw(bg, 0, 0, root.SCREEN_WIDTH, root.SCREEN_HEIGHT);
-
-        //il manager screen si occupa già di fare questo lavoro
-        /*if(index == 1)
+        for(Entity e: entities)
         {
-            for(Entity e : entities)
-                if(!world.isLocked())
-                {
-                    //System.out.println("entrato" + e.body);
-                    e.body.setActive(false);
-                    world.destroyBody(e.body);
-                }
-            
-            entities.clear();
-            //cambio screen dopo aver pulito tutto
-            root.setScreen(new Livello1(-10f, false, "map2.tmx", root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
-        }*/
+            e.draw();
+        }
     }
     
     @Override
