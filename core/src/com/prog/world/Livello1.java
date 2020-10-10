@@ -17,6 +17,7 @@ public class Livello1 extends Livello implements Screen{
         
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
+        world.destroyBody(mouse.body);
     }
 
     @Override
@@ -69,13 +70,5 @@ public class Livello1 extends Livello implements Screen{
         super.dispose();
     }
     
-    public void handleInput()
-    {
-        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
-        {
-            dispose();
-            root.dispose();
-            Gdx.app.exit();
-        }
-    }
+
 }

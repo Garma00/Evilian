@@ -4,10 +4,11 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import static com.prog.world.ManagerScreen.index;
 
 public class MenuContactListener implements ContactListener{
     //il contact listener si setta tramite world.setContactListener(istanza di questa classe)
-    public int index = 0; // indice per stabilire lo screen in cui andare 1 gioca 
+    public boolean collided = false; 
     //chiamato quando due fixture cominciano a collidere
     @Override
     public void beginContact(Contact c) {
@@ -17,6 +18,7 @@ public class MenuContactListener implements ContactListener{
             if(c.getFixtureB().getUserData() == "gioca")
             {
                 //System.out.println("Gioca");
+                collided = true;
                 index = 1;
                 
             }
@@ -28,7 +30,31 @@ public class MenuContactListener implements ContactListener{
             if(c.getFixtureA().getUserData() == "gioca")
             {
                 //System.out.println("Gioca");
+                collided = true;
                 index = 1;
+            }
+                
+        }
+        
+        if(c.getFixtureA().getUserData() == "mouse")
+        {
+            if(c.getFixtureB().getUserData() == "opzioni")
+            {
+                //System.out.println("opzioni");
+                collided = true;
+                index = 2;
+                
+            }
+                
+        }
+        
+        if(c.getFixtureB().getUserData() == "mouse")
+        {
+            if(c.getFixtureA().getUserData() == "opzioni")
+            {
+                //System.out.println("Gioca");
+                collided = true;
+                index = 2;
             }
                 
         }
@@ -41,7 +67,9 @@ public class MenuContactListener implements ContactListener{
         if(index == 0)
         {
             //System.out.println("non c'e' piu' contatto tra "+c.getFixtureA().getUserData()+" e "+c.getFixtureB().getUserData());
+            
         }
+        collided = false;
     }
 
     
