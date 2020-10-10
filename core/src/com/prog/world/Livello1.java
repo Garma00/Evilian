@@ -1,7 +1,6 @@
 package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.prog.collision.LevelContactListener;
@@ -23,10 +22,14 @@ public class Livello1 extends Livello implements Screen{
         
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
-        //ho bisgno di passare il listener per avere il flag inAir
+        
+        //ho bisgno di passare il listener come parametro per avere il flag inAir
         p=new Player(lcl);
         
         entities.add(p);
+        
+        //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravità applicata essendo un body
+        world.destroyBody(mouse.body);
     }
 
     @Override
@@ -90,13 +93,5 @@ public class Livello1 extends Livello implements Screen{
         super.dispose();
     }
     
-    public void handleInput()
-    {
-        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE))
-        {
-            dispose();
-            root.dispose();
-            Gdx.app.exit();
-        }
-    }
+
 }

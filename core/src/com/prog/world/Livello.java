@@ -1,5 +1,7 @@
 package com.prog.world;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
+import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
 
 public class Livello {
@@ -34,13 +37,16 @@ public class Livello {
     public Evilian root;
     public Box2DDebugRenderer debug;
     public static TextureAtlas atlas;
+    public Mouse mouse;
     
     
     public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
     {
+        
         //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
         root=game;
         debug=new Box2DDebugRenderer();
+        
         //creiamo il mondo
         //NOTA:inserire gravita' negativa da parametro
         world=new World(new Vector2(0,gravity),Sleep);
@@ -57,6 +63,7 @@ public class Livello {
         camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
         atlas=new TextureAtlas("osvaldo.atlas");
         
+        mouse = new Mouse(cam);
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     }
     
@@ -70,6 +77,7 @@ public class Livello {
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         camvp=new FillViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
         atlas=new TextureAtlas("osvaldo.atlas");
+        mouse = new Mouse(cam);
     }
     
     public void dispose()
@@ -112,4 +120,16 @@ public class Livello {
         cs.createChain(worldVertices);
         return cs;
     }
+    
+    public void handleInput()
+    {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+            root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
+            dispose();
+            root.dispose();
+            Gdx.app.exit();
+        }
+    }
+    
 }
