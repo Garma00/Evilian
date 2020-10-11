@@ -2,6 +2,7 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -38,6 +39,7 @@ public class Livello {
     public Box2DDebugRenderer debug;
     public static TextureAtlas atlas;
     public Mouse mouse;
+    public Music musica;
     
     
     public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
@@ -85,6 +87,7 @@ public class Livello {
         map.dispose();
         mapRenderer.dispose();
         world.dispose();
+        musica.dispose();
     }
     
     public void parseCollisions(World w,MapObjects objects)
@@ -126,9 +129,11 @@ public class Livello {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
-            dispose();
-            root.dispose();
-            Gdx.app.exit();
+            
+            //questo pezzo di codice fa crashare l'app appena si preme esc e si passa da livello1 a opzioni
+            //dispose();
+            //root.dispose();
+            //Gdx.app.exit();
         }
     }
     

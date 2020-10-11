@@ -5,9 +5,11 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import static com.prog.world.ManagerScreen.index;
+import static com.prog.evilian.Evilian.musica;
+
 
 public class OpzioniContactListener implements ContactListener{
-    public boolean collided = false; 
+    public boolean collided = false;
     
 
     @Override
@@ -56,6 +58,51 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
+        //se viene premuto il bottone musica il volume passa da 0 a 0.1 e viceversa
+        if(c.getFixtureA().getUserData() == "mouse")
+        {
+            if(c.getFixtureB().getUserData() == "musica")
+            {
+                System.out.println("musica");
+                //collided = true;
+                if(musica.getVolume() > 0)
+                {
+                    System.out.println("Volume musica 0");
+                    musica.setVolume(0f);
+                }
+                    
+                    
+                else
+                {
+                    musica.setVolume(0.1f);
+                    System.out.println("Volume musica 0.1");
+                }
+            }
+                
+        }
+        
+        if(c.getFixtureB().getUserData() == "mouse")
+        {
+            if(c.getFixtureA().getUserData() == "musica")
+            {
+                System.out.println("musica");
+                //collided = true;
+                
+                if(musica.getVolume() > 0)
+                {
+                    musica.setVolume(0);
+                    System.out.println("Volume musica 0");
+                }
+                
+                else
+                {
+                    musica.setVolume(0.1f);
+                    System.out.println("Volume musica 0.1");
+                }
+            }
+                
+        }
+        
         
     }
 

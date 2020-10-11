@@ -19,7 +19,7 @@ public class Livello1 extends Livello implements Screen{
         super(gravity, Sleep, path, cameraWidth, cameraHeight,game);
         lcl=new LevelContactListener();
         world.setContactListener(lcl);
-        
+
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
         
@@ -28,7 +28,7 @@ public class Livello1 extends Livello implements Screen{
         
         entities.add(p);
         
-        //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravità applicata essendo un body
+        //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravitï¿½ applicata essendo un body
         world.destroyBody(mouse.body);
     }
 
