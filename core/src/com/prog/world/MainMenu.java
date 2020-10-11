@@ -13,14 +13,13 @@ import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
-
+import static com.prog.evilian.Evilian.MANAGER_MUSIC;
 
 //dichiara una istanza di custom contact listener
 public class MainMenu extends Livello implements Screen
 {
     MenuContactListener c;
     Texture bg;
-    
     
     public MainMenu(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian game)
     {
@@ -30,9 +29,11 @@ public class MainMenu extends Livello implements Screen
         world.setContactListener(c);
 
         entities.add(mouse);
-        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "gioca.png"));
-        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png"));
+        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "gioca.png", false));
+        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png", false));
         bg = new Texture("menu.png");
+        MANAGER_MUSIC.selectMusic(1);
+        
     }
 
     @Override

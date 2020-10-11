@@ -4,12 +4,15 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.prog.world.ManagerMusic;
 import static com.prog.world.ManagerScreen.index;
-import static com.prog.evilian.Evilian.musica;
+import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+
 
 
 public class OpzioniContactListener implements ContactListener{
     public boolean collided = false;
+    ManagerMusic m = new ManagerMusic();
     
 
     @Override
@@ -65,17 +68,17 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("musica");
                 //collided = true;
-                if(musica.getVolume() > 0)
+                if(MANAGER_MUSIC.musica.getVolume() > 0)
                 {
                     System.out.println("Volume musica 0");
-                    musica.setVolume(0f);
+                    MANAGER_MUSIC.setVolume(0f);
                 }
                     
                     
                 else
                 {
-                    musica.setVolume(0.1f);
-                    System.out.println("Volume musica 0.1");
+                    MANAGER_MUSIC.setVolume(0.5f);
+                    System.out.println("Volume musica 0.5");
                 }
             }
                 
@@ -88,16 +91,17 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("musica");
                 //collided = true;
                 
-                if(musica.getVolume() > 0)
+                if(MANAGER_MUSIC.musica.getVolume() > 0)
                 {
-                    musica.setVolume(0);
                     System.out.println("Volume musica 0");
+                    MANAGER_MUSIC.setVolume(0f);
                 }
-                
+                    
+                    
                 else
                 {
-                    musica.setVolume(0.1f);
-                    System.out.println("Volume musica 0.1");
+                    MANAGER_MUSIC.setVolume(0.5f);
+                    System.out.println("Volume musica 0.5");
                 }
             }
                 
