@@ -24,10 +24,9 @@ public class Opzioni extends Livello implements Screen {
         bg = new Texture("menu.png");
         world.setContactListener(c);
         
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2, 150, 50, "riprendi", "riprendi.png"));
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "musica.png"));
-        //entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "musica_off.png"));
-        entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "indietro.png"));
+        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2, 150, 50, "riprendi", "riprendi.png", false));
+        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "musica.png", true));
+        entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "indietro.png", false));
         
         
         

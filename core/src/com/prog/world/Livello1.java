@@ -8,6 +8,7 @@ import com.prog.entity.Entity;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
+import static com.prog.evilian.Evilian.MANAGER_MUSIC;
 
 public class Livello1 extends Livello implements Screen{
     Player p;
@@ -30,6 +31,9 @@ public class Livello1 extends Livello implements Screen{
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravit� applicata essendo un body
         world.destroyBody(mouse.body);
+        
+        MANAGER_MUSIC.selectMusic(2);
+        
     }
 
     @Override

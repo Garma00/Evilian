@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.world.Livello.world;
-import static com.prog.evilian.Evilian.musica;
 
 public class ManagerScreen 
 {
@@ -52,9 +51,6 @@ public class ManagerScreen
     public boolean clear(Array<Entity> entities)
     {
         boolean  done = false;
-        //se musica è in riproduzione e passo a livello 1 interrompo la musica del menù
-        if(musica.isPlaying() && index == 1)
-            musica.dispose();
             
         
         if(!world.isLocked())
