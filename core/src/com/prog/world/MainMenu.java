@@ -32,7 +32,7 @@ public class MainMenu extends Livello implements Screen
         entities.add(mouse);
         entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "gioca.png"));
         entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png"));
-        bg = new Texture("bg.png");
+        bg = new Texture("menu.png");
     }
 
     @Override
