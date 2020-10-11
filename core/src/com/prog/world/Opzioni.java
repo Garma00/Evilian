@@ -8,6 +8,7 @@ import com.prog.collision.OpzioniContactListener;
 import com.prog.entity.Button;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
+import static com.prog.evilian.Evilian.MANAGER_MUSIC;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.world;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
@@ -25,7 +26,9 @@ public class Opzioni extends Livello implements Screen {
         world.setContactListener(c);
         
         entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2, 150, 50, "riprendi", "riprendi.png", false));
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "musica.png", true));
+        Button b=new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "musica.png", true);
+        entities.add(b);
+        MANAGER_MUSIC.addMusicButton(b);
         entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "indietro.png", false));
         
         

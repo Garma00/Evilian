@@ -68,7 +68,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("musica");
                 //collided = true;
-                if(MANAGER_MUSIC.musica.getVolume() > 0)
+                if(MANAGER_MUSIC.getVolume() > 0)
                 {
                     System.out.println("Volume musica 0");
                     MANAGER_MUSIC.setVolume(0f);
@@ -91,7 +91,7 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("musica");
                 //collided = true;
                 
-                if(MANAGER_MUSIC.musica.getVolume() > 0)
+                if(MANAGER_MUSIC.getVolume() > 0)
                 {
                     System.out.println("Volume musica 0");
                     MANAGER_MUSIC.setVolume(0f);

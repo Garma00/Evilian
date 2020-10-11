@@ -2,6 +2,7 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.prog.entity.Button;
 
 
 public class ManagerMusic 
@@ -11,7 +12,8 @@ public class ManagerMusic
     2           livello1
     default     dispose della musica
     */
-    public Music musica;
+    private Music musica;
+    private Button button;
     
     public void selectMusic(int traccia)
     {
@@ -44,11 +46,21 @@ public class ManagerMusic
     {
         if(musica.isPlaying() && volume >= 0 && volume <= 1)
             musica.setVolume(volume);
-        
         else
             System.out.println("volume errato");
         
+        if(volume==0)
+            button.isActive=false;
+        else
+            button.isActive=true;
     }
 
-    
+    public float getVolume() {
+        return musica.getVolume();
+    }
+
+    public void addMusicButton(Button b)
+    {
+        button=b;
+    }
 }
