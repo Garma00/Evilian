@@ -33,7 +33,8 @@ public class MainMenu extends Livello implements Screen
         entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png", false));
         bg = new Texture("menu.png");
         MANAGER_MUSIC.selectMusic(1);
-        
+        //modifichiamo il bloom
+        mvfx.editBloom(1f,1f,0.3f,10);
     }
 
     @Override
@@ -45,19 +46,34 @@ public class MainMenu extends Livello implements Screen
     {
         
         cam.update();
+        batch.setProjectionMatrix(cam.combined);
+        
         mouse.handleInput();
         if(c.collided)
         {
+            super.dispose();
             System.out.println("COllisione fra mouse e opzioni");
             MANAGER_SCREEN.changeScreen(entities, root);
         }
             
+        for(Entity e:entities)
+            e.update(f);
         
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    
+        mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
+        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
+        mvfx.enableBlend(true);
+        
+        mvfx.initCapture();
         //il metodo draw sta sopra il debug perchè se lo metto dopo i body vengono coperti dalla 
         //texture di bg ed è scomodo, la foto di sfondo l'ho presa random
+        batch.begin();
+        batch.draw(bg, 0, 0, root.SCREEN_WIDTH/Evilian.PPM, root.SCREEN_HEIGHT/Evilian.PPM);
+        batch.end();
+        mvfx.endCapture();
+        mvfx.render();
+        
         batch.begin();
         draw();
         batch.end();
@@ -72,7 +88,7 @@ public class MainMenu extends Livello implements Screen
     public void draw()
     {
 
-        batch.draw(bg, 0, 0, root.SCREEN_WIDTH, root.SCREEN_HEIGHT);
+        
         for(Entity e: entities)
         {
             e.draw();

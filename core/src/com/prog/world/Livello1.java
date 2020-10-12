@@ -34,6 +34,8 @@ public class Livello1 extends Livello implements Screen{
         
         MANAGER_MUSIC.selectMusic(2);
         
+        //diamo un po' di zoom alla telecamera per un gameplay migliore
+        cam.zoom-=0.5;
     }
 
     @Override
@@ -42,9 +44,10 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void render(float f) {
-        delta=Gdx.graphics.getDeltaTime();
         
+        cam.position.set(Math.max(p.pos.x,2), Math.max(p.pos.y+0.2f,1.7f),0f);
         cam.update();
+        batch.setProjectionMatrix(cam.combined);
         
         //handleinput entita'
         for(Entity e:entities)
@@ -55,21 +58,19 @@ public class Livello1 extends Livello implements Screen{
         
         //guardo entities e faccio gli update
         for(Entity e:entities)
-            e.update(delta);
+            e.update(f);
         
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
+
         //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
         mapRenderer.render();
-        
         //guardo entities e renderizzo cose
         batch.begin();
         for(Entity e:entities)
             e.draw();
         batch.end();
-        
         debug.render(world, cam.combined);
         
         world.step(1/60f,6,2);
@@ -78,6 +79,7 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void resize(int width, int height) {
         camvp.update(width,height);
+        mvfx.resize(width, height);
     }
 
     @Override

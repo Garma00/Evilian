@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 public class LevelContactListener implements ContactListener{
     //true se faccio spawnare il player in aria, false se lo faccio spawnare a terra
-    public boolean inAir=true;
+    public boolean inAir;
     
     @Override
     public void beginContact(Contact c) {
