@@ -106,8 +106,13 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
+       /*da fixare  
+        if(c.getFixtureA().getUserData() == "mouse")
+            c.getFixtureA().getBody().setTransform(-100, -100, 0);
         
-        
+        if(c.getFixtureB().getUserData() == "mouse")
+            c.getFixtureB().getBody().setTransform(-100, -100, 0);
+        */
     }
 
     @Override

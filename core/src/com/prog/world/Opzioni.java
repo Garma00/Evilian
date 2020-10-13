@@ -22,14 +22,14 @@ public class Opzioni extends Livello implements Screen {
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, root);
         c = new OpzioniContactListener();
         entities.add(mouse);
-        bg = new Texture("menu.png");
+        bg = new Texture("images/menu.png");
         world.setContactListener(c);
         
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2, 150, 50, "riprendi", "riprendi.png", false));
-        Button b=new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "musica.png", true);
+        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2, 150, 50, "riprendi", "images/riprendi.png", false));
+        Button b=new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "images/musica.png", true);
         entities.add(b);
         MANAGER_MUSIC.addMusicButton(b);
-        entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "indietro.png", false));
+        entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "images/indietro.png", false));
         
         mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);

@@ -23,16 +23,16 @@ public class ManagerMusic
             case 1:
                 if(musica != null)
                     musica.dispose();
-                musica = Gdx.audio.newMusic(Gdx.files.internal("opening.mp3"));
-                musica.play();
+                musica = Gdx.audio.newMusic(Gdx.files.internal("music/opening.mp3"));
+                //musica.play();
                 musica.setLooping(true);
                 break;
         
             case 2:
                 if(musica != null)
                     musica.dispose();
-                musica = Gdx.audio.newMusic(Gdx.files.internal("ope.mp3"));
-                musica.play();
+                musica = Gdx.audio.newMusic(Gdx.files.internal("music/ope.mp3"));
+                //musica.play();
                 musica.setLooping(true);
                 break;
         

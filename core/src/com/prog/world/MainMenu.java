@@ -29,9 +29,9 @@ public class MainMenu extends Livello implements Screen
         world.setContactListener(c);
 
         entities.add(mouse);
-        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "gioca.png", false));
-        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png", false));
-        bg = new Texture("menu.png");
+        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "images/gioca.png", false));
+        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","images/opzioni.png", false));
+        bg = new Texture("images/menu.png");
         MANAGER_MUSIC.selectMusic(1);
         mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
@@ -54,8 +54,9 @@ public class MainMenu extends Livello implements Screen
         mouse.handleInput();
         if(c.collided)
         {
+            System.out.println("Collisione fra mouse e opzioni");
+
             super.dispose();
-            System.out.println("COllisione fra mouse e opzioni");
             MANAGER_SCREEN.changeScreen(entities, root);
         }
             
