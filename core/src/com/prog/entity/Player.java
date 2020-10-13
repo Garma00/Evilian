@@ -2,6 +2,7 @@ package com.prog.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,12 +19,15 @@ public class Player extends Entity{
     
     public Player(LevelContactListener lcl)
     {
-        this.pos=new Rectangle(200,1000,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
+        this.pos=new Rectangle(50,100,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
         this.lcl=lcl;
-        this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 0.1f,  0, 1f);
+        this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f);
+        //imposto width e height al valore corretto
+        this.pos.width=this.pos.width/Evilian.PPM;
+        this.pos.height=this.pos.height/Evilian.PPM;
         //attacco una fixture di tipo sensor come piede
-        attachFixture(body,new Vector2(0,-0.15f), true, 10f, 10f, "player_foot", 0, 0, 0);
+        attachFixture(body,new Vector2(0,-0.15f), true, 14f, 5f, "player_foot", 0, 0, 0);
         this.flipX=false;
         this.flipY=false;
     }
@@ -32,13 +36,12 @@ public class Player extends Entity{
     public void update(float delta) {
         animationTime+=delta;
         //NOTA: getPosition di body mi ritorna il centro del corpo
-        pos.x=(body.getPosition().x * Evilian.PPM)-(pos.width/2);
-        pos.y=(body.getPosition().y * Evilian.PPM)-(pos.height/2);
+        pos.x=(body.getPosition().x)-(pos.width/2);
+        pos.y=(body.getPosition().y)-(pos.height/2);
     }
 
     @Override
     public void handleInput() {
-        Vector2 pos = this.body.getPosition();
         float forza=0;
 
 
@@ -60,7 +63,7 @@ public class Player extends Entity{
             if(!lcl.inAir)
             {
                 float force = body.getMass() * 1.5f;
-                System.out.println("massa:"+body.getMass()+"\tforza:"+force);
+                //System.out.println("massa:"+body.getMass()+"\tforza:"+force);
                 body.applyLinearImpulse(new Vector2(0,force), body.getWorldCenter(), false);
             }
         }
@@ -74,11 +77,9 @@ public class Player extends Entity{
         if(anim!=null)
         {
             TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
-            System.out.println("player:\t"+(body.getPosition().x)+"\t"+(body.getPosition().y));
-            System.out.println("draw:\t"+pos.x+"\t"+pos.y);
-            System.out.println(pos.width/Evilian.PPM+"\t"+pos.height/Evilian.PPM);
-            //batch.draw(region, 0.16f, 0.16f, (pos.width/2)/Evilian.PPM,(pos.height/2)/Evilian.PPM,pos.width/Evilian.PPM, pos.height/Evilian.PPM,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
-            batch.draw(region,pos.x,pos.y,body.getWorldCenter().x,body.getWorldCenter().y,pos.width,pos.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
+            //System.out.println("player in:"+body.getPosition());
+            //System.out.println(pos.x+"\t"+pos.y);
+            batch.draw(region,pos.x,pos.y,pos.width/2,pos.height/2,pos.width,pos.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
         }
     }
 
