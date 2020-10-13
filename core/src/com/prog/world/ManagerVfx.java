@@ -2,6 +2,7 @@ package com.prog.world;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.crashinvaders.vfx.VfxManager;
 import com.crashinvaders.vfx.effects.BloomEffect;
 import com.crashinvaders.vfx.effects.ChromaticAberrationEffect;
@@ -9,6 +10,7 @@ import com.crashinvaders.vfx.effects.GaussianBlurEffect;
 import com.crashinvaders.vfx.effects.MotionBlurEffect;
 import com.crashinvaders.vfx.effects.OldTvEffect;
 import com.crashinvaders.vfx.effects.util.MixEffect;
+import com.crashinvaders.vfx.framebuffer.VfxFrameBuffer;
 
 public class ManagerVfx {
     public static final int BLOOM_EFFECT=1;
@@ -22,7 +24,7 @@ public class ManagerVfx {
     private final BloomEffect bloom= new BloomEffect();
     private final GaussianBlurEffect gblur=new GaussianBlurEffect();
     private final MotionBlurEffect mblur=new MotionBlurEffect(Pixmap.Format.RGBA8888,MixEffect.Method.MAX,0.9f);
-    private final ChromaticAberrationEffect chrome=new ChromaticAberrationEffect(15);
+    private final ChromaticAberrationEffect chrome=new ChromaticAberrationEffect(5);
     
     int active;
     
@@ -114,6 +116,14 @@ public class ManagerVfx {
         manager.renderToScreen();
     }
     
+    public void render(int x,int y,int width,int height)
+    {
+        //applico effetti
+        manager.applyEffects();
+        //renderizzo su schermo
+        manager.renderToScreen(x, y, width, height);
+    }
+    
     public void resize(int width,int height)
     {
         manager.resize(width, height);
@@ -130,6 +140,14 @@ public class ManagerVfx {
         bloom.setBloomSaturation(saturation);
         bloom.setThreshold(threshold);
         bloom.setBlurPasses(bloom_passes);
+    }
+    
+    public Texture renderToTexture(int width,int height)
+    {
+        VfxFrameBuffer output=new VfxFrameBuffer(Pixmap.Format.RGBA8888);
+        output.initialize(width,height);
+        manager.renderToFbo(output);
+        return output.getTexture();
     }
     
     public void dispose()

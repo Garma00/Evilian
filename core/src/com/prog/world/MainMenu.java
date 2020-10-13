@@ -33,6 +33,8 @@ public class MainMenu extends Livello implements Screen
         entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png", false));
         bg = new Texture("menu.png");
         MANAGER_MUSIC.selectMusic(1);
+        mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
+        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
         //modifichiamo il bloom
         mvfx.editBloom(1f,1f,0.3f,10);
     }
@@ -59,10 +61,19 @@ public class MainMenu extends Livello implements Screen
         for(Entity e:entities)
             e.update(f);
         
+        draw();
+        world.step(1/60f, 6, 2);
+       
+    }
+
+    //chiamata tra batch begin e batch end;
+    //questo metodo potrebbe essere astratto ed essere riscritto per opzioni, salva ecc
+    public void draw()
+    {
+
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
-        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
+        
         mvfx.enableBlend(true);
         
         mvfx.initCapture();
@@ -75,29 +86,17 @@ public class MainMenu extends Livello implements Screen
         mvfx.render();
         
         batch.begin();
-        draw();
+        for(Entity e: entities)
+            e.draw();
         batch.end();
         
         debug.render(world, cam.combined);
-        world.step(1/60f, 6, 2);
-       
-    }
-
-    //chiamata tra batch begin e batch end;
-    //questo metodo potrebbe essere astratto ed essere riscritto per opzioni, salva ecc
-    public void draw()
-    {
-
-        
-        for(Entity e: entities)
-        {
-            e.draw();
-        }
     }
     
     @Override
     public void resize(int width, int height) {
         camvp.update(width, height);
+        mvfx.resize(width, height);
     }
 
     @Override

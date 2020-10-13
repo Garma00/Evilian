@@ -31,6 +31,9 @@ public class Opzioni extends Livello implements Screen {
         MANAGER_MUSIC.addMusicButton(b);
         entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "indietro.png", false));
         
+        mvfx.enableBlend(true);
+        mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
+        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
         //modifichiamo il bloom
         mvfx.editBloom(1f,1f,0.3f,10);
     }
@@ -61,11 +64,17 @@ public class Opzioni extends Livello implements Screen {
         for(Entity e:entities)
             e.update(f);
             
+        draw();
+        world.step(1/60f, 6, 2);
+    
+        
+    }
+
+    public void draw()
+    {
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mvfx.enableBlend(true);
-        mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
-        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
+
         
         mvfx.initCapture();
         batch.begin();
@@ -75,26 +84,17 @@ public class Opzioni extends Livello implements Screen {
         mvfx.render();
         
         batch.begin();
-        draw();
+        for(Entity e: entities)
+            e.draw();
         batch.end();
         
         debug.render(world, cam.combined);
-        world.step(1/60f, 6, 2);
-    
-        
-    }
-
-    public void draw()
-    {
-        
-        for(Entity e: entities)
-        {
-            e.draw();
-        }
     }
     
     @Override
-    public void resize(int i, int i1) {
+    public void resize(int width, int height) {
+        camvp.update(width, height);
+        mvfx.resize(width, height);
     }
 
     @Override
