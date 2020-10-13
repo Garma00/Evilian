@@ -31,8 +31,8 @@ public class Opzioni extends Livello implements Screen {
         MANAGER_MUSIC.addMusicButton(b);
         entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "images/indietro.png", false));
         
-        
-        
+        //modifichiamo il bloom
+        mvfx.editBloom(1f,1f,0.3f,10);
     }
     
     
@@ -45,6 +45,7 @@ public class Opzioni extends Livello implements Screen {
     public void render(float f)
     {
         cam.update();
+        batch.setProjectionMatrix(cam.combined);
         mouse.handleInput();
         
         //qui ontrolliamo se c'è una collisione nello screen opzioni, ma se c'è una collisione con il
@@ -53,13 +54,26 @@ public class Opzioni extends Livello implements Screen {
         if(c.collided)
         {
             //System.out.println("collided in opzioni");
+            super.dispose();
             MANAGER_SCREEN.changeScreen(entities, root);
         }
+        
+        for(Entity e:entities)
+            e.update(f);
             
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    
-
+        mvfx.enableBlend(true);
+        mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
+        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
+        
+        mvfx.initCapture();
+        batch.begin();
+        batch.draw(bg, 0, 0, root.SCREEN_WIDTH/Evilian.PPM, root.SCREEN_HEIGHT/Evilian.PPM);
+        batch.end();
+        mvfx.endCapture();
+        mvfx.render();
+        
         batch.begin();
         draw();
         batch.end();
@@ -72,7 +86,7 @@ public class Opzioni extends Livello implements Screen {
 
     public void draw()
     {
-        batch.draw(bg, 0, 0, root.SCREEN_WIDTH, root.SCREEN_HEIGHT);
+        
         for(Entity e: entities)
         {
             e.draw();
