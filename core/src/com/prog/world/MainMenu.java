@@ -33,6 +33,7 @@ public class MainMenu extends Livello implements Screen
         entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","opzioni.png", false));
         bg = new Texture("menu.png");
         MANAGER_MUSIC.selectMusic(1);
+        mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
         mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
         //modifichiamo il bloom
@@ -73,8 +74,6 @@ public class MainMenu extends Livello implements Screen
 
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        mvfx.enableBlend(true);
         
         mvfx.initCapture();
         //il metodo draw sta sopra il debug perchè se lo metto dopo i body vengono coperti dalla 

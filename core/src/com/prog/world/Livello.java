@@ -44,7 +44,7 @@ public class Livello {
     public Box2DDebugRenderer debug;
     public static TextureAtlas atlas;
     public Mouse mouse;
-    ManagerVfx mvfx;
+    public static final ManagerVfx mvfx=new ManagerVfx();
     
     
     
@@ -75,7 +75,6 @@ public class Livello {
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        mvfx=new ManagerVfx();
     }
     
     public Livello(boolean Sleep, int cameraWidth, int cameraHeight, Evilian game)
@@ -89,9 +88,6 @@ public class Livello {
         camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
         atlas=new TextureAtlas("osvaldo.atlas");
         mouse = new Mouse(cam);
-        
-        //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        mvfx=new ManagerVfx();
     }
     
     public void dispose()
@@ -103,6 +99,7 @@ public class Livello {
             mapRenderer.dispose();
         }
         atlas.dispose();
+        mvfx.removeAllEffects();
         //mvfx.dispose();
         //forse non conviene fare il dispose del mondo visto che ne abbiamo solo uno istanziato
         //world.dispose();
