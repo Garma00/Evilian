@@ -63,7 +63,7 @@ public class Livello {
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         //inizializzo la viewport come fit (non importa la grandezza della finestra, vedremo sempre la stessa regione(con barre nere se neceessarie ai lati))
         camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
-        atlas=new TextureAtlas("osvaldo.atlas");
+        atlas=new TextureAtlas("atlas/osvaldo.atlas");
         
         mouse = new Mouse(cam);
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
@@ -78,7 +78,7 @@ public class Livello {
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         camvp=new FillViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
-        atlas=new TextureAtlas("osvaldo.atlas");
+        atlas=new TextureAtlas("atlas/osvaldo.atlas");
         mouse = new Mouse(cam);
     }
     
