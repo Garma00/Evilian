@@ -45,7 +45,7 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void render(float f) {
         
-        cam.position.set(Math.max(p.pos.x,2), Math.max(p.pos.y+0.2f,1.7f),0f);
+        cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.7f),0f);
         cam.update();
         batch.setProjectionMatrix(cam.combined);
         
@@ -60,18 +60,8 @@ public class Livello1 extends Livello implements Screen{
         for(Entity e:entities)
             e.update(f);
         
-        Gdx.gl20.glClearColor(0, 0, 0, 1);
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        //prima renderizzo la mappa e poi il player o altre cose
-        mapRenderer.setView(cam);
-        mapRenderer.render();
-        //guardo entities e renderizzo cose
-        batch.begin();
-        for(Entity e:entities)
-            e.draw();
-        batch.end();
-        debug.render(world, cam.combined);
+        //draw
+        draw();
         
         world.step(1/60f,6,2);
     }
@@ -94,10 +84,25 @@ public class Livello1 extends Livello implements Screen{
     public void hide() {
     }
     
+    @Override
     public void dispose()
     {
         super.dispose();
     }
     
+    public void draw()
+    {
+        Gdx.gl20.glClearColor(0, 0, 0, 1);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //prima renderizzo la mappa e poi il player o altre cose
+        mapRenderer.setView(cam);
+        mapRenderer.render();
+        //guardo entities e renderizzo cose
+        batch.begin();
+        for(Entity e:entities)
+            e.draw();
+        batch.end();
+        debug.render(world, cam.combined);
+    }
 
 }

@@ -2,14 +2,12 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,14 +18,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
@@ -48,7 +44,7 @@ public class Livello {
     public Box2DDebugRenderer debug;
     public static TextureAtlas atlas;
     public Mouse mouse;
-    ManagerVfx mvfx;
+    public static final ManagerVfx mvfx=new ManagerVfx();
     
     
     
@@ -79,7 +75,6 @@ public class Livello {
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        mvfx=new ManagerVfx();
     }
     
     public Livello(boolean Sleep, int cameraWidth, int cameraHeight, Evilian game)
@@ -90,12 +85,11 @@ public class Livello {
         entities = new Array<Entity>();
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
-        camvp=new FillViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
-        atlas=new TextureAtlas("atlas/osvaldo.atlas");
-        mouse = new Mouse(cam);
         
-        //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        mvfx=new ManagerVfx();
+        camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        atlas=new TextureAtlas("atlas/osvaldo.atlas");
+
+        mouse = new Mouse(cam);
     }
     
     public void dispose()
@@ -107,6 +101,7 @@ public class Livello {
             mapRenderer.dispose();
         }
         atlas.dispose();
+        mvfx.removeAllEffects();
         //mvfx.dispose();
         //forse non conviene fare il dispose del mondo visto che ne abbiamo solo uno istanziato
         //world.dispose();
