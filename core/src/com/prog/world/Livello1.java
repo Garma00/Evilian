@@ -36,6 +36,9 @@ public class Livello1 extends Livello implements Screen{
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
+        mvfx.removeAllEffects();
+        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
+        mvfx.enableBlend(true);
     }
 
     @Override
@@ -92,7 +95,7 @@ public class Livello1 extends Livello implements Screen{
     }
     
     public void draw()
-    {
+    {   
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //prima renderizzo la mappa e poi il player o altre cose
@@ -102,7 +105,7 @@ public class Livello1 extends Livello implements Screen{
         batch.begin();
         for(Entity e:entities)
             e.draw();
-        batch.end();
+        batch.end();        
         debug.render(world, cam.combined);
     }
 

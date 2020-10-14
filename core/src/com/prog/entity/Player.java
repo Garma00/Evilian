@@ -58,8 +58,12 @@ public class Player extends Entity{
         //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
         if(Gdx.input.justTouched())
         {
-            
-            spellList.add(new Magia(this.body.getWorldCenter(), 3, lanciaMagia()));
+            Vector2 res=lanciaMagia();
+            spellList.add(new Magia(this.body.getWorldCenter(), 1/10f, res));
+            if(res.x < 0)
+                flipX=true;
+            else
+                flipX=false;
         }
         
         // apply left impulse, but only if max velocity is not reached yet
@@ -91,16 +95,16 @@ public class Player extends Entity{
     public Vector2 lanciaMagia()
     {
         Vector3 mouse_pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
-        System.out.println("mouse unproject:"+mouse_pos);
+        //System.out.println("mouse unproject:"+mouse_pos);
         Vector2 m = new Vector2(mouse_pos.x, mouse_pos.y);
         Vector2 pg = new Vector2(body.getWorldCenter());
-        System.out.println("player:"+pg);
+        //System.out.println("player:"+pg);
         Vector2 tmp = m.cpy();
         tmp.sub(pg);
-        System.out.println("vettore distanza:"+tmp);
+        //System.out.println("vettore distanza:"+tmp);
         //tmp = (mouse - player) normalizzato
         tmp.nor();
-        System.out.println("vettore normalizzato:"+tmp);
+        //System.out.println("vettore normalizzato:"+tmp);
         return tmp;
     }
 
@@ -114,10 +118,13 @@ public class Player extends Entity{
             //System.out.println(pos.x+"\t"+pos.y);
             batch.draw(region,pos.x,pos.y,pos.width/2,pos.height/2,pos.width,pos.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
         }
+        draw_fireball();
+    }
+    
+    public void draw_fireball()
+    {
         for(Magia m:spellList)
-        {
             m.draw();
-        }
     }
 
     @Override
