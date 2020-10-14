@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.prog.collision.LevelContactListener;
+import com.prog.entity.magia.Magia;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
@@ -16,8 +19,10 @@ public class Player extends Entity{
     private final static Animation<TextureAtlas.AtlasRegion> stand=new Animation<>(1/7f,atlas.findRegions("knight_m_idle_anim"),Animation.PlayMode.LOOP);
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("knight_m_run_anim"),Animation.PlayMode.LOOP);
     LevelContactListener lcl;
+    Mouse mouse;
+    Array<Magia> spellList;
     
-    public Player(LevelContactListener lcl)
+    public Player(LevelContactListener lcl, Mouse mouse)
     {
         this.pos=new Rectangle(50,100,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
@@ -30,6 +35,9 @@ public class Player extends Entity{
         attachFixture(body,new Vector2(0,-0.15f), true, 14f, 5f, "player_foot", 0, 0, 0);
         this.flipX=false;
         this.flipY=false;
+        this.mouse = mouse;
+        spellList = new Array<Magia>();
+        
     }
 
     @Override
@@ -44,7 +52,13 @@ public class Player extends Entity{
     public void handleInput() {
         float forza=0;
 
-
+        //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
+        if(Gdx.input.justTouched())
+        {
+            spellList.add(new Magia(this.body.getPosition(), 3, lanciaMagia()));
+            
+        }
+        
         // apply left impulse, but only if max velocity is not reached yet
         if (Gdx.input.isKeyPressed(Keys.A)) {
             anim=walking;
@@ -70,6 +84,21 @@ public class Player extends Entity{
         
         this.body.setLinearVelocity(forza,this.body.getLinearVelocity().y);
     }
+    
+    public Vector2 lanciaMagia()
+    {
+        Vector3 pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
+        Vector2 m = new Vector2(pos.x, pos.y);
+        Vector2 pg = new Vector2(this.pos.x, this.pos.y);
+        Vector2 tmp = m.cpy();
+        tmp.sub(pg);
+        //tmp = vettore distanza personaggio - mouse normalizzato
+        tmp.nor();
+        return tmp;
+        
+        
+        
+    }
 
     @Override
     public void draw() {
@@ -80,6 +109,10 @@ public class Player extends Entity{
             //System.out.println("player in:"+body.getPosition());
             //System.out.println(pos.x+"\t"+pos.y);
             batch.draw(region,pos.x,pos.y,pos.width/2,pos.height/2,pos.width,pos.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
+        }
+        for(Magia m:spellList)
+        {
+            m.draw();
         }
     }
 
