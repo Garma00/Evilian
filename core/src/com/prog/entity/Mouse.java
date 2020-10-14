@@ -13,7 +13,7 @@ public class Mouse extends Entity
         this.cam = cam;
         realPos = fixedPosition(0, 0, cam);
         //se il mouse non è di tipo dinamico non vengono rilevate le collisioni coi bottoni
-        this.body = createBody(realPos.x, realPos.y, 16, 16, 1, "mouse", 0,  0, 0);
+        this.body = createBody(realPos.x, realPos.y, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);
         
     }
     
@@ -22,7 +22,6 @@ public class Mouse extends Entity
         Vector3 mousePos = new Vector3();
         mousePos.x = x;
         mousePos.y = y;
-        
         return cam.unproject(mousePos);
         
      

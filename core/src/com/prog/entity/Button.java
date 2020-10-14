@@ -16,7 +16,7 @@ public class Button extends Entity
     {
         isActive = true;
         this.pos=new Rectangle(x,y,width/Evilian.PPM,height/Evilian.PPM);
-        body = createBody(pos.x,pos.y, width, height, 0, userData, 0, 0, 0);
+        body = createBody(pos.x,pos.y, width, height, 0, userData, 0, 0, 0,(short)1,(short)2);
         this.img = new Texture (path);
         if(isDouble)
         {
