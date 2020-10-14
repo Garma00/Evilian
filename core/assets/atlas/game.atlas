@@ -1,0 +1,174 @@
+
+game.png
+size: 1024,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fire_ball
+  rotate: false
+  xy: 2, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 15
+fire_ball
+  rotate: false
+  xy: 51, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 10
+fire_ball
+  rotate: false
+  xy: 100, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 11
+fire_ball
+  rotate: false
+  xy: 149, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 12
+fire_ball
+  rotate: false
+  xy: 198, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 0
+fire_ball
+  rotate: false
+  xy: 247, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 1
+fire_ball
+  rotate: false
+  xy: 296, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 2
+fire_ball
+  rotate: false
+  xy: 345, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 3
+fire_ball
+  rotate: false
+  xy: 394, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 4
+fire_ball
+  rotate: false
+  xy: 443, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 5
+fire_ball
+  rotate: false
+  xy: 492, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 6
+fire_ball
+  rotate: false
+  xy: 541, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 7
+fire_ball
+  rotate: false
+  xy: 590, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 8
+fire_ball
+  rotate: false
+  xy: 639, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 9
+fire_ball
+  rotate: false
+  xy: 688, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 14
+fire_ball
+  rotate: false
+  xy: 737, 10
+  size: 47, 20
+  orig: 47, 20
+  offset: 0, 0
+  index: 13
+knight_m_idle_anim
+  rotate: false
+  xy: 786, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 0
+knight_m_idle_anim
+  rotate: false
+  xy: 804, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 1
+knight_m_idle_anim
+  rotate: false
+  xy: 822, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 2
+knight_m_idle_anim
+  rotate: false
+  xy: 840, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 3
+knight_m_run_anim
+  rotate: false
+  xy: 858, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 0
+knight_m_run_anim
+  rotate: false
+  xy: 876, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 1
+knight_m_run_anim
+  rotate: false
+  xy: 894, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 2
+knight_m_run_anim
+  rotate: false
+  xy: 912, 2
+  size: 16, 28
+  orig: 16, 28
+  offset: 0, 0
+  index: 3
