@@ -34,8 +34,6 @@ public class Opzioni extends Livello implements Screen {
         mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
         mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
-        //modifichiamo il bloom
-        mvfx.editBloom(1f,1f,0.3f,10);
     }
     
     

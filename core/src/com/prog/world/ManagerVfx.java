@@ -66,19 +66,19 @@ public class ManagerVfx {
         switch(wanted)
         {
             case BLOOM_EFFECT:
-                bloom.dispose();
+                manager.removeEffect(bloom);
                 break;
             case GBLUR_EFFECT:
-                gblur.dispose();
+                manager.removeEffect(gblur);
                 break;
             case MBLUR_EFFECT:
-                mblur.dispose();
+                manager.removeEffect(mblur);
                 break;
             case CHROME_EFFECT:
-                chrome.dispose();
+                manager.removeEffect(chrome);
                 break;
             case OLDTV_EFFECT:
-                oldtv.dispose();
+                manager.removeEffect(oldtv);
                 break;
             default:
                 System.out.println("Effect not recognized");
