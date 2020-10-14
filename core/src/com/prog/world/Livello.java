@@ -133,6 +133,8 @@ public class Livello {
             fdef.friction=0f;
             fdef.shape=s;
             fdef.density=1f;
+            fdef.filter.categoryBits=(short)8;
+            fdef.filter.maskBits=(short)(4|32);
             body.createFixture(fdef).setUserData("map_object");
             
             s.dispose();

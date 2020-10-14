@@ -34,9 +34,11 @@ public abstract class Entity {
     //0 static
     //1 dynamic
     //2 kinematic
-    public Body createBody(float x,float y,float width,float height, int bodyType,String userData,float density, float restitution, float friction)
+    public Body createBody(float x,float y,float width,float height, int bodyType,String userData,float density, float restitution, float friction,short categoria,short mask)
     {
         BodyDef bdef= new BodyDef();
+        CATEGORY_BIT=categoria;
+        MASK_BIT=mask;
         
         switch(bodyType)
         {
@@ -62,7 +64,7 @@ public abstract class Entity {
     }
     
     //overloading
-    public Body createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction)
+    public Body createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction,short categoria,short mask)
     {
         BodyDef bdef= new BodyDef();
         
@@ -100,6 +102,8 @@ public abstract class Entity {
         fdef.friction=friction;
         fdef.restitution=restitution;
         fdef.isSensor=isSensor;
+        fdef.filter.categoryBits=CATEGORY_BIT;
+        fdef.filter.maskBits=MASK_BIT;
         
         fdef.shape=shape;
         
@@ -121,6 +125,8 @@ public abstract class Entity {
         fdef.friction=friction;
         fdef.restitution=restitution;
         fdef.isSensor=isSensor;
+        fdef.filter.categoryBits=CATEGORY_BIT;
+        fdef.filter.maskBits=MASK_BIT;
         
         fdef.shape=shape;
         

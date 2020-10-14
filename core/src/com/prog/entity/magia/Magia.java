@@ -21,33 +21,36 @@ public class Magia extends Entity{
     
     public Magia(Vector2 position, int potenza, Vector2 impulso)
     {
-        pos = new Rectangle(0, 0, 50, 50);
-        pos.x =position.x * Evilian.PPM;
-        pos.y = position.y * Evilian.PPM;
+        //position e' la posizione del personaggio in metri da convertire in pixel
+        pos = new Rectangle(0, 0, 20, 20);
+        pos.x =(position.x);
+        pos.y = (position.y);
         pos.width /= Evilian.PPM;
         pos.height /= Evilian.PPM;
         this.potenza = potenza;
         this.impulso = impulso;
-        this.body = createBody(pos.x, pos.y, 10, 1, "magia", 1, 0, 1);
-        this.body.applyLinearImpulse(impulso, body.getWorldCenter(), true);
-    }
-    
-    
-
-    @Override
-    public Body createBody(float x, float y, float radius, int bodyType, String userData, float density, float restitution, float friction) {
-        return super.createBody(x, y, radius, bodyType, userData, density, restitution, friction); //To change body of generated methods, choose Tools | Templates.
+        
+        pos.x+=impulso.x/5;
+        pos.y+=impulso.y/5;
+        
+        System.out.println("sto spawnando il cerchio in "+pos);
+        this.body = createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)32);
+        
+        body.applyLinearImpulse(impulso.scl(1/10f),new Vector2(pos.x,pos.y),true);
+        
+        this.anim=moving;
     }
     
 
     @Override
     public void update(float delta) 
     {
-        animationTime += delta;
+        //animationTime += delta;
         //dare impulso con parametro tmp
-        pos.x = this.body.getPosition().x - pos.width / 2;
-        pos.y = this.body.getPosition().y - pos.height / 2;
-        
+        pos.x = this.body.getPosition().x - (pos.width / 2);
+        pos.y = this.body.getPosition().y - (pos.height / 2);
+        //System.out.println(pos);
+        //System.out.println(body.getWorldCenter());
     }
 
     @Override

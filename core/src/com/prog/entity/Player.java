@@ -27,7 +27,7 @@ public class Player extends Entity{
         this.pos=new Rectangle(50,100,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
         this.lcl=lcl;
-        this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f);
+        this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32));
         //imposto width e height al valore corretto
         this.pos.width=this.pos.width/Evilian.PPM;
         this.pos.height=this.pos.height/Evilian.PPM;
@@ -46,6 +46,9 @@ public class Player extends Entity{
         //NOTA: getPosition di body mi ritorna il centro del corpo
         pos.x=(body.getPosition().x)-(pos.width/2);
         pos.y=(body.getPosition().y)-(pos.height/2);
+        
+        for(Magia m:spellList)
+            m.update(delta);
     }
 
     @Override
@@ -55,8 +58,8 @@ public class Player extends Entity{
         //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
         if(Gdx.input.justTouched())
         {
-            spellList.add(new Magia(this.body.getPosition(), 3, lanciaMagia()));
             
+            spellList.add(new Magia(this.body.getWorldCenter(), 3, lanciaMagia()));
         }
         
         // apply left impulse, but only if max velocity is not reached yet
@@ -87,17 +90,18 @@ public class Player extends Entity{
     
     public Vector2 lanciaMagia()
     {
-        Vector3 pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
-        Vector2 m = new Vector2(pos.x, pos.y);
-        Vector2 pg = new Vector2(this.pos.x, this.pos.y);
+        Vector3 mouse_pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
+        System.out.println("mouse unproject:"+mouse_pos);
+        Vector2 m = new Vector2(mouse_pos.x, mouse_pos.y);
+        Vector2 pg = new Vector2(body.getWorldCenter());
+        System.out.println("player:"+pg);
         Vector2 tmp = m.cpy();
         tmp.sub(pg);
-        //tmp = vettore distanza personaggio - mouse normalizzato
+        System.out.println("vettore distanza:"+tmp);
+        //tmp = (mouse - player) normalizzato
         tmp.nor();
+        System.out.println("vettore normalizzato:"+tmp);
         return tmp;
-        
-        
-        
     }
 
     @Override
