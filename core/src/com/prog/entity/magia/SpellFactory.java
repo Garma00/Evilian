@@ -37,8 +37,8 @@ public class SpellFactory{
     };
 
     //chaimala quando vuoi creare una spell
-    public Magia createSpell(SpellType monsterType){
-       switch(monsterType){
+    public Magia createSpell(SpellType spell){
+       switch(spell){
          case PALLADIFUOCO:
             return fireballPool.obtain();
          case PALLADIGHIACCIO:

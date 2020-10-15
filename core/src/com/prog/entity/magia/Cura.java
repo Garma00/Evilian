@@ -37,6 +37,7 @@ public class Cura extends Magia{
 
     @Override
     public void update(float delta) {
+        animationTime+=delta;
         time=TimeUtils.millis();
         
         if(time-lastLaunch>durata)
