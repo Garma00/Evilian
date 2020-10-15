@@ -8,11 +8,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.magia.Magia;
-import com.prog.entity.magia.PallaDiFuoco;
+import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
@@ -23,7 +22,7 @@ public class Player extends Entity{
     LevelContactListener lcl;
     Mouse mouse;
     Array<Magia> activeSpells;
-    Pool<Magia> spellPool;
+    SpellFactory spellFactory;
     int spellSelector;
     long time;
     long[] lastLaunch;
@@ -43,19 +42,8 @@ public class Player extends Entity{
         this.flipY=false;
         this.mouse = mouse;
         activeSpells = new Array<Magia>();
-        spellPool=new Pool<Magia>() {
-            @Override
-            protected Magia newObject() {
-                switch(spellSelector)
-                {
-                    case 0:
-                        return new PallaDiFuoco();
-                    default:
-                        return null;
-                }
-            }
-        };
         
+        spellFactory=new SpellFactory();
         spellSelector=0;
         lastLaunch=new long[4];
         time=TimeUtils.millis();
@@ -79,7 +67,7 @@ public class Player extends Entity{
             if(!item.alive)
             {
                 activeSpells.removeIndex(i);
-                spellPool.free(item);
+                spellFactory.destroySpell(item);
             }
         }
     }
@@ -172,15 +160,30 @@ public class Player extends Entity{
     }
 
     private void spellSelect(Vector2 res) {
+        Magia m = null;
+        
+        switch(spellSelector)
+        {
+            case 0:
+                m=spellFactory.createSpell(SpellFactory.SpellType.PALLADIFUOCO);
+                break;
+            case 1:
+                m=spellFactory.createSpell(SpellFactory.SpellType.PALLADIGHIACCIO);
+                break;
+            case 2:
+                m=spellFactory.createSpell(SpellFactory.SpellType.CURA);
+                break;
+            case 3:
+                m=spellFactory.createSpell(SpellFactory.SpellType.METEORA);
+                break;
+        }
 
-        Magia m=spellPool.obtain();
-
-        m.init(this.body.getWorldCenter(), 1/10f, res);
+        m.init(this.body.getWorldCenter(), res);
         if(time-lastLaunch[spellSelector]>m.COOLDOWN)
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
         }else
-            spellPool.free(m);
+            spellFactory.destroySpell(m);
     }
 }

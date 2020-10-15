@@ -17,7 +17,7 @@ public class PallaDiFuoco extends Magia{
     }
     
     @Override
-    public void init(Vector2 position, float potenza, Vector2 impulso)
+    public void init(Vector2 position, Vector2 impulso)
     {
         COOLDOWN=1000;
         //position e' la posizione del personaggio in metri da convertire in pixel
@@ -27,7 +27,7 @@ public class PallaDiFuoco extends Magia{
         pos.width /= Evilian.PPM;
         pos.height /= Evilian.PPM;
         this.impulso = impulso;
-        this.potenza=potenza;
+        this.potenza=0.1f;
         
         System.out.println("sto spawnando il cerchio in "+pos);
         this.body = createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)32);
