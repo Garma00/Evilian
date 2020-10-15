@@ -54,7 +54,8 @@ public abstract class Magia extends Entity implements Poolable{
         alive=true;
         //da rivedere in futuro
         if(!world.isLocked())
-            world.destroyBody(this.body);
+            if(body != null)
+                world.destroyBody(this.body);
         lastLaunch=0;
         time=0;
     }
