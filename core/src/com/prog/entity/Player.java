@@ -26,7 +26,7 @@ public class Player extends Entity{
     Pool<Magia> spellPool;
     int spellSelector;
     long time;
-    long lastLaunch;
+    long[] lastLaunch;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {
@@ -57,7 +57,7 @@ public class Player extends Entity{
         };
         
         spellSelector=0;
-        lastLaunch=0;
+        lastLaunch=new long[4];
         time=TimeUtils.millis();
     }
 
@@ -91,31 +91,14 @@ public class Player extends Entity{
         //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
         if(Gdx.input.justTouched())
         {
-            //da mettere dentro una funzione
-            if(spellSelector==0)
-            {
-                Magia m=spellPool.obtain();
-                Vector2 res=lanciaMagia();
-                m.init(this.body.getWorldCenter(), 1/10f, res);
-                if(time-lastLaunch>m.COOLDOWN)
-                {
-                    activeSpells.add(m);
-                    lastLaunch=time;
-                }else
-                    spellPool.free(m);
-                
-                //rimozione magie morte
-                System.out.println(spellPool.getFree());
-                
-                
-                //logica player dopo il lancio
-                if(res.x < 0)
-                    flipX=true;
-                else
-                    flipX=false;
-            }
-            
-            
+            Vector2 res=lanciaMagia();
+            spellSelect(res);
+
+            //logica player dopo il lancio
+            if(res.x < 0)
+                flipX=true;
+            else
+                flipX=false;
         }
         
         // apply left impulse, but only if max velocity is not reached yet
@@ -187,5 +170,17 @@ public class Player extends Entity{
     @Override
     public void dispose() {
     }
-    
+
+    private void spellSelect(Vector2 res) {
+
+        Magia m=spellPool.obtain();
+
+        m.init(this.body.getWorldCenter(), 1/10f, res);
+        if(time-lastLaunch[spellSelector]>m.COOLDOWN)
+        {
+            activeSpells.add(m);
+            lastLaunch[spellSelector]=time;
+        }else
+            spellPool.free(m);
+    }
 }

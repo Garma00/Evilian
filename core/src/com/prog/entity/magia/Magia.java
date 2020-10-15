@@ -19,6 +19,7 @@ public abstract class Magia extends Entity implements Poolable{
     public long COOLDOWN;
     public boolean alive;
     long time;
+    //lastlaunch dentro la magia e' solo per i buff
     public long lastLaunch;
     
     public abstract void init(Vector2 position, float potenza, Vector2 impulso);

@@ -14,13 +14,12 @@ public class PallaDiFuoco extends Magia{
     
     public PallaDiFuoco()
     {
-        anim=moving;
     }
     
     @Override
     public void init(Vector2 position, float potenza, Vector2 impulso)
     {
-        COOLDOWN=300;
+        COOLDOWN=1000;
         //position e' la posizione del personaggio in metri da convertire in pixel
         pos = new Rectangle(0, 0, 47, 20);
         pos.x =(position.x);
@@ -37,6 +36,7 @@ public class PallaDiFuoco extends Magia{
         
         this.anim=moving;
         time=TimeUtils.millis();
+        //solo per i buff
         lastLaunch=time;
         alive=true;
     }
@@ -62,11 +62,6 @@ public class PallaDiFuoco extends Magia{
             float rad =(float)Math.atan2(vel.y, vel.x);
             //conversione radianti-angolo
             angle=(float) (rad*(180/Math.PI));
-            
-            //da sostituire con collisione di qualcosa
-            
-            //end
-            
         }
     }
     
