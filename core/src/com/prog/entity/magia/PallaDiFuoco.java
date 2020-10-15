@@ -19,7 +19,7 @@ public class PallaDiFuoco extends Magia{
     @Override
     public void init(Vector2 position, Vector2 impulso)
     {
-        COOLDOWN=1000;
+        COOLDOWN=300;
         //position e' la posizione del personaggio in metri da convertire in pixel
         pos = new Rectangle(0, 0, 47, 20);
         pos.x =(position.x);
