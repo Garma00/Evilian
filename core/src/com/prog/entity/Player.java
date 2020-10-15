@@ -2,15 +2,17 @@ package com.prog.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.magia.Magia;
+import com.prog.entity.magia.PallaDiFuoco;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
@@ -20,7 +22,11 @@ public class Player extends Entity{
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("knight_m_run_anim"),Animation.PlayMode.LOOP);
     LevelContactListener lcl;
     Mouse mouse;
-    Array<Magia> spellList;
+    Array<Magia> activeSpells;
+    Pool<Magia> spellPool;
+    int spellSelector;
+    long time;
+    long[] lastLaunch;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {
@@ -36,19 +42,46 @@ public class Player extends Entity{
         this.flipX=false;
         this.flipY=false;
         this.mouse = mouse;
-        spellList = new Array<Magia>();
+        activeSpells = new Array<Magia>();
+        spellPool=new Pool<Magia>() {
+            @Override
+            protected Magia newObject() {
+                switch(spellSelector)
+                {
+                    case 0:
+                        return new PallaDiFuoco();
+                    default:
+                        return null;
+                }
+            }
+        };
         
+        spellSelector=0;
+        lastLaunch=new long[4];
+        time=TimeUtils.millis();
     }
 
     @Override
     public void update(float delta) {
+        time=TimeUtils.millis();
         animationTime+=delta;
         //NOTA: getPosition di body mi ritorna il centro del corpo
         pos.x=(body.getPosition().x)-(pos.width/2);
         pos.y=(body.getPosition().y)-(pos.height/2);
         
-        for(Magia m:spellList)
+        for(Magia m:activeSpells)
             m.update(delta);
+        
+        
+        for(int i=0;i<activeSpells.size;i++)
+        {
+            Magia item=activeSpells.get(i);
+            if(!item.alive)
+            {
+                activeSpells.removeIndex(i);
+                spellPool.free(item);
+            }
+        }
     }
 
     @Override
@@ -59,7 +92,9 @@ public class Player extends Entity{
         if(Gdx.input.justTouched())
         {
             Vector2 res=lanciaMagia();
-            spellList.add(new Magia(this.body.getWorldCenter(), 1/10f, res));
+            spellSelect(res);
+
+            //logica player dopo il lancio
             if(res.x < 0)
                 flipX=true;
             else
@@ -90,6 +125,11 @@ public class Player extends Entity{
         }
         
         this.body.setLinearVelocity(forza,this.body.getLinearVelocity().y);
+        
+        if(Gdx.input.isKeyJustPressed(Keys.Z))
+        {
+            spellSelector=(spellSelector+1)%4;
+        }
     }
     
     public Vector2 lanciaMagia()
@@ -123,12 +163,24 @@ public class Player extends Entity{
     
     public void draw_fireball()
     {
-        for(Magia m:spellList)
+        for(Magia m:activeSpells)
             m.draw();
     }
 
     @Override
     public void dispose() {
     }
-    
+
+    private void spellSelect(Vector2 res) {
+
+        Magia m=spellPool.obtain();
+
+        m.init(this.body.getWorldCenter(), 1/10f, res);
+        if(time-lastLaunch[spellSelector]>m.COOLDOWN)
+        {
+            activeSpells.add(m);
+            lastLaunch[spellSelector]=time;
+        }else
+            spellPool.free(m);
+    }
 }
