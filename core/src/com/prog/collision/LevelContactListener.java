@@ -7,12 +7,13 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 
 public class LevelContactListener implements ContactListener{
     //true se faccio spawnare il player in aria, false se lo faccio spawnare a terra
-    public boolean inAir;
+    public boolean inAir = true;
     
     @Override
     public void beginContact(Contact c) {
         if(c.getFixtureA().getUserData() == "player_foot" || c.getFixtureB().getUserData() == "player_foot")
         {
+            System.out.println("Contatto con la terra");
             inAir=false;
         }
     }
@@ -21,6 +22,7 @@ public class LevelContactListener implements ContactListener{
     public void endContact(Contact c) {
         if(c.getFixtureA().getUserData() == "player_foot" || c.getFixtureB().getUserData() == "player_foot")
         {
+            System.out.println("Fine contatto con la terra");
             inAir=true;
         }
     }

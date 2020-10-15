@@ -99,8 +99,8 @@ public class Livello1 extends Livello implements Screen{
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //prima renderizzo la mappa e poi il player o altre cose
-        //mapRenderer.setView(cam);
-        //mapRenderer.render();
+        mapRenderer.setView(cam);
+        mapRenderer.render();
         //guardo entities e renderizzo cose
         batch.begin();
         for(Entity e:entities)

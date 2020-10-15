@@ -26,6 +26,7 @@ public class Player extends Entity{
     int spellSelector;
     long time;
     long[] lastLaunch;
+    public float hp, hpMax;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {
@@ -37,16 +38,18 @@ public class Player extends Entity{
         this.pos.width=this.pos.width/Evilian.PPM;
         this.pos.height=this.pos.height/Evilian.PPM;
         //attacco una fixture di tipo sensor come piede
-        attachFixture(body,new Vector2(0,-0.15f), true, 14f, 5f, "player_foot", 0, 0, 0);
+        attachFixture(body,new Vector2(0,-0.15f), true, 12f, 5f, "player_foot", 0, 0, 0);
         this.flipX=false;
         this.flipY=false;
         this.mouse = mouse;
         activeSpells = new Array<Magia>();
         
-        spellFactory=new SpellFactory();
+        spellFactory=new SpellFactory(this);
         spellSelector=0;
         lastLaunch=new long[4];
         time=TimeUtils.millis();
+        this.hp = 0.1f;
+        this.hpMax = 1.0f;
     }
 
     @Override
@@ -76,6 +79,10 @@ public class Player extends Entity{
     public void handleInput() {
         float forza=0;
 
+        //setto la vita a 0.1
+        if(Gdx.input.isKeyJustPressed(Keys.X))
+            hp = 0.1f;
+        
         //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
         if(Gdx.input.justTouched())
         {
@@ -174,10 +181,12 @@ public class Player extends Entity{
                 m=spellFactory.createSpell(SpellFactory.SpellType.CURA);
                 break;
             case 3:
+                res = lanciaMeteora();
                 m=spellFactory.createSpell(SpellFactory.SpellType.METEORA);
                 break;
         }
 
+        
         m.init(this.body.getWorldCenter(), res);
         if(time-lastLaunch[spellSelector]>m.COOLDOWN)
         {
@@ -185,5 +194,11 @@ public class Player extends Entity{
             lastLaunch[spellSelector]=time;
         }else
             spellFactory.destroySpell(m);
+    }
+    
+    public Vector2 lanciaMeteora()
+    {
+        Vector3 pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
+        return new Vector2(pos.x, pos.y + 3f);
     }
 }

@@ -1,9 +1,11 @@
 package com.prog.entity.magia;
 
 import com.badlogic.gdx.utils.Pool;
+import com.prog.entity.Player;
 
 
 public class SpellFactory{
+    Player pg;
     public enum SpellType {
       PALLADIFUOCO,
       PALLADIGHIACCIO,
@@ -11,6 +13,10 @@ public class SpellFactory{
       METEORA
     };
 
+    public SpellFactory(Player pg)
+    {
+        this.pg = pg;
+    }
     private final Pool<PallaDiFuoco> fireballPool = new Pool<PallaDiFuoco>() {
         @Override
         protected PallaDiFuoco newObject() {
@@ -26,7 +32,7 @@ public class SpellFactory{
     private final Pool<Cura> healPool = new Pool<Cura>() {
         @Override
         protected Cura newObject() {
-            return new Cura();
+            return new Cura(pg);
         }
     };
     private final Pool<Meteora> meteorPool = new Pool<Meteora>() {
