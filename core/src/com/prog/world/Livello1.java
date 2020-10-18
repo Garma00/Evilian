@@ -44,7 +44,7 @@ public class Livello1 extends Livello implements Screen{
         
         //test UI
         tex=new Texture("images/ui/bg.png");
-        tex2=new Texture("images/ui/fireball_1.png");
+        tex2=new Texture("images/ui/fireball_2.png");
         
         //cam.translate(0f,-1f);
         level_ui.add(new UIElement(0,0,800,75,"images/ui/bg.png"),UI.ElementType.BACKGROUND);
