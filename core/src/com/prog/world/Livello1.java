@@ -3,6 +3,7 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
@@ -15,9 +16,13 @@ public class Livello1 extends Livello implements Screen{
     float delta;
     LevelContactListener lcl;
     
-    public Livello1(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight, Evilian game)
+    //test UI
+    Texture tex;
+    Texture tex2;
+    
+    public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
     {
-        super(gravity, Sleep, path, cameraWidth, cameraHeight,game);
+        super(gravity, Sleep, path, cameraWidth, cameraHeight,uiWidth,uiHeight,game);
         lcl=new LevelContactListener();
         world.setContactListener(lcl);
 
@@ -36,9 +41,14 @@ public class Livello1 extends Livello implements Screen{
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
-        mvfx.removeAllEffects();
-        mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
-        mvfx.enableBlend(true);
+        
+        //test UI
+        tex=new Texture("images/ui/bg.png");
+        tex2=new Texture("images/ui/fireball_1.png");
+        
+        //cam.translate(0f,-1f);
+        level_ui.add(new UIElement(0,0,800,75,"images/ui/bg.png"),UI.ElementType.BACKGROUND);
+        level_ui.add(new UIElement(0,0,64,64,"images/ui/fireball_2.png"),UI.ElementType.FOREGROUND);
     }
 
     @Override
@@ -48,8 +58,9 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void render(float f) {
         
-        cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.7f),0f);
+        cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
+        level_ui.update();
         batch.setProjectionMatrix(cam.combined);
         
         //handleinput entita'
@@ -66,14 +77,16 @@ public class Livello1 extends Livello implements Screen{
         
         //draw
         draw();
+        level_ui.draw();
         
         world.step(1/60f,6,2);
     }
 
     @Override
     public void resize(int width, int height) {
-        camvp.update(width,height);
+        System.out.println(width+"\t"+height);
         mvfx.resize(width, height);
+        level_ui.resize(width, (int)(height-cam.viewportHeight));
     }
 
     @Override
@@ -98,6 +111,7 @@ public class Livello1 extends Livello implements Screen{
     {   
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glViewport(0,75,800, 525);
         //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
         mapRenderer.render();
@@ -105,7 +119,7 @@ public class Livello1 extends Livello implements Screen{
         batch.begin();
         for(Entity e:entities)
             e.draw();
-        batch.end();        
+        batch.end();
         debug.render(world, cam.combined);
     }
 
