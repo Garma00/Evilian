@@ -84,9 +84,8 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        System.out.println(width+"\t"+height);
+        //da sistemare il discorso del resize(molto confusionario con le viewport)
         mvfx.resize(width, height);
-        level_ui.resize(width, (int)(height-cam.viewportHeight));
     }
 
     @Override

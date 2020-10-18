@@ -57,7 +57,8 @@ public class UI
     
     public void resize(int width,int height)
     {
-        camvp.update(width, height);
+        //da sistemare il resize
+        camvp.update(width,height);
     }
     
     public void add(UIElement e,ElementType type)
