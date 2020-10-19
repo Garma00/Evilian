@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.prog.world.MainMenu;
 import com.prog.world.ManagerMusic;
+import com.prog.world.ManagerSound;
 
 public class Evilian extends Game 
 {
@@ -13,7 +14,7 @@ public class Evilian extends Game
         public final int SCREEN_HEIGHT=600;
         public static final float PPM=100f;
         public static ManagerMusic MANAGER_MUSIC;
-
+        public static ManagerSound MANAGER_SOUND;
         
     
 	@Override
@@ -22,6 +23,7 @@ public class Evilian extends Game
             batch=new SpriteBatch();
             //da cambiare livello1 con il menu'
             MANAGER_MUSIC = new ManagerMusic();
+            MANAGER_SOUND = new ManagerSound();
             this.setScreen(new MainMenu(SCREEN_WIDTH,SCREEN_HEIGHT,this));
            
 

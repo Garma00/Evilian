@@ -15,6 +15,8 @@ import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
+import static com.prog.evilian.Evilian.MANAGER_SOUND;
+
 
 public class Player extends Entity{
     private final static Animation<TextureAtlas.AtlasRegion> stand=new Animation<>(1/7f,atlas.findRegions("knight_m_idle_anim"),Animation.PlayMode.LOOP);
@@ -23,7 +25,7 @@ public class Player extends Entity{
     Mouse mouse;
     Array<Magia> activeSpells;
     SpellFactory spellFactory;
-    int spellSelector;
+    int spellSelector, sound;//sound è l'indice per selezionare l'effetto sonoro corretto
     long time;
     long[] lastLaunch;
     public static float hp, hpMax;
@@ -50,6 +52,7 @@ public class Player extends Entity{
         time=TimeUtils.millis();
         this.hp = 0.1f;
         this.hpMax = 1.0f;
+        this.sound = 0;
     }
 
     @Override
@@ -124,6 +127,7 @@ public class Player extends Entity{
         if(Gdx.input.isKeyJustPressed(Keys.Z))
         {
             spellSelector=(spellSelector+1)%4;
+            sound = spellSelector;//l'indice sound corrisponde sempre al valore di Z
         }
     }
     
@@ -159,7 +163,12 @@ public class Player extends Entity{
     public void draw_fireball()
     {
         for(Magia m:activeSpells)
+        {
             m.draw();
+            
+            
+        }
+            
     }
 
     @Override
@@ -192,6 +201,7 @@ public class Player extends Entity{
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
+            MANAGER_SOUND.selectSound(sound);
         }else
             spellFactory.destroySpell(m);
     }

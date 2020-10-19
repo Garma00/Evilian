@@ -1,5 +1,6 @@
 package com.prog.entity.magia;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,14 +15,14 @@ public abstract class Magia extends Entity implements Poolable{
     
     float potenza;
     Vector2 impulso;
-    Rectangle pos;
+    //pos lo rendo publico per richiamarlo nel momento in cui voglio verificare la posizione della skill 
+    public Rectangle pos;
     float angle;
     public long COOLDOWN;
     public boolean alive;
     long time;
     //lastlaunch dentro la magia e' solo per i buff
     public long lastLaunch;
-    
     public abstract void init(Vector2 position, Vector2 impulso);
     
 
@@ -47,6 +48,7 @@ public abstract class Magia extends Entity implements Poolable{
 
     @Override
     public void dispose() {
+        
     }
 
     @Override

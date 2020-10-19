@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.world.ManagerMusic;
 import static com.prog.world.ManagerScreen.index;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+import static com.prog.evilian.Evilian.MANAGER_SOUND;
 
 
 
@@ -106,7 +107,62 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
-       /*da fixare  
+        
+        if(c.getFixtureB().getUserData() == "mouse")
+        {
+            if(c.getFixtureA().getUserData() == "sound")
+            {
+                System.out.println("sound");
+                //collided = true;
+                
+                if(MANAGER_SOUND.soundOn)
+                {
+                    System.out.println("Suoni disattivati");
+                    MANAGER_SOUND.soundOn = false;
+                    MANAGER_SOUND.update();
+                }
+                    
+                    
+                else
+                {
+                    MANAGER_SOUND.soundOn = true;
+                    System.out.println("Suoni attivi");
+                    MANAGER_SOUND.update();
+                    
+                }
+            }
+                
+        }
+        
+        if(c.getFixtureA().getUserData() == "mouse")
+        {
+            if(c.getFixtureB().getUserData() == "sound")
+            {
+                System.out.println("sound");
+                //collided = true;
+                
+                if(MANAGER_SOUND.soundOn)
+                {
+                    System.out.println("Suoni disattivati");
+                    MANAGER_SOUND.soundOn = false;
+                    MANAGER_SOUND.update();
+
+                }
+                
+                else
+                {
+                    MANAGER_SOUND.soundOn = true;
+                    System.out.println("Suoni attivi");
+                    MANAGER_SOUND.update();
+                }
+            }
+                
+        }
+        
+        
+        
+        
+        /*da fixare  
         if(c.getFixtureA().getUserData() == "mouse")
             c.getFixtureA().getBody().setTransform(-100, -100, 0);
         
