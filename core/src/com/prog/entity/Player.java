@@ -26,7 +26,7 @@ public class Player extends Entity{
     int spellSelector;
     long time;
     long[] lastLaunch;
-    public float hp, hpMax;
+    public static float hp, hpMax;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {

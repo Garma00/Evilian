@@ -47,8 +47,12 @@ public class Livello1 extends Livello implements Screen{
         tex2=new Texture("images/ui/fireball_2.png");
         
         //cam.translate(0f,-1f);
-        level_ui.add(new UIElement(0,0,800,75,"images/ui/bg.png"),UI.ElementType.BACKGROUND);
-        level_ui.add(new UIElement(0,0,64,64,"images/ui/fireball_2.png"),UI.ElementType.FOREGROUND);
+        //NOTA: METTI GLI ELEMENTI IN ORDINE
+        level_ui.add(0,0,800,75,"images/ui/bg.png",UI.ElementType.BACKGROUND);
+        level_ui.add(300,15,40,40,"images/ui/fireball_2.png",UI.ElementType.FOREGROUND);
+        level_ui.add(56,31,50*3,4*3,"images/ui/health_only.png", UI.ElementType.HEALTH_BAR);
+        level_ui.add(56,31,50*3,1*3,"images/ui/health_only_shade.png", UI.ElementType.HEALTH_SHADE);
+        level_ui.add(20,25,64*3,8*3,"images/ui/health_bar_empty.png",UI.ElementType.FOREGROUND);
     }
 
     @Override

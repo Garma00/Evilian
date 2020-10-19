@@ -13,7 +13,9 @@ public class UI
     public enum ElementType
     {
         BACKGROUND,
-        FOREGROUND
+        FOREGROUND,
+        HEALTH_BAR,
+        HEALTH_SHADE
     };
     
     private OrthographicCamera cam;
@@ -53,6 +55,8 @@ public class UI
     public void update()
     {
         cam.update();
+        for(UIElement e:fgElements)
+                e.update();
     }
     
     public void resize(int width,int height)
@@ -61,8 +65,9 @@ public class UI
         camvp.update(width,height);
     }
     
-    public void add(UIElement e,ElementType type)
+    public void add(float x,float y, float width,float height, String path,ElementType type)
     {
+        UIElement e=new UIElement(x,y,width,height,path,type);
         switch(type)
         {
             case BACKGROUND:
@@ -71,8 +76,15 @@ public class UI
             case FOREGROUND:
                 fgElements.add(e);
                 break;
+            case HEALTH_BAR:
+                fgElements.add(e);
+                break;
+            case HEALTH_SHADE:
+                fgElements.add(e);
+                break;
             default:
-                System.out.println("UI.java ---> tipo di elemento non riconosciuto");
+                e.dispose();
+                e=null;
         }
     }
 }
