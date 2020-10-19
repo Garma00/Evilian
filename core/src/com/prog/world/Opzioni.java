@@ -12,6 +12,8 @@ import static com.prog.evilian.Evilian.MANAGER_MUSIC;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.world;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
+import static com.prog.evilian.Evilian.MANAGER_SOUND;
+
 
 public class Opzioni extends Livello implements Screen {
 
@@ -25,15 +27,18 @@ public class Opzioni extends Livello implements Screen {
         bg = new Texture("images/menu.png");
         world.setContactListener(c);
         
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2, 150, 50, "riprendi", "images/riprendi.png", false));
-        Button b=new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 4, 150, 50, "musica", "images/musica.png", true);
+        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT -75, 150, 50, "riprendi", "images/riprendi.png", false));
+        Button b=new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT -150, 150, 50, "musica", "images/musica.png", true);
         entities.add(b);
         MANAGER_MUSIC.addMusicButton(b);
         entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "images/indietro.png", false));
-        
+        Button button = new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT -225, 150, 50, "sound", "images/sound.png", true);
+        entities.add(button);
+        MANAGER_SOUND.addSoundButton(button);
         mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
         mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
+        MANAGER_SOUND.update();
     }
     
     
