@@ -24,7 +24,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
@@ -45,10 +47,11 @@ public class Livello {
     public static TextureAtlas atlas;
     public Mouse mouse;
     public static final ManagerVfx mvfx=new ManagerVfx();
+    public UI level_ui;
     
     
     
-    public Livello(float gravity, boolean Sleep, String path, int cameraWidth, int cameraHeight,Evilian game)
+    public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game)
     {
         
         //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
@@ -67,8 +70,11 @@ public class Livello {
         cam=new OrthographicCamera();
         
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
+        
         //inizializzo la viewport come fit (non importa la grandezza della finestra, vedremo sempre la stessa regione(con barre nere se neceessarie ai lati))
-        camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        camvp=new ExtendViewport(cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM,cam);
+        level_ui=new UI(uiWidth,uiHeight);
+        
         atlas=new TextureAtlas("atlas/game.atlas");
         
         mouse = new Mouse(cam);

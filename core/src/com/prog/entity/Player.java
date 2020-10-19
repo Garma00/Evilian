@@ -28,7 +28,7 @@ public class Player extends Entity{
     int spellSelector, sound;//sound è l'indice per selezionare l'effetto sonoro corretto
     long time;
     long[] lastLaunch;
-    public float hp, hpMax;
+    public static float hp, hpMax;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {
