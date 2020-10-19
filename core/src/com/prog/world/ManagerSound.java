@@ -2,6 +2,7 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Button;
 
 public class ManagerSound 
@@ -26,11 +27,9 @@ public class ManagerSound
                 if(soundOn)
                 {
                     effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/fireball.mp3"));
+                    System.out.println(effetto.isPlaying());
                     effetto.setVolume(0.7f);
                     effetto.play();
-
-                    if(!effetto.isPlaying())
-                        effetto.dispose();
 
                     break;
 
@@ -40,12 +39,10 @@ public class ManagerSound
                  
                 if(soundOn)
                 {
+                    
                     effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/iceball.mp3"));
                     effetto.setVolume(0.7f);
                     effetto.play();
-
-                    if(!effetto.isPlaying())
-                        effetto.dispose();
 
                     break;
 
@@ -55,12 +52,12 @@ public class ManagerSound
                 
                 if(soundOn)
                 {
+                    
                     effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/heal.mp3"));
                     effetto.setVolume(0.7f);
                     effetto.play();
 
-                    if(!effetto.isPlaying())
-                        effetto.dispose();
+                    
 
                     break;
                 }
@@ -69,12 +66,10 @@ public class ManagerSound
                 
                 if(soundOn)
                 {
+                    
                     effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/meteora.mp3"));
                     effetto.setVolume(0.7f);
                     effetto.play();
-
-                    if(!effetto.isPlaying())
-                        effetto.dispose();
 
                     break;
 
@@ -118,4 +113,5 @@ public class ManagerSound
         button.isActive = soundOn;
     }
     
+
 }

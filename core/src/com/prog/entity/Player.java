@@ -15,7 +15,7 @@ import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
-import com.prog.world.ManagerSound;
+import static com.prog.evilian.Evilian.MANAGER_SOUND;
 
 
 public class Player extends Entity{
@@ -29,7 +29,6 @@ public class Player extends Entity{
     long time;
     long[] lastLaunch;
     public float hp, hpMax;
-    private ManagerSound effetto;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {
@@ -54,7 +53,6 @@ public class Player extends Entity{
         this.hp = 0.1f;
         this.hpMax = 1.0f;
         this.sound = 0;
-        effetto = new ManagerSound();
     }
 
     @Override
@@ -165,7 +163,12 @@ public class Player extends Entity{
     public void draw_fireball()
     {
         for(Magia m:activeSpells)
+        {
             m.draw();
+            
+            
+        }
+            
     }
 
     @Override
@@ -198,7 +201,7 @@ public class Player extends Entity{
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
-            effetto.selectSound(sound);
+            MANAGER_SOUND.selectSound(sound);
         }else
             spellFactory.destroySpell(m);
     }
