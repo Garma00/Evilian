@@ -32,22 +32,16 @@ public class PallaDiFuoco extends Magia{
         this.potenza=0.1f;
         
         System.out.println("sto spawnando il cerchio in "+pos);
-        this.body = createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)32);
+        this.body = createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)(32|8));
         
         body.applyLinearImpulse(impulso.scl(potenza),new Vector2(pos.x,pos.y),true);
         
         this.anim=moving;
-        time=TimeUtils.millis();
-        //solo per i buff
-        lastLaunch=time;
         alive=true;
     }
 
     @Override
     public void update(float delta) {
-        time=TimeUtils.millis();
-        if(time-lastLaunch>1000)
-            alive=false;
         //System.out.println(alive);
         if(alive)
         {

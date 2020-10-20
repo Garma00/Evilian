@@ -4,6 +4,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.prog.entity.Button;
+import com.prog.entity.Entity;
 import com.prog.world.ManagerMusic;
 import static com.prog.world.ManagerScreen.index;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
@@ -14,13 +16,16 @@ import static com.prog.evilian.Evilian.MANAGER_SOUND;
 public class OpzioniContactListener implements ContactListener{
     public boolean collided = false;
     ManagerMusic m = new ManagerMusic();
+    Entity a,b;
     
 
     @Override
     public void beginContact(Contact c) {
-        if(c.getFixtureA().getUserData() == "mouse")
+        a=(Entity)c.getFixtureA().getUserData();
+        b=(Entity)c.getFixtureB().getUserData();
+        if(a.entity_type == "mouse")
         {
-            if(c.getFixtureB().getUserData() == "riprendi")
+            if(b.entity_type == "riprendi")
             {
                 System.out.println("Riprendi");
                 collided = true;
@@ -29,9 +34,9 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
-        if(c.getFixtureB().getUserData() == "mouse")
+        if(b.entity_type == "mouse")
         {
-            if(c.getFixtureA().getUserData() == "riprendi")
+            if(a.entity_type == "riprendi")
             {
                 System.out.println("Gioca");
                 collided = true;
@@ -40,9 +45,9 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
-        if(c.getFixtureB().getUserData() == "mouse")
+        if(b.entity_type == "mouse")
         {
-            if(c.getFixtureA().getUserData() == "MainMenu")
+            if(a.entity_type == "MainMenu")
             {
                 System.out.println("MainMenu");
                 collided = true;
@@ -51,9 +56,9 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
-        if(c.getFixtureA().getUserData() == "mouse")
+        if(a.entity_type == "mouse")
         {
-            if(c.getFixtureB().getUserData() == "MainMenu")
+            if(b.entity_type == "MainMenu")
             {
                 System.out.println("MainMenu");
                 collided = true;
@@ -63,63 +68,61 @@ public class OpzioniContactListener implements ContactListener{
                 
         }
         //se viene premuto il bottone musica il volume passa da 0 a 0.1 e viceversa
-        if(c.getFixtureA().getUserData() == "mouse")
+        if(a.entity_type == "mouse")
         {
-            if(c.getFixtureB().getUserData() == "musica")
+            if(b.entity_type == "musica")
             {
                 System.out.println("musica");
-                //collided = true;
                 if(MANAGER_MUSIC.getVolume() > 0)
                 {
                     System.out.println("Volume musica 0");
                     MANAGER_MUSIC.setVolume(0f);
-                }
-                    
-                    
+                    ((Button)b).isActive=false;
+                }  
                 else
                 {
                     MANAGER_MUSIC.setVolume(0.5f);
                     System.out.println("Volume musica 0.5");
+                    ((Button)b).isActive=true;
                 }
             }
                 
         }
         
-        if(c.getFixtureB().getUserData() == "mouse")
+        if(b.entity_type == "mouse")
         {
-            if(c.getFixtureA().getUserData() == "musica")
+            if(a.entity_type == "musica")
             {
                 System.out.println("musica");
-                //collided = true;
                 
                 if(MANAGER_MUSIC.getVolume() > 0)
                 {
                     System.out.println("Volume musica 0");
                     MANAGER_MUSIC.setVolume(0f);
-                }
+                    ((Button)a).isActive=false;
                     
-                    
+                }                    
                 else
                 {
                     MANAGER_MUSIC.setVolume(0.5f);
                     System.out.println("Volume musica 0.5");
+                    ((Button)a).isActive=false;
                 }
             }
                 
         }
         
-        if(c.getFixtureB().getUserData() == "mouse")
+        if(b.entity_type == "mouse")
         {
-            if(c.getFixtureA().getUserData() == "sound")
+            if(a.entity_type == "sound")
             {
                 System.out.println("sound");
-                //collided = true;
                 
                 if(MANAGER_SOUND.soundOn)
                 {
                     System.out.println("Suoni disattivati");
                     MANAGER_SOUND.soundOn = false;
-                    MANAGER_SOUND.update();
+                    ((Button)a).isActive=false;
                 }
                     
                     
@@ -127,33 +130,30 @@ public class OpzioniContactListener implements ContactListener{
                 {
                     MANAGER_SOUND.soundOn = true;
                     System.out.println("Suoni attivi");
-                    MANAGER_SOUND.update();
-                    
+                    ((Button)a).isActive=true;
                 }
             }
                 
         }
         
-        if(c.getFixtureA().getUserData() == "mouse")
+        if(a.entity_type == "mouse")
         {
-            if(c.getFixtureB().getUserData() == "sound")
+            if(b.entity_type == "sound")
             {
                 System.out.println("sound");
-                //collided = true;
                 
                 if(MANAGER_SOUND.soundOn)
                 {
                     System.out.println("Suoni disattivati");
                     MANAGER_SOUND.soundOn = false;
-                    MANAGER_SOUND.update();
-
+                    ((Button)b).isActive=false;
                 }
                 
                 else
                 {
                     MANAGER_SOUND.soundOn = true;
                     System.out.println("Suoni attivi");
-                    MANAGER_SOUND.update();
+                    ((Button)b).isActive=true;
                 }
             }
                 

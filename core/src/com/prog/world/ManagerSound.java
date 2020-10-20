@@ -2,8 +2,6 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.utils.Array;
-import com.prog.entity.Button;
 
 public class ManagerSound 
 {
@@ -16,7 +14,6 @@ public class ManagerSound
     
     int sound = -1;
     public Music effetto;
-    private Button button;
     public static boolean soundOn = true;
     
     public void selectSound(int sound)
@@ -84,17 +81,7 @@ public class ManagerSound
     public void setVolume(float v)
     {
         effetto.setVolume(v);
-        if(v == 0f)
-        {
-            button.isActive = false;
-            System.out.println("isActive = false");
-        }
-            
-        else
-        {
-            button.isActive = true;
-            System.out.println("isActive");
-        }
+        
             
     }
     
@@ -102,16 +89,5 @@ public class ManagerSound
     {
         return effetto.getVolume();
     }
-    
-    public void addSoundButton(Button b)
-    {
-        button=b;
-    }
-    
-    public void update()
-    {
-        button.isActive = soundOn;
-    }
-    
 
 }

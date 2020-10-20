@@ -21,6 +21,8 @@ public abstract class Entity {
     public Body body;
     public short CATEGORY_BIT;
     public short MASK_BIT;
+    public String entity_type;
+    public boolean isSensor;
     
     public abstract void update(float delta);
     
@@ -39,6 +41,7 @@ public abstract class Entity {
         BodyDef bdef= new BodyDef();
         CATEGORY_BIT=categoria;
         MASK_BIT=mask;
+        this.entity_type=userData;
         
         switch(bodyType)
         {
@@ -58,7 +61,7 @@ public abstract class Entity {
 
         body=world.createBody(bdef);
         
-        attachFixture(body,new Vector2(0,0),false,width,height,userData,density,restitution,friction);
+        attachFixture(body,new Vector2(0,0),false,userData,width,height,density,restitution,friction);
         
         return body;
     }
@@ -67,6 +70,9 @@ public abstract class Entity {
     public Body createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction,short categoria,short mask)
     {
         BodyDef bdef= new BodyDef();
+        CATEGORY_BIT=categoria;
+        MASK_BIT=mask;
+        this.entity_type=userData;
         
         switch(bodyType)
         {
@@ -91,7 +97,7 @@ public abstract class Entity {
         
     }
     
-    public void attachFixture(Body b,Vector2 relativePos, boolean isSensor, float width, float height, String userData,float density, float restitution, float friction)
+    public void attachFixture(Body b,Vector2 relativePos, boolean isSensor,String userData, float width, float height,float density, float restitution, float friction)
     {
         PolygonShape shape=new PolygonShape();
         // diviso 2 perche' la setasbox parte dal centro
@@ -107,13 +113,16 @@ public abstract class Entity {
         
         fdef.shape=shape;
         
-        b.createFixture(fdef).setUserData(userData);
+        if(isSensor)
+            b.createFixture(fdef).setUserData(userData);
+        else
+            b.createFixture(fdef).setUserData(this);
         
         shape.dispose();
     }
     
     //overloading
-    public void attachFixture(Body b,Vector2 relativePos, boolean isSensor, String userData,float radius, float density, float restitution, float friction)
+    public void attachFixture(Body b,Vector2 relativePos, boolean isSensor,String userData,float radius, float density, float restitution, float friction)
     {
         CircleShape shape=new CircleShape();
         // diviso 2 perche' la setasbox parte dal centro
@@ -130,7 +139,7 @@ public abstract class Entity {
         
         fdef.shape=shape;
         
-        b.createFixture(fdef).setUserData(userData);
+        b.createFixture(fdef).setUserData(this);
         
         shape.dispose();
     }
