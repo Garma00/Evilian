@@ -22,7 +22,6 @@ public abstract class Entity {
     public short CATEGORY_BIT;
     public short MASK_BIT;
     public String entity_type;
-    public boolean isSensor;
     
     public abstract void update(float delta);
     
