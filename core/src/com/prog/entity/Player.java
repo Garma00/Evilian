@@ -23,12 +23,13 @@ public class Player extends Entity{
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("knight_m_run_anim"),Animation.PlayMode.LOOP);
     LevelContactListener lcl;
     Mouse mouse;
-    Array<Magia> activeSpells;
+    public Array<Magia> activeSpells;
     SpellFactory spellFactory;
-    int spellSelector, sound;//sound è l'indice per selezionare l'effetto sonoro corretto
-    long time;
-    long[] lastLaunch;
+    public static int spellSelector, sound;//sound è l'indice per selezionare l'effetto sonoro corretto
+    public static long time;
+    public static long[] lastLaunch;
     public static float hp, hpMax;
+    public static boolean selectorPressed;
     
     public Player(LevelContactListener lcl, Mouse mouse)
     {
@@ -53,6 +54,7 @@ public class Player extends Entity{
         this.hp = 0.1f;
         this.hpMax = 1.0f;
         this.sound = 0;
+        selectorPressed=false;
     }
 
     @Override
@@ -66,7 +68,7 @@ public class Player extends Entity{
         for(Magia m:activeSpells)
             m.update(delta);
         
-        
+         
         for(int i=0;i<activeSpells.size;i++)
         {
             Magia item=activeSpells.get(i);
@@ -127,6 +129,7 @@ public class Player extends Entity{
         if(Gdx.input.isKeyJustPressed(Keys.Z))
         {
             spellSelector=(spellSelector+1)%4;
+            selectorPressed = true;
             sound = spellSelector;//l'indice sound corrisponde sempre al valore di Z
         }
     }

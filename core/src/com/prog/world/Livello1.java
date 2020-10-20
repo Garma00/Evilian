@@ -49,10 +49,34 @@ public class Livello1 extends Livello implements Screen{
         //cam.translate(0f,-1f);
         //NOTA: METTI GLI ELEMENTI IN ORDINE
         level_ui.add(0,0,800,75,"images/ui/bg.png",UI.ElementType.BACKGROUND);
+        //fb
         level_ui.add(300,15,40,40,"images/ui/fireball_2.png",UI.ElementType.FOREGROUND);
+        level_ui.add(301,56,38,4,"images/ui/health_only.png", UI.ElementType.FB_BAR);
+        level_ui.add(300, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        //ib
+        level_ui.add(400, 15, 40, 40, "images/ui/iceball.png", UI.ElementType.FOREGROUND);
+        level_ui.add(401,56,38,4,"images/ui/health_only.png", UI.ElementType.IB_BAR);
+        level_ui.add(400, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        //heal
+        level_ui.add(500, 15, 40, 40, "images/ui/heal.png", UI.ElementType.FOREGROUND);
+        level_ui.add(501,56,38,4,"images/ui/health_only.png", UI.ElementType.H_BAR);
+        level_ui.add(500, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        
+        //meteor
+        level_ui.add(600, 15, 40, 40, "images/ui/meteor.png", UI.ElementType.FOREGROUND);
+        level_ui.add(601,56,38,4,"images/ui/health_only.png", UI.ElementType.M_BAR);
+        level_ui.add(600, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        //health
         level_ui.add(56,31,50*3,4*3,"images/ui/health_only.png", UI.ElementType.HEALTH_BAR);
         level_ui.add(56,31,50*3,1*3,"images/ui/health_only_shade.png", UI.ElementType.HEALTH_SHADE);
         level_ui.add(20,25,64*3,8*3,"images/ui/health_bar_empty.png",UI.ElementType.FOREGROUND);
+        
+        //selector
+        level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
     }
 
     @Override

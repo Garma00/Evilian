@@ -13,7 +13,7 @@ public class Cura extends Magia{
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,atlas.findRegions("heal"),Animation.PlayMode.LOOP_PINGPONG);
     long durata;
     Player pg;
-
+    public static long UI_CD;
 
     public Cura(Player pg)
     {
@@ -23,6 +23,7 @@ public class Cura extends Magia{
     @Override
     public void init(Vector2 position,Vector2 impulso) {
         COOLDOWN=5000;
+        UI_CD=COOLDOWN;
         //position e' la posizione del personaggio in metri da convertire in pixel
         pos = new Rectangle(0, 0, 25, 18);
         pos.x =(position.x) - pos.width/2;

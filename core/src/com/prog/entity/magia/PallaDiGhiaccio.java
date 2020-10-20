@@ -10,13 +10,13 @@ import static com.prog.world.Livello.atlas;
 
 public class PallaDiGhiaccio extends Magia{
     
-        private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,atlas.findRegions("ice_ball"),Animation.PlayMode.LOOP);
-
-
+    private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,atlas.findRegions("ice_ball"),Animation.PlayMode.LOOP);
+    public static long UI_CD;
     @Override
     public void init(Vector2 position, Vector2 impulso)
     {
         COOLDOWN=500;
+        UI_CD=COOLDOWN;
         //position e' la posizione del personaggio in metri da convertire in pixel
         pos = new Rectangle(0, 0, 47, 20);
         pos.x =(position.x);

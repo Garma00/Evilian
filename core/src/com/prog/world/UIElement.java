@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.prog.entity.Player;
+import com.prog.entity.magia.Cura;
+import com.prog.entity.magia.Meteora;
+import com.prog.entity.magia.PallaDiFuoco;
+import com.prog.entity.magia.PallaDiGhiaccio;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.UI.ElementType;
@@ -20,6 +24,8 @@ class UIElement
     public boolean flipY;
     Texture tex;
     ElementType type;
+    float cd;
+    float original_pos;
     
     public UIElement(float x,float y,float width,float height,String path,ElementType type)
     {
@@ -27,6 +33,8 @@ class UIElement
         this.pos=new Rectangle(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
         this.type=type;
+        cd=1;
+        this.original_pos=this.pos.x;
     }
     
     public void draw()
@@ -57,6 +65,30 @@ class UIElement
 
                 batch.setColor(Color.WHITE);
                 break;
+            case FB_BAR:
+                batch.setColor(0f,0.43f,1f,1f);
+                cd=map(clamp(Player.time-Player.lastLaunch[0],0,PallaDiFuoco.UI_CD),0,PallaDiFuoco.UI_CD,1,0);
+                batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
+                batch.setColor(Color.WHITE);
+                break;
+            case IB_BAR:
+                batch.setColor(0f,0.43f,1f,1f);
+                cd=map(clamp(Player.time-Player.lastLaunch[1],0,PallaDiGhiaccio.UI_CD),0,PallaDiGhiaccio.UI_CD,1,0);
+                batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
+                batch.setColor(Color.WHITE);
+                break;
+            case H_BAR:
+                batch.setColor(0f,0.43f,1f,1f);
+                cd=map(clamp(Player.time-Player.lastLaunch[2],0,Cura.UI_CD),0,Cura.UI_CD,1,0);
+                batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
+                batch.setColor(Color.WHITE);
+                break;
+            case M_BAR:
+                batch.setColor(0f,0.43f,1f,1f);
+                cd=map(clamp(Player.time-Player.lastLaunch[3],0,Meteora.UI_CD),0,Meteora.UI_CD,1,0);
+                batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
+                batch.setColor(Color.WHITE);
+                break;
             default:
                 //da aggiungere le animazioni, punto di rotazione, flip e quant'altro
                 batch.draw(tex,pos.x,pos.y,pos.width,pos.height);
@@ -66,11 +98,38 @@ class UIElement
 
     public void update() 
     {
-        
+        if(type==ElementType.SELECTOR)
+        {
+            if(Player.selectorPressed)
+            {
+                if(Player.spellSelector == 0)
+                    this.pos.x=original_pos;
+                else
+                    //1m vale 100px
+                    this.pos.x+=1;
+                Player.selectorPressed=false;
+            }
+        }
     }
 
     public void dispose() 
     {
         tex.dispose();
+    }
+    
+    public float map(float value,float istart,float iend,float ostart,float oend)
+    {
+        return ostart + (oend - ostart) * ((value - istart) / (iend - istart));
+    }
+    
+    public float clamp(float v,float min,float max)
+    {
+        if(v<min)
+            v=min;
+        else if(v>max)
+            v=max;
+        
+        return v;
+            
     }
 }
