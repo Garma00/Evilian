@@ -11,12 +11,12 @@ import static com.prog.world.Livello.atlas;
 public class Meteora extends Magia{
     
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,atlas.findRegions("meteor"),Animation.PlayMode.LOOP);
-
-    
+    public static long UI_CD;
     @Override
     public void init(Vector2 position, Vector2 impulso)
     {
-        COOLDOWN=1000;
+        COOLDOWN=10000;
+        UI_CD=COOLDOWN;
         //position e' la posizione del personaggio in metri da convertire in pixel
         pos = new Rectangle(0, 0, 100, 20);
         pos.x = impulso.x;

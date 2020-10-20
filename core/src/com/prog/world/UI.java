@@ -15,7 +15,12 @@ public class UI
         BACKGROUND,
         FOREGROUND,
         HEALTH_BAR,
-        HEALTH_SHADE
+        HEALTH_SHADE,
+        FB_BAR,
+        IB_BAR,
+        H_BAR,
+        M_BAR,
+        SELECTOR
     };
     
     private OrthographicCamera cam;
@@ -80,6 +85,21 @@ public class UI
                 fgElements.add(e);
                 break;
             case HEALTH_SHADE:
+                fgElements.add(e);
+                break;
+            case FB_BAR:
+                fgElements.add(e);
+                break;
+            case IB_BAR:
+                fgElements.add(e);
+                break;
+            case H_BAR:
+                fgElements.add(e);
+                break;
+            case M_BAR:
+                fgElements.add(e);
+                break;
+            case SELECTOR:
                 fgElements.add(e);
                 break;
             default:

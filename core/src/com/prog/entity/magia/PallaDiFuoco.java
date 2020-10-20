@@ -12,7 +12,7 @@ import static com.prog.world.Livello.atlas;
 public class PallaDiFuoco extends Magia{
     
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,atlas.findRegions("fire_ball"),Animation.PlayMode.LOOP);
-    
+    public static long UI_CD;
     public PallaDiFuoco()
     {
     }
@@ -21,6 +21,7 @@ public class PallaDiFuoco extends Magia{
     public void init(Vector2 position, Vector2 impulso)
     {
         COOLDOWN=300;
+        UI_CD=COOLDOWN;
         //position e' la posizione del personaggio in metri da convertire in pixel
         pos = new Rectangle(0, 0, 47, 20);
         pos.x =(position.x);
