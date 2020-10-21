@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Button;
 import com.prog.entity.Entity;
+import com.prog.entity.Mouse;
 import com.prog.world.ManagerMusic;
 import static com.prog.world.ManagerScreen.index;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
@@ -72,6 +73,7 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(b.entity_type == "musica")
             {
+                ((Mouse)a).toReposition=true;
                 System.out.println("musica");
                 if(MANAGER_MUSIC.getVolume() > 0)
                 {
@@ -93,6 +95,7 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(a.entity_type == "musica")
             {
+                ((Mouse)b).toReposition=true;
                 System.out.println("musica");
                 
                 if(MANAGER_MUSIC.getVolume() > 0)
@@ -116,6 +119,7 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(a.entity_type == "sound")
             {
+                ((Mouse)b).toReposition=true;
                 System.out.println("sound");
                 
                 if(MANAGER_SOUND.soundOn)
@@ -140,8 +144,8 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(b.entity_type == "sound")
             {
+                ((Mouse)a).toReposition=true;
                 System.out.println("sound");
-                
                 if(MANAGER_SOUND.soundOn)
                 {
                     System.out.println("Suoni disattivati");
@@ -158,17 +162,6 @@ public class OpzioniContactListener implements ContactListener{
             }
                 
         }
-        
-        
-        
-        
-        /*da fixare  
-        if(c.getFixtureA().getUserData() == "mouse")
-            c.getFixtureA().getBody().setTransform(-100, -100, 0);
-        
-        if(c.getFixtureB().getUserData() == "mouse")
-            c.getFixtureB().getBody().setTransform(-100, -100, 0);
-        */
     }
 
     @Override
