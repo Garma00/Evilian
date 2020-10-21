@@ -21,7 +21,6 @@ import static com.prog.evilian.Evilian.MANAGER_SOUND;
 public class Player extends Entity{
     private final static Animation<TextureAtlas.AtlasRegion> stand=new Animation<>(1/7f,atlas.findRegions("knight_m_idle_anim"),Animation.PlayMode.LOOP);
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("knight_m_run_anim"),Animation.PlayMode.LOOP);
-    LevelContactListener lcl;
     Mouse mouse;
     Array<Magia> activeSpells;
     SpellFactory spellFactory;
@@ -30,12 +29,14 @@ public class Player extends Entity{
     public static long[] lastLaunch;
     public static float hp, hpMax;
     public static boolean selectorPressed;
+    public static boolean inAir;
     
-    public Player(LevelContactListener lcl, Mouse mouse)
+    public Player(Mouse mouse)
     {
         this.pos=new Rectangle(50,100,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
-        this.lcl=lcl;
+        //true perche' il player starta in aria
+        inAir=true;
         this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32|64));
         //imposto width e height al valore corretto
         this.pos.width=this.pos.width/Evilian.PPM;
@@ -116,7 +117,7 @@ public class Player extends Entity{
             anim=stand;
 
         if(Gdx.input.isKeyPressed(Keys.W)){
-            if(!lcl.inAir)
+            if(!inAir)
             {
                 float force = body.getMass() * 1.5f;
                 //System.out.println("massa:"+body.getMass()+"\tforza:"+force);

@@ -9,8 +9,6 @@ import com.prog.entity.Player;
 import com.prog.entity.magia.Magia;
 
 public class LevelContactListener implements ContactListener{
-    //true se faccio spawnare il player in aria, false se lo faccio spawnare a terra
-    public boolean inAir = true;
     Entity a,b;
     String sensorA,sensorB;
     boolean isSensorA,isSensorB;
@@ -19,19 +17,19 @@ public class LevelContactListener implements ContactListener{
     public void beginContact(Contact c) {
         check(c);
         
-        System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
+        //System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
         
         //check player
         if(isSensorA && sensorA=="player_foot")
         {
             //System.out.println(a+" "+b);
-            inAir=false;
+            Player.inAir=false;
         }
         
         if(isSensorB && sensorB=="player_foot")
         {
             //System.out.println(a+" "+b);
-            inAir=false;
+            Player.inAir=false;
         }
         
         //check magie
@@ -57,14 +55,14 @@ public class LevelContactListener implements ContactListener{
         //check player
         if(isSensorA && sensorA=="player_foot")
         {
-            System.out.println("fine "+a+" "+b);
-            inAir=true;
+            //System.out.println("fine "+a+" "+b);
+            Player.inAir=true;
         }
         
         if(isSensorB && sensorB=="player_foot")
         {
-            System.out.println("fine "+a+" "+b);
-            inAir=true;
+            //System.out.println("fine "+a+" "+b);
+            Player.inAir=true;
         }
         
         //check magie

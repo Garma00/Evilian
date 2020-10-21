@@ -30,7 +30,7 @@ public class Livello1 extends Livello implements Screen{
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
         
         //ho bisgno di passare il listener come parametro per avere il flag inAir
-        p=new Player(lcl, mouse);
+        p=new Player(mouse);
         
         entities.add(p);
         
