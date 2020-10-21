@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -26,12 +27,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
-import com.prog.world.ManagerVfx;
 
 public class Livello {
     public static World world;
@@ -139,8 +138,24 @@ public class Livello {
             fdef.friction=0f;
             fdef.shape=s;
             fdef.density=1f;
-            fdef.filter.categoryBits=(short)8;
-            fdef.filter.maskBits=(short)(4|32);
+            MapProperties mp=o.getProperties();
+            if(mp.containsKey("type"))
+            {
+                String type=(String)mp.get("type");
+                
+                switch(type)
+                {
+                    case "platform_solid":
+                        fdef.filter.categoryBits=(short)8;
+                        fdef.filter.maskBits=(short)(4|32|16);
+                        break;
+                    case "platform":
+                        fdef.filter.categoryBits=(short)64;
+                        fdef.filter.maskBits=(short)(4|32);
+                        break;
+                }
+            }
+            
             body.createFixture(fdef).setUserData("map_object");
             
             s.dispose();
@@ -174,7 +189,7 @@ public class Livello {
             float[] worldVertices = new float[vertices.length];
 
             for (int i = 0; i < vertices.length; ++i) {
-                System.out.println(vertices[i]);
+                //System.out.println(vertices[i]);
                 worldVertices[i] = vertices[i] / Evilian.PPM;
             }
 
