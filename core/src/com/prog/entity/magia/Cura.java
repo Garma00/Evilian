@@ -52,14 +52,14 @@ public class Cura extends Magia{
         if(pg.hp >= pg.hpMax)
         {
             pg.hp = pg.hpMax;
-            System.out.println("hp gi√† al massimo non uso la cura");
+            //System.out.println("hp gia'† al massimo non uso la cura");
             alive = false;
         }
             
         if(alive && pg.hp < pg.hpMax)
         {
             pg.hp+= potenza*delta;
-            System.out.println("HP:\t" + pg.hp + "/" + pg.hpMax);
+            //System.out.println("HP:\t" + pg.hp + "/" + pg.hpMax);
         }
         
         if(time-lastLaunch>durata)

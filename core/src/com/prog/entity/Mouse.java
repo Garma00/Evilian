@@ -3,14 +3,18 @@ package com.prog.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import static com.prog.world.Livello.world;
 
 public class Mouse extends Entity
 {
     OrthographicCamera cam;
     Vector3 realPos;
+    public boolean toReposition;
+    
     public Mouse(OrthographicCamera cam)
     {
         this.cam = cam;
+        toReposition=false;
         realPos = fixedPosition(0, 0, cam);
         //se il mouse non è di tipo dinamico non vengono rilevate le collisioni coi bottoni
         this.body = createBody(realPos.x, realPos.y, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);
@@ -29,6 +33,12 @@ public class Mouse extends Entity
     
     @Override
     public void update(float delta) {
+        if(toReposition)
+            if(!world.isLocked())
+            {
+                body.setTransform(0, 0, 0);
+                toReposition=false;
+            }
     }
 
     @Override
@@ -39,7 +49,7 @@ public class Mouse extends Entity
         {
             pos = fixedPosition(Gdx.input.getX(), Gdx.input.getY(), cam);
             this.body.setTransform(pos.x, pos.y, 0);
-            System.out.println(pos.x + "\t" + pos.y);
+            //System.out.println(pos.x + "\t" + pos.y);
         }
     }
 

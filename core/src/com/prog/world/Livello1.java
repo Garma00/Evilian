@@ -30,7 +30,7 @@ public class Livello1 extends Livello implements Screen{
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
         
         //ho bisgno di passare il listener come parametro per avere il flag inAir
-        p=new Player(lcl, mouse);
+        p=new Player(mouse);
         
         entities.add(p);
         
@@ -113,7 +113,7 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void resize(int width, int height) {
         //da sistemare il discorso del resize(molto confusionario con le viewport)
-        mvfx.resize(width, height);
+        //mvfx.resize(width, height);
     }
 
     @Override

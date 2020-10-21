@@ -21,27 +21,28 @@ import static com.prog.evilian.Evilian.MANAGER_SOUND;
 public class Player extends Entity{
     private final static Animation<TextureAtlas.AtlasRegion> stand=new Animation<>(1/7f,atlas.findRegions("knight_m_idle_anim"),Animation.PlayMode.LOOP);
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("knight_m_run_anim"),Animation.PlayMode.LOOP);
-    LevelContactListener lcl;
     Mouse mouse;
-    public Array<Magia> activeSpells;
+    Array<Magia> activeSpells;
     SpellFactory spellFactory;
     public static int spellSelector, sound;//sound è l'indice per selezionare l'effetto sonoro corretto
     public static long time;
     public static long[] lastLaunch;
     public static float hp, hpMax;
     public static boolean selectorPressed;
+    public static boolean inAir;
     
-    public Player(LevelContactListener lcl, Mouse mouse)
+    public Player(Mouse mouse)
     {
         this.pos=new Rectangle(50,100,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
-        this.lcl=lcl;
-        this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32));
+        //true perche' il player starta in aria
+        inAir=true;
+        this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32|64));
         //imposto width e height al valore corretto
         this.pos.width=this.pos.width/Evilian.PPM;
         this.pos.height=this.pos.height/Evilian.PPM;
         //attacco una fixture di tipo sensor come piede
-        attachFixture(body,new Vector2(0,-0.15f), true, 12f, 5f, "player_foot", 0, 0, 0);
+        attachFixture(body,new Vector2(0,-0.15f), true,"player_foot", 12f, 5f, 0, 0, 0);
         this.flipX=false;
         this.flipY=false;
         this.mouse = mouse;
@@ -116,7 +117,7 @@ public class Player extends Entity{
             anim=stand;
 
         if(Gdx.input.isKeyPressed(Keys.W)){
-            if(!lcl.inAir)
+            if(!inAir)
             {
                 float force = body.getMass() * 1.5f;
                 //System.out.println("massa:"+body.getMass()+"\tforza:"+force);
@@ -211,7 +212,8 @@ public class Player extends Entity{
     
     public Vector2 lanciaMeteora()
     {
-        Vector3 pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
-        return new Vector2(pos.x, pos.y + 3f);
+        Vector3 m_pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
+        //+3f = +300px
+        return new Vector2(m_pos.x, m_pos.y + 3f);
     }
 }
