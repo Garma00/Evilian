@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Button;
+import com.prog.entity.Player;
+
 
 public class ManagerSound 
 {
@@ -52,11 +54,14 @@ public class ManagerSound
                 
                 if(soundOn)
                 {
-                    
-                    effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/heal.mp3"));
-                    effetto.setVolume(0.7f);
-                    effetto.play();
+                    if(Player.hp < 1)
+                    {
+                        effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/heal.mp3"));
+                        effetto.setVolume(0.7f);
+                        effetto.play();
 
+                    }
+                        
                     
 
                     break;

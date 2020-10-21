@@ -32,6 +32,9 @@ import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
 import com.prog.world.ManagerVfx;
+//per la funzione salva stato
+import java.io.IOException;
+import java.io.FileWriter;
 
 public class Livello {
     public static World world;
@@ -186,6 +189,7 @@ public class Livello {
     {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
+            salvaStato();
             root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
             
             //questo pezzo di codice fa crashare l'app appena si preme esc e si passa da livello1 a opzioni
@@ -193,6 +197,27 @@ public class Livello {
             //root.dispose();
             //Gdx.app.exit();
         }
+    }
+    
+    public void salvaStato()
+    {
+        try
+            {
+                    FileWriter wr = new FileWriter("file.txt");
+                    for(Entity e: entities)
+                    {
+                        wr.write(e.pos.x);
+                        wr.write(e.pos.x);                        
+                    }
+
+                    wr.close();			
+
+            }
+            catch(IOException e)
+            {
+                System.out.println("No file found");
+            }
+		
     }
     
 }
