@@ -39,7 +39,7 @@ public class Mouse extends Entity
         {
             pos = fixedPosition(Gdx.input.getX(), Gdx.input.getY(), cam);
             this.body.setTransform(pos.x, pos.y, 0);
-            System.out.println(pos.x + "\t" + pos.y);
+            //System.out.println(pos.x + "\t" + pos.y);
         }
     }
 

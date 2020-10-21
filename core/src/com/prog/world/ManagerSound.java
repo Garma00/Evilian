@@ -24,7 +24,7 @@ public class ManagerSound
                 if(soundOn)
                 {
                     effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/fireball.mp3"));
-                    System.out.println(effetto.isPlaying());
+                    //System.out.println(effetto.isPlaying());
                     effetto.setVolume(0.7f);
                     effetto.play();
 
