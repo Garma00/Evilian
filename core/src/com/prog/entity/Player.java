@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.prog.collision.LevelContactListener;
 import com.prog.entity.magia.Magia;
 import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
@@ -124,7 +123,6 @@ public class Player extends Entity{
                 body.applyLinearImpulse(new Vector2(0,force), body.getWorldCenter(), false);
             }
         }
-        
         this.body.setLinearVelocity(forza,this.body.getLinearVelocity().y);
         
         if(Gdx.input.isKeyJustPressed(Keys.Z))

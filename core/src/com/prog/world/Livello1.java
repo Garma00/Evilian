@@ -3,7 +3,6 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
@@ -15,10 +14,7 @@ public class Livello1 extends Livello implements Screen{
     Player p;
     float delta;
     LevelContactListener lcl;
-    
-    //test UI
-    Texture tex;
-    Texture tex2;
+
     
     public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
     {
@@ -41,10 +37,6 @@ public class Livello1 extends Livello implements Screen{
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
-        
-        //test UI
-        tex=new Texture("images/ui/bg.png");
-        tex2=new Texture("images/ui/fireball_2.png");
         
         //cam.translate(0f,-1f);
         //NOTA: METTI GLI ELEMENTI IN ORDINE
