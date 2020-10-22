@@ -136,7 +136,7 @@ public class Player extends Entity{
     public Vector2 lanciaMagia()
     {
         Vector3 mouse_pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
-        //System.out.println("mouse unproject:"+mouse_pos);
+        System.out.println("mouse unproject:"+mouse_pos);
         Vector2 m = new Vector2(mouse_pos.x, mouse_pos.y);
         Vector2 pg = new Vector2(body.getWorldCenter());
         //System.out.println("player:"+pg);
