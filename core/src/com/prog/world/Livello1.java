@@ -84,8 +84,8 @@ public class Livello1 extends Livello implements Screen{
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
         
         graph=parseNodes();
-        Node start=graph.nodeArray.get(0);
-        Node goal=graph.nodeArray.get(102);
+        Node start=graph.nodeArray.get(startIndex);
+        Node goal=graph.nodeArray.get(goalIndex);
         System.out.println("p "+start.x+"\t"+start.y+"\na "+goal.x+"\t"+goal.y);
         res_path=graph.findPath(start, goal);
     }
@@ -102,7 +102,7 @@ public class Livello1 extends Livello implements Screen{
         {
             goalIndex++;
             System.out.println(goalIndex);
-            Node start=graph.nodeArray.get(0);
+            Node start=graph.nodeArray.get(startIndex);
             Node goal=graph.nodeArray.get(goalIndex);
             System.out.println(goal.x+"\t"+goal.y);
             res_path=graph.findPath(start, goal);
@@ -110,7 +110,7 @@ public class Livello1 extends Livello implements Screen{
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT))
         {
             goalIndex--;
-            Node start=graph.nodeArray.get(0);
+            Node start=graph.nodeArray.get(startIndex);
             Node goal=graph.nodeArray.get(goalIndex);
             res_path=graph.findPath(start, goal);
         }

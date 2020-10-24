@@ -209,150 +209,100 @@ public class Livello {
             x+=tileDim;
             y=0;
         }
+ 
         //STEP1 corretto (aggiungo pavimento e basta)
         for(int i=0;i<width;i++)
         {
             for(int j=0;j<height;j++)
             {
-                Cell cell=step1.getCell(i,j);
-                if(cell != null)
-                {
-                    Node n=new Node(x,y,NodeType.FLOOR);
-                    //aggiungo pavimento alla matrice della mappa
-                    arr[j][i]=n;
-                    System.out.println("pavimento:"+x+"\t"+y);
+                Node n=arr[j][i];
+                if(n!=null)
+                    switch(n.type)
+                    {
+                        case FLOOR:
+                            if( i-1 > 0 && arr[0][i-1] != null)
+                            {
+                                graph.connectNode(n, arr[0][i-1]);
+                                graph.connectNode(arr[0][i-1], n);
+                            }
+                            break;
+                        case MIDDLE:
+                            //controllo a destra fino a trovare la cornice
+                            if(i+1 < 100)
+                            {
+                                Node tmp=arr[j][i+1];
+                                if(tmp!=null)
+                                {
+                                    graph.connectNode(n, tmp);
+                                    graph.connectNode(tmp, n);
+                                }      
+                            }
+                            //controllo a sinistra fino a trovare la cornice
+                            if(i-1 > 0)
+                            {
+                                Node tmp=arr[j][i-1];
+                                if(tmp!=null)
+                                {
+                                    graph.connectNode(n, tmp);
+                                    graph.connectNode(tmp, n);
+                                }      
+                            }
+                            break;
+                        case CORNER:
+                            //collegamenti bidirezionali in cui il nemico potrà saltare
+                            //if per evitare collegamenti sovrapposti alla piattaforma
+                            for(int k=0;k<4;k++)
+                            {
+                                //per il lato sinistro
+                                if(arr[j][i-1] == null)
+                                {
+                                    for(int l=1;l<5;l++)
+                                    {
+                                        if(i-l > 0 && j-k >= 0)
+                                        {
+                                            Node tmp=arr[j-k][i-l];
+                                            if( tmp != null)
+                                            {
+                                                graph.connectNode(n, tmp);
+                                                graph.connectNode(tmp, n);
+                                            }
+                                        }
+                                    }
+                                }
+                                //per il lato destro
+                                //if per evitare collegamenti sovrapposti alla piattaforma
+                                if(arr[j][i+1] == null)
+                                {
+                                    for(int l=1;l<5;l++)
+                                    {
+                                        if(i+l < 100 && j-k >= 0)
+                                        {
+                                            Node tmp=arr[j-k][i+l];
+                                            if( tmp != null)
+                                            {
+                                                graph.connectNode(n, tmp);
+                                                graph.connectNode(tmp, n);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
-                    //collegamento con pavimento precedente
-                    if( i-1 > 0 && arr[0][i-1] != null)
-                    {
-                        graph.connectNode(n, arr[0][i-1]);
-                        graph.connectNode(arr[0][i-1], n);
-                    }
-                }
-                y+=tileDim;
-            }
-            x+=tileDim;
-            y=0;
-        }
-        
-        //STEP3 corretto (aggiungo la parte centrale delle piattaforme)
-        width=step3.getWidth();
-        height=step3.getHeight();
-        x=0;
-        y=0;
-        for(int i=0;i<width;i++)
-        {
-            for(int j=0;j<height;j++)
-            {
-                Cell cell=step3.getCell(i,j);
-                if(cell != null)
-                {
-                    Node n=new Node(x,y,NodeType.MIDDLE);
-                    arr[j][i]=n;
-                    System.out.println("middle:"+x+"\t"+y);
-                    
-                    //controllo a destra fino a trovare la cornice
-                    if(i+1 < 100)
-                    {
-                        Node tmp=arr[j][i+1];
-                        if(tmp!=null)
-                        {
-                            graph.connectNode(n, tmp);
-                            graph.connectNode(tmp, n);
-                        }      
-                    }
-                    //controllo a sinistra fino a trovare la cornice
-                    if(i-1 > 0)
-                    {
-                        Node tmp=arr[j][i-1];
-                        if(tmp!=null)
-                        {
-                            graph.connectNode(n, tmp);
-                            graph.connectNode(tmp, n);
-                        }      
-                    }
-                }
-                y+=tileDim;
-            }
-            x+=tileDim;
-            y=0;
-        }
-        
-        //STEP2 corretto (aggiungo le cornici delle piattaforme)
-        width=step2.getWidth();
-        height=step2.getHeight();
-        x=0;
-        y=0;
-        for(int i=0;i<width;i++)
-        {
-            for(int j=0;j<height;j++)
-            {
-                Cell cell=step2.getCell(i,j);
-                if(cell != null)
-                {
-                    Node n=new Node(x,y,NodeType.CORNER);
-                    arr[j][i]=n;
-                    
-                    //collegamenti bidirezionali in cui il nemico potrà saltare
-                    //if per evitare collegamenti sovrapposti alla piattaforma
-                    for(int k=0;k<4;k++)
-                    {
-                        //per il lato sinistro
-                        if(arr[j][i-1] == null)
-                        {
-                            for(int l=1;l<4;l++)
+                            //collegamenti unidirezionali per scendere da qualsiasi cornice
+                            for(int k=j;k>=0;k--)
                             {
-                                if(i-l > 0 && j-k >= 0)
-                                {
-                                    Node tmp=arr[j-k][i-l];
-                                    if( tmp != null)
-                                    {
-                                        graph.connectNode(n, tmp);
-                                        graph.connectNode(tmp, n);
-                                    }
-                                }
+                                Node tmp=arr[j-k][i-1];
+                                Node tmp2=arr[j-k][i+1];
+                                if(tmp != null)
+                                    graph.connectNode(n, tmp);
+                                if(tmp2!=null)
+                                    graph.connectNode(n, tmp2);
                             }
-                        }
-                        //per il lato destro
-                        //if per evitare collegamenti sovrapposti alla piattaforma
-                        if(arr[j][i+1] == null)
-                        {
-                            for(int l=1;l<4;l++)
-                            {
-                                if(i+l < 100 && j-k >= 0)
-                                {
-                                    Node tmp=arr[j-k][i+l];
-                                    if( tmp != null)
-                                    {
-                                        graph.connectNode(n, tmp);
-                                        graph.connectNode(tmp, n);
-                                    }
-                                }
-                            }
-                        }
+                            break;
                     }
-                    
-                    //collegamenti unidirezionali per scendere da qualsiasi cornice
-                    for(int k=j;k>=0;k--)
-                    {
-                        Node tmp=arr[j-k][i-1];
-                        Node tmp2=arr[j-k][i+1];
-                        if(tmp != null)
-                            graph.connectNode(n, tmp);
-                        if(tmp2!=null)
-                            graph.connectNode(n, tmp2);
-                    }
-                    
-                    System.out.println("cornice:"+x+"\t"+y);
-                }
-                y+=tileDim;
+                
             }
-            x+=tileDim;
-            y=0;
         }
-        
-        
-        
         //aggiunta tutti i nodi in array unidimensionale
         for(int i=0;i<height;i++)
             for(int j=0;j<width;j++)

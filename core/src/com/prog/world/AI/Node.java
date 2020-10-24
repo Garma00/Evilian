@@ -9,7 +9,7 @@ public class Node {
     }
     public float x;
     public float y;
-    NodeType type;
+    public NodeType type;
 
 
     //Nodo generico. uso un index perche' l'ai usera' l'algoritmo A* indexed che richiede che i nodi siano indicizzati
