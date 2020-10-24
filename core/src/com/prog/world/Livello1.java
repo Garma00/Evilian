@@ -4,23 +4,27 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Livello1 extends Livello implements Screen{
-    Player p;
     float delta;
     LevelContactListener lcl;
+    
     
     //test UI
     Texture tex;
     Texture tex2;
     
-    public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
+    public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game, boolean resume) throws IOException
     {
         super(gravity, Sleep, path, cameraWidth, cameraHeight,uiWidth,uiHeight,game);
         lcl=new LevelContactListener();
@@ -29,10 +33,22 @@ public class Livello1 extends Livello implements Screen{
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
         
+        //non spostare assolutamente da qui questione di vita o morte 
         //ho bisgno di passare il listener come parametro per avere il flag inAir
-        p=new Player(mouse);
+        this.resume = resume;
+        if(this.resume)
+        {
+            Vector2 pos = loadState(p);
+            p=new Player(mouse, pos.x, pos.y);
+            entities.add(p);
+        }
+        else
+        {
+            p = new Player(mouse, 50, 150);
+            entities.add(p);
+        }
         
-        entities.add(p);
+        
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravit� applicata essendo un body
         world.destroyBody(mouse.body);
@@ -77,6 +93,8 @@ public class Livello1 extends Livello implements Screen{
         
         //selector
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
+        
+            
     }
 
     @Override
@@ -96,8 +114,12 @@ public class Livello1 extends Livello implements Screen{
             e.handleInput();
         
         
-        //handleinput del livello
-        handleInput();
+        try {
+            //handleinput del livello
+            handleInput();
+        } catch (IOException ex) {
+            Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         //guardo entities e faccio gli update
         for(Entity e:entities)

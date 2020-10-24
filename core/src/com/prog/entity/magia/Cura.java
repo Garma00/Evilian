@@ -52,7 +52,7 @@ public class Cura extends Magia{
         if(pg.hp >= pg.hpMax)
         {
             pg.hp = pg.hpMax;
-            //System.out.println("hp gia'  al massimo non uso la cura");
+            //System.out.println("hp gia' al massimo non uso la cura");
             alive = false;
         }
             

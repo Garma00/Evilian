@@ -30,13 +30,19 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
+import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import com.prog.world.ManagerVfx;
+import java.io.File;
+import java.io.FileNotFoundException;
 //per la funzione salva stato
 import java.io.IOException;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 public class Livello {
+    Player p;
+    FileWriter wr;
     public static World world;
     //mappa tiled
     public TiledMap map;
@@ -51,16 +57,17 @@ public class Livello {
     public Mouse mouse;
     public static final ManagerVfx mvfx=new ManagerVfx();
     public UI level_ui;
+    public boolean resume;
+    File file;//file per il caricamento dello stato
     
     
-    
-    public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game)
+    public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
     {
         
         //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
         root=game;
         debug=new Box2DDebugRenderer();
-        
+        Player p;
         //creiamo il mondo
         //NOTA:inserire gravita' negativa da parametro
         world=new World(new Vector2(0,gravity),Sleep);
@@ -80,6 +87,8 @@ public class Livello {
         
         atlas=new TextureAtlas("atlas/game.atlas");
         
+        
+        file = new File("save_state.txt");
         mouse = new Mouse(cam);
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
@@ -99,6 +108,7 @@ public class Livello {
         atlas=new TextureAtlas("atlas/game.atlas");
 
         mouse = new Mouse(cam);
+        
     }
     
     public void dispose()
@@ -201,11 +211,12 @@ public class Livello {
             return polygon;
         }
     
-    public void handleInput()
+    public void handleInput() throws IOException
     {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
-            salvaStato();
+            p.salvaStato();
+            
             root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
             
             //questo pezzo di codice fa crashare l'app appena si preme esc e si passa da livello1 a opzioni
@@ -215,25 +226,36 @@ public class Livello {
         }
     }
     
-    public void salvaStato()
+    public Vector2 loadState(Player p) throws FileNotFoundException
     {
         try
+        {
+            float x = 50, y = 100;
+            System.out.println("entro per leggere");
+            Scanner scan = new Scanner(file);
+            while(scan.hasNextLine())
             {
-                    FileWriter wr = new FileWriter("file.txt");
-                    for(Entity e: entities)
-                    {
-                        //wr.write(e.pos.x);
-                        //wr.write(e.pos.x);                        
-                    }
-
-                    wr.close();			
-
+                
+                String line = scan.nextLine();
+                String[] words = line.split(" ");
+                if(words[0].equals("P"))
+                {
+                    x = Float.parseFloat(words[1]);
+                    y = Float.parseFloat(words[2]);
+//                    System.out.println("Il player va in posizione " + p.pos.x + " " + p.pos.y);
+                }    
             }
-            catch(IOException e)
-            {
-                System.out.println("No file found");
-            }
-		
+            scan.close();
+            return new Vector2(x, y).scl(Evilian.PPM);
+        }
+        catch(FileNotFoundException e)
+        {
+                System.out.println("no file found");
+                return null;
+        }
+            
     }
-    
+        
 }
+    
+

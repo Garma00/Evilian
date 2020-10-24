@@ -14,6 +14,9 @@ import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //dichiara una istanza di custom contact listener
 public class MainMenu extends Livello implements Screen
@@ -55,7 +58,11 @@ public class MainMenu extends Livello implements Screen
             System.out.println("Collisione fra mouse e opzioni");
 
             super.dispose();
-            MANAGER_SCREEN.changeScreen(entities, root);
+            try {
+                MANAGER_SCREEN.changeScreen(entities, root);
+            } catch (IOException ex) {
+                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
             
         for(Entity e:entities)

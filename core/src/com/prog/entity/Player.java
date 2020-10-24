@@ -10,12 +10,18 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.collision.LevelContactListener;
+import com.prog.entity.magia.Cura;
 import com.prog.entity.magia.Magia;
+import com.prog.entity.magia.Meteora;
+import com.prog.entity.magia.PallaDiFuoco;
+import com.prog.entity.magia.PallaDiGhiaccio;
 import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
 import static com.prog.evilian.Evilian.MANAGER_SOUND;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class Player extends Entity{
@@ -31,9 +37,9 @@ public class Player extends Entity{
     public static boolean selectorPressed;
     public static boolean inAir;
     
-    public Player(Mouse mouse)
+    public Player(Mouse mouse, float spawnX, float spawnY)
     {
-        this.pos=new Rectangle(50,100,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
+        this.pos=new Rectangle(spawnX,spawnY,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
         //true perche' il player starta in aria
         inAir=true;
@@ -216,4 +222,29 @@ public class Player extends Entity{
         //+3f = +300px
         return new Vector2(m_pos.x, m_pos.y + 3f);
     }
+
+    public void salvaStato() throws IOException
+    {
+        FileWriter wr = new FileWriter("save_state.txt");
+        String toWrite = "P " + pos.x + " " + pos.y + "\n";
+        for(Magia m: activeSpells)
+        {
+            if(m instanceof PallaDiFuoco)
+                toWrite += "PDF ";
+            else if(m instanceof PallaDiGhiaccio)
+                toWrite += "PDG ";
+            else if(m instanceof Cura)
+                toWrite += "CUR ";
+            else if(m instanceof Meteora)
+                toWrite += "MET ";
+        
+            toWrite += m.pos.x + " " + m.pos.y + "\n";
+        
+        }
+        System.out.println(toWrite);
+        wr.write(toWrite);
+        wr.close();
+        
+    }
+
 }

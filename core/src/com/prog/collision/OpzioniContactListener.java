@@ -30,7 +30,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("Riprendi");
                 collided = true;
-                index = 1;//se si vuole riprendere viene settato l'index a gioca
+                index = 3;//se si vuole riprendere viene settato l'index a riprendi
                 
             }
                 
@@ -39,9 +39,9 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(a.entity_type == "riprendi")
             {
-                System.out.println("Gioca");
+                System.out.println("Riprendi");
                 collided = true;
-                index = 1;
+                index = 3;
                 
             }
                 

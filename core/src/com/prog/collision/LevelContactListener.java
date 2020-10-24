@@ -33,7 +33,7 @@ public class LevelContactListener implements ContactListener{
         }
         
         //check magie
-        //check di null perchè non è detto che la funzione check instanzi a e b
+        //check di null perche' non e' detto che la funzione check instanzi a e b
         //(ovvero non entra negli if)
         if(!isSensorA && a!=null && a.entity_type == "magia")
         {
