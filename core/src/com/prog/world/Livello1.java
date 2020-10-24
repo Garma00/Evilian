@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
@@ -12,15 +14,15 @@ import static com.prog.evilian.Evilian.batch;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
 import com.prog.world.AI.Node;
 import com.prog.world.AI.NodeGraph;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Livello1 extends Livello implements Screen{
     Player p;
     float delta;
     LevelContactListener lcl;
+    GraphPath<Node> res_path;
     
-    //ai test
-    NodeGraph nodeGraph;
-    GraphPath<Node> nodePath;
+    ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
 
     
     public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
@@ -77,48 +79,11 @@ public class Livello1 extends Livello implements Screen{
         //selector
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
         
-        //ai test
-        nodeGraph=new NodeGraph();
-        
-        Node s=new Node(0.85f,0.72f,"start");
-        Node e=new Node(2.32f,1.57f,"E");
-        nodeGraph.addNode(e);
-        Node a=new Node(1.11f,1.25f,"A");
-        nodeGraph.addNode(a);
-        Node b=new Node(1.11f,0.73f,"B");
-        nodeGraph.addNode(b);
-        Node c=new Node(1.61f,0.73f,"C");
-        nodeGraph.addNode(c);
-        Node d=new Node(1.78f,0.59f,"D");
-        nodeGraph.addNode(d);
-        
-        nodeGraph.addNode(s);
-        Node f=new Node(2.32f,0.73f,"F");
-        nodeGraph.addNode(f);
-        
-        nodeGraph.connectNode(s, a);
-        nodeGraph.connectNode(a, s);
-        nodeGraph.connectNode(a, c);
-        nodeGraph.connectNode(c, a);
-        nodeGraph.connectNode(s, b);
-        nodeGraph.connectNode(b, s);
-        nodeGraph.connectNode(a, d);
-        nodeGraph.connectNode(d, a);
-        nodeGraph.connectNode(d, e);
-        nodeGraph.connectNode(e, d);
-        nodeGraph.connectNode(c, f);
-        nodeGraph.connectNode(f, c);
-        
-        Node start=e;
-        Node goal=b;
-        
-        nodePath=nodeGraph.findPath(start, goal);
-        
-        System.out.println(nodePath.getCount());
-        for(int i=0;i<nodePath.getCount();i++)
-        {
-            System.out.println(nodePath.get(i).name);
-        }
+        NodeGraph graph=parseNodes();
+        Node start=graph.nodeArray.get(0);
+        Node goal=graph.nodeArray.get(98);
+        System.out.println("p "+start.x+"\t"+start.y+"\na "+goal.x+"\t"+goal.y);
+        res_path=graph.findPath(start, goal);
     }
 
     @Override
@@ -188,6 +153,15 @@ public class Livello1 extends Livello implements Screen{
         batch.begin();
         for(Entity e:entities)
             e.draw();
+        for(int i=0;i<res_path.getCount();i++)
+        {
+            sd.setColor(1f, 1f, 1f, 1f);
+            if(i != 0)
+                sd.line((res_path.get(i-1).x/Evilian.PPM)+0.16f, (res_path.get(i-1).y/Evilian.PPM)+0.32f, (res_path.get(i).x/Evilian.PPM)+0.16f, (res_path.get(i).y/Evilian.PPM)+0.32f,0.05f);
+            else
+                sd.setColor(0f, 1f, 0f, 1f);
+            sd.filledCircle((res_path.get(i).x/Evilian.PPM)+0.16f,(res_path.get(i).y/Evilian.PPM)+0.32f,0.1f);
+        }
         batch.end();
         debug.render(world, cam.combined);
     }

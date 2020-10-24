@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 public class NodeGraph implements IndexedGraph<Node>{
 
     NodeHeuristic nodeHeuristic = new NodeHeuristic();
-    Array<Node> nodeArray = new Array<>();
+    public Array<Node> nodeArray = new Array<>();
     Array<NodeConnection> connessioni = new Array<>();
 
     // mappe di nodi partendo dal punto iniziale

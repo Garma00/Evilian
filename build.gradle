@@ -26,6 +26,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        shapedrawerVersion = '2.3.0'
     }
 
     repositories {
@@ -33,6 +34,7 @@ allprojects {
         mavenCentral()
         jcenter()
         google()
+        maven { url 'https://jitpack.io' }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
@@ -63,5 +65,7 @@ project(":core") {
         //AI test
         compile "com.badlogicgames.gdx:gdx-ai:1.8.2"
         //
+        //debug con batch
+        compile "space.earlygrey:shapedrawer:$shapedrawerVersion"
     }
 }
