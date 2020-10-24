@@ -226,7 +226,7 @@ public class Livello {
         }
     }
     
-    public Vector2 loadState(Player p) throws FileNotFoundException
+    public Vector2 loadState() throws FileNotFoundException
     {
         try
         {
@@ -242,7 +242,6 @@ public class Livello {
                 {
                     x = Float.parseFloat(words[1]);
                     y = Float.parseFloat(words[2]);
-//                    System.out.println("Il player va in posizione " + p.pos.x + " " + p.pos.y);
                 }    
             }
             scan.close();
