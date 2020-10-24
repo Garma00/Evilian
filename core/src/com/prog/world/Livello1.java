@@ -1,6 +1,7 @@
 package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
@@ -21,6 +22,9 @@ public class Livello1 extends Livello implements Screen{
     float delta;
     LevelContactListener lcl;
     GraphPath<Node> res_path;
+    int startIndex=0;
+    int goalIndex=96;
+    NodeGraph graph;
     
     ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
 
@@ -79,9 +83,9 @@ public class Livello1 extends Livello implements Screen{
         //selector
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
         
-        NodeGraph graph=parseNodes();
+        graph=parseNodes();
         Node start=graph.nodeArray.get(0);
-        Node goal=graph.nodeArray.get(98);
+        Node goal=graph.nodeArray.get(102);
         System.out.println("p "+start.x+"\t"+start.y+"\na "+goal.x+"\t"+goal.y);
         res_path=graph.findPath(start, goal);
     }
@@ -93,6 +97,24 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void render(float f) {
         
+                
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))
+        {
+            goalIndex++;
+            System.out.println(goalIndex);
+            Node start=graph.nodeArray.get(0);
+            Node goal=graph.nodeArray.get(goalIndex);
+            System.out.println(goal.x+"\t"+goal.y);
+            res_path=graph.findPath(start, goal);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT))
+        {
+            goalIndex--;
+            Node start=graph.nodeArray.get(0);
+            Node goal=graph.nodeArray.get(goalIndex);
+            res_path=graph.findPath(start, goal);
+        }
+
         cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
         level_ui.update();
