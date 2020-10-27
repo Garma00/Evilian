@@ -227,7 +227,7 @@ public class Livello {
                             }
                             break;
                         case MIDDLE:
-                            //controllo a destra fino a trovare la cornice
+                            //controllo a destra per trovare la cornice
                             if(i+1 < 100)
                             {
                                 Node tmp=arr[j][i+1];
@@ -237,7 +237,7 @@ public class Livello {
                                     graph.connectNode(tmp, n);
                                 }      
                             }
-                            //controllo a sinistra fino a trovare la cornice
+                            //controllo a sinistra per trovare la cornice
                             if(i-1 > 0)
                             {
                                 Node tmp=arr[j][i-1];

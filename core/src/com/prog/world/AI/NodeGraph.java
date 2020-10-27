@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -61,6 +62,23 @@ public class NodeGraph implements IndexedGraph<Node>{
       }
 
       return new Array<>(0);
+    }
+    
+    public Node findNodeAtPos(Vector2 pos)
+    {
+        //perche' mi ritorna il centro del nemico
+        pos.x-=8;
+        pos.y-=14;
+        for(Node n:nodeArray)
+        {
+            if(n.x == 32*((int)pos.x/32) && n.y == 32*(((int)pos.y/32)-1))
+            {
+                System.out.println("si trova nel nodo"+n.x+"\t"+n.y);
+                return n;
+            }
+        }
+        
+        return null;
     }
     
 }

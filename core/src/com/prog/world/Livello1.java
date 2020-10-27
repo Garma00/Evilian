@@ -1,13 +1,14 @@
 package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.prog.collision.LevelContactListener;
+import com.prog.entity.Enemy;
+import com.prog.entity.EnemyFactory;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
@@ -24,9 +25,10 @@ public class Livello1 extends Livello implements Screen{
     GraphPath<Node> res_path;
     int startIndex=0;
     int goalIndex=96;
-    NodeGraph graph;
+    public static NodeGraph graph;
+    EnemyFactory ef;
     
-    ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
+    public static ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
 
     
     public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
@@ -84,10 +86,11 @@ public class Livello1 extends Livello implements Screen{
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
         
         graph=parseNodes();
-        Node start=graph.nodeArray.get(startIndex);
+        /*Node start=graph.nodeArray.get(startIndex);
         Node goal=graph.nodeArray.get(goalIndex);
         System.out.println("p "+start.x+"\t"+start.y+"\na "+goal.x+"\t"+goal.y);
-        res_path=graph.findPath(start, goal);
+        res_path=graph.findPath(start, goal);*/
+        ef=new EnemyFactory(p);
     }
 
     @Override
@@ -96,25 +99,6 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void render(float f) {
-        
-                
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT))
-        {
-            goalIndex++;
-            System.out.println(goalIndex);
-            Node start=graph.nodeArray.get(startIndex);
-            Node goal=graph.nodeArray.get(goalIndex);
-            System.out.println(goal.x+"\t"+goal.y);
-            res_path=graph.findPath(start, goal);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT))
-        {
-            goalIndex--;
-            Node start=graph.nodeArray.get(startIndex);
-            Node goal=graph.nodeArray.get(goalIndex);
-            res_path=graph.findPath(start, goal);
-        }
-
         cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
         level_ui.update();
@@ -124,6 +108,8 @@ public class Livello1 extends Livello implements Screen{
         for(Entity e:entities)
             e.handleInput();
         
+        //enemyfactory update
+        ef.update(f);
         
         //handleinput del livello
         handleInput();
@@ -170,12 +156,13 @@ public class Livello1 extends Livello implements Screen{
         Gdx.gl.glViewport(0,75,800, 525);
         //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
-        mapRenderer.render();
+        //mapRenderer.render();
         //guardo entities e renderizzo cose
         batch.begin();
         for(Entity e:entities)
             e.draw();
-        for(int i=0;i<res_path.getCount();i++)
+        //secondo il profiler lo shapedrawer prende 7ms di cpu(attivarlo solo a scopo di debugging)
+        /*for(int i=0;i<res_path.getCount();i++)
         {
             sd.setColor(1f, 1f, 1f, 1f);
             if(i != 0)
@@ -183,7 +170,8 @@ public class Livello1 extends Livello implements Screen{
             else
                 sd.setColor(0f, 1f, 0f, 1f);
             sd.filledCircle((res_path.get(i).x/Evilian.PPM)+0.16f,(res_path.get(i).y/Evilian.PPM)+0.32f,0.1f);
-        }
+        }*/
+        ef.draw();
         batch.end();
         debug.render(world, cam.combined);
     }
