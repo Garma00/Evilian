@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.prog.entity.EnemyA;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
 import com.prog.entity.magia.Magia;
@@ -46,6 +47,18 @@ public class LevelContactListener implements ContactListener{
             Magia spellB=(Magia)b;
             spellB.alive=false;
         }
+        
+        if(!isSensorA && a!=null && a.entity_type=="enemyA")
+        {
+            System.out.println("nemico a terra");
+            ((EnemyA)a).inAir=false;
+        }
+        if(!isSensorB && b!=null && b.entity_type=="enemyA")
+        {
+            System.out.println("nemico a terra");
+            ((EnemyA)b).inAir=false;
+        }
+
     }
 
     @Override
@@ -65,7 +78,16 @@ public class LevelContactListener implements ContactListener{
             Player.inAir=true;
         }
         
-        //check magie
+        if(!isSensorA && a!=null && a.entity_type=="enemyA")
+        {
+            System.out.println("nemico in aria");
+            ((EnemyA)a).inAir=true;
+        }
+        if(!isSensorB && b!=null && b.entity_type=="enemyA")
+        {
+            System.out.println("nemico in aria");
+            ((EnemyA)b).inAir=true;
+        }
         
     }
 
