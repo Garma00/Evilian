@@ -6,28 +6,29 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.EnemyA;
 import com.prog.entity.Entity;
+import com.prog.entity.Entity.sensorContainer;
 import com.prog.entity.Player;
 import com.prog.entity.magia.Magia;
 
 public class LevelContactListener implements ContactListener{
     Entity a,b;
-    String sensorA,sensorB;
+    sensorContainer sensorA,sensorB;
     boolean isSensorA,isSensorB;
     
     @Override
     public void beginContact(Contact c) {
         check(c);
         
-        //System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
+        System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
         
         //check player
-        if(isSensorA && sensorA=="player_foot")
+        if(isSensorA && sensorA.type=="player_foot")
         {
             //System.out.println(a+" "+b);
             Player.inAir=false;
         }
         
-        if(isSensorB && sensorB=="player_foot")
+        if(isSensorB && sensorB.type=="player_foot")
         {
             //System.out.println(a+" "+b);
             Player.inAir=false;
@@ -48,17 +49,6 @@ public class LevelContactListener implements ContactListener{
             spellB.alive=false;
         }
         
-        if(!isSensorA && a!=null && a.entity_type=="enemyA")
-        {
-            System.out.println("nemico a terra");
-            ((EnemyA)a).inAir=false;
-        }
-        if(!isSensorB && b!=null && b.entity_type=="enemyA")
-        {
-            System.out.println("nemico a terra");
-            ((EnemyA)b).inAir=false;
-        }
-
     }
 
     @Override
@@ -66,28 +56,39 @@ public class LevelContactListener implements ContactListener{
         check(c);
         
         //check player
-        if(isSensorA && sensorA=="player_foot")
+        if(isSensorA && sensorA.type=="player_foot")
         {
             //System.out.println("fine "+a+" "+b);
             Player.inAir=true;
         }
         
-        if(isSensorB && sensorB=="player_foot")
+        if(isSensorB && sensorB.type=="player_foot")
         {
             //System.out.println("fine "+a+" "+b);
             Player.inAir=true;
         }
         
-        if(!isSensorA && a!=null && a.entity_type=="enemyA")
+        //piediiiii
+        if(isSensorA && sensorA.type=="enemyLeftFoot")
         {
-            System.out.println("nemico in aria");
-            ((EnemyA)a).inAir=true;
+            ((EnemyA)sensorA.e).walkLeft=false;
         }
-        if(!isSensorB && b!=null && b.entity_type=="enemyA")
+        
+        if(isSensorB && sensorB.type=="enemyLeftFoot")
         {
-            System.out.println("nemico in aria");
-            ((EnemyA)b).inAir=true;
+            ((EnemyA)sensorB.e).walkLeft=false;
         }
+        
+        if(isSensorA && sensorA.type=="enemyRightFoot")
+        {
+            ((EnemyA)sensorA.e).walkLeft=true;
+        }
+        
+        if(isSensorB && sensorB.type=="enemyRightFoot")
+        {
+            ((EnemyA)sensorB.e).walkLeft=true;
+        }
+        
         
     }
 
@@ -107,14 +108,14 @@ public class LevelContactListener implements ContactListener{
         {
             //allora la fixture e' un sensore
             //nella classe entity ho assegnato ai sensori la stringa come userdata
-            sensorA=(String)c.getFixtureA().getUserData();
+            sensorA=(sensorContainer)c.getFixtureA().getUserData();
             isSensorA=true;
         }
         if(c.getFixtureB().isSensor())
         {
              //allora la fixture e' un sensore
             //nella classe entity ho assegnato ai sensori la stringa come userdata
-            sensorB=(String)c.getFixtureB().getUserData();
+            sensorB=(sensorContainer)c.getFixtureB().getUserData();
             isSensorB=true;
         }
         

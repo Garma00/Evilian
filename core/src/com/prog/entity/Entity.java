@@ -23,6 +23,18 @@ public abstract class Entity {
     public short MASK_BIT;
     public String entity_type;
     
+    public class sensorContainer
+    {
+        public String type;
+        public Entity e;
+        
+        public sensorContainer(String u, Entity e)
+        {
+            this.type=u;
+            this.e=e;
+        }
+    }
+    
     public abstract void update(float delta);
     
     public abstract void handleInput();
@@ -113,7 +125,7 @@ public abstract class Entity {
         fdef.shape=shape;
         
         if(isSensor)
-            b.createFixture(fdef).setUserData(userData);
+            b.createFixture(fdef).setUserData(new sensorContainer(userData, this));
         else
             b.createFixture(fdef).setUserData(this);
         
