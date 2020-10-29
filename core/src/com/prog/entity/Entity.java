@@ -21,7 +21,18 @@ public abstract class Entity {
     public Body body;
     public short CATEGORY_BIT;
     public short MASK_BIT;
-    public String entity_type;
+    
+    public class userDataContainer
+    {
+        public String type;
+        public Entity e;
+        
+        public userDataContainer(String u, Entity e)
+        {
+            this.type=u;
+            this.e=e;
+        }
+    }
     
     public abstract void update(float delta);
     
@@ -40,7 +51,6 @@ public abstract class Entity {
         BodyDef bdef= new BodyDef();
         CATEGORY_BIT=categoria;
         MASK_BIT=mask;
-        this.entity_type=userData;
         
         switch(bodyType)
         {
@@ -71,7 +81,6 @@ public abstract class Entity {
         BodyDef bdef= new BodyDef();
         CATEGORY_BIT=categoria;
         MASK_BIT=mask;
-        this.entity_type=userData;
         
         switch(bodyType)
         {
@@ -112,10 +121,7 @@ public abstract class Entity {
         
         fdef.shape=shape;
         
-        if(isSensor)
-            b.createFixture(fdef).setUserData(userData);
-        else
-            b.createFixture(fdef).setUserData(this);
+        b.createFixture(fdef).setUserData(new userDataContainer(userData, this));
         
         shape.dispose();
     }
@@ -138,7 +144,7 @@ public abstract class Entity {
         
         fdef.shape=shape;
         
-        b.createFixture(fdef).setUserData(this);
+        b.createFixture(fdef).setUserData(new userDataContainer(userData, this));
         
         shape.dispose();
     }

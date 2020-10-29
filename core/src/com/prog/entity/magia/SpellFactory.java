@@ -42,7 +42,7 @@ public class SpellFactory{
         }
     };
 
-    //chaimala quando vuoi creare una spell
+    //chiamala quando vuoi creare una spell
     public Magia createSpell(SpellType spell){
        switch(spell){
          case PALLADIFUOCO:
