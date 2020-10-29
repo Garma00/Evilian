@@ -67,6 +67,7 @@ public class EnemyFactory {
     
     public void update(float delta)
     {
+        //uncommentare se si vogliono spawnare i nemici ogni tot tempo
         //time=TimeUtils.millis();
         
         if(time - lastCall > 10000)

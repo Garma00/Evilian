@@ -280,7 +280,7 @@
   </object>
   <object id="32" x="0" y="0.666667">
    <properties>
-    <property name="type" value="platform_solid"/>
+    <property name="type" value="platform_wall"/>
    </properties>
    <polygon points="0,0 32,0 32,959.333 0,959.333"/>
   </object>
@@ -400,7 +400,7 @@
   </object>
   <object id="57" x="3168" y="0">
    <properties>
-    <property name="type" value="platform_solid"/>
+    <property name="type" value="platform_wall"/>
    </properties>
    <polygon points="0,0 32,0 32,959.333 0,959.333"/>
   </object>

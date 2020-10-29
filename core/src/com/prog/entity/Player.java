@@ -28,7 +28,7 @@ public class Player extends Entity{
     public static long[] lastLaunch;
     public static float hp, hpMax;
     public static boolean selectorPressed;
-    public static boolean inAir;
+    public boolean inAir;
     
     public Player(Mouse mouse)
     {

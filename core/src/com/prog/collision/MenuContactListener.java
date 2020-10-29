@@ -5,21 +5,22 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Entity;
+import com.prog.entity.Entity.userDataContainer;
 import static com.prog.world.ManagerScreen.index;
 
 public class MenuContactListener implements ContactListener{
     //il contact listener si setta tramite world.setContactListener(istanza di questa classe)
     public boolean collided = false; 
-    Entity a,b;
+    userDataContainer a,b;
     //chiamato quando due fixture cominciano a collidere
     @Override
     public void beginContact(Contact c) {
-        a=(Entity)c.getFixtureA().getUserData();
-        b=(Entity)c.getFixtureB().getUserData();
+        a=((userDataContainer)c.getFixtureA().getUserData());
+        b=((userDataContainer)c.getFixtureB().getUserData());
         //System.out.println("rilevato contatto tra "+c.getFixtureA().getUserData()+" e "+c.getFixtureB().getUserData());
-        if(a.entity_type == "mouse")
+        if(a.type == "mouse")
         {
-            if(b.entity_type == "gioca")
+            if(b.type == "gioca")
             {
                 //System.out.println("Gioca");
                 collided = true;
@@ -29,9 +30,9 @@ public class MenuContactListener implements ContactListener{
                 
         }
         
-        if(b.entity_type == "mouse")
+        if(b.type == "mouse")
         {
-            if(a.entity_type == "gioca")
+            if(a.type == "gioca")
             {
                 //System.out.println("Gioca");
                 collided = true;
@@ -40,9 +41,9 @@ public class MenuContactListener implements ContactListener{
                 
         }
         
-        if(a.entity_type == "mouse")
+        if(a.type == "mouse")
         {
-            if(b.entity_type == "opzioni")
+            if(b.type == "opzioni")
             {
                 //System.out.println("opzioni");
                 collided = true;
@@ -52,9 +53,9 @@ public class MenuContactListener implements ContactListener{
                 
         }
         
-        if(b.entity_type == "mouse")
+        if(b.type == "mouse")
         {
-            if(a.entity_type == "opzioni")
+            if(a.type == "opzioni")
             {
                 //System.out.println("opzioni");
                 collided = true;
@@ -68,13 +69,8 @@ public class MenuContactListener implements ContactListener{
     //chiamato quando due fixture finiscono di collidere
     @Override
     public void endContact(Contact c) {
-        a=(Entity)c.getFixtureA().getUserData();
-        b=(Entity)c.getFixtureB().getUserData();
-        if(index == 0)
-        {
-            //System.out.println("non c'e' piu' contatto tra "+c.getFixtureA().getUserData()+" e "+c.getFixtureB().getUserData());
-            
-        }
+        a=(userDataContainer)c.getFixtureA().getUserData();
+        b=(userDataContainer)c.getFixtureB().getUserData();
         collided = false;
     }
 

@@ -11,8 +11,6 @@ import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Circle;
@@ -31,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
+import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
 
@@ -150,15 +149,21 @@ public class Livello {
                     case "platform_solid":
                         fdef.filter.categoryBits=(short)8;
                         fdef.filter.maskBits=(short)(4|32|16);
+                        body.createFixture(fdef).setUserData("map_object");
                         break;
                     case "platform":
                         fdef.filter.categoryBits=(short)64;
                         fdef.filter.maskBits=(short)(4|32);
+                        body.createFixture(fdef).setUserData("map_object");
+                        break;
+                    case "platform_wall":
+                        //stessi bit per le platform_solid
+                        fdef.filter.categoryBits=(short)8;
+                        fdef.filter.maskBits=(short)(4|32|16);
+                        body.createFixture(fdef).setUserData("map_wall");
                         break;
                 }
             }
-            
-            body.createFixture(fdef).setUserData("map_object");
             
             s.dispose();
         }
