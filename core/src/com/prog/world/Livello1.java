@@ -2,23 +2,27 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.prog.collision.LevelContactListener;
+import com.prog.entity.EnemyFactory;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Livello1 extends Livello implements Screen{
     Player p;
     float delta;
     LevelContactListener lcl;
+    EnemyFactory ef;
     
-    //test UI
-    Texture tex;
-    Texture tex2;
+    public static ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
+
     
     public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
     {
@@ -41,10 +45,6 @@ public class Livello1 extends Livello implements Screen{
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
-        
-        //test UI
-        tex=new Texture("images/ui/bg.png");
-        tex2=new Texture("images/ui/fireball_2.png");
         
         //cam.translate(0f,-1f);
         //NOTA: METTI GLI ELEMENTI IN ORDINE
@@ -77,6 +77,8 @@ public class Livello1 extends Livello implements Screen{
         
         //selector
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
+
+        ef=new EnemyFactory(p);
     }
 
     @Override
@@ -85,7 +87,6 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void render(float f) {
-        
         cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
         level_ui.update();
@@ -95,6 +96,8 @@ public class Livello1 extends Livello implements Screen{
         for(Entity e:entities)
             e.handleInput();
         
+        //enemyfactory update
+        ef.update(f);
         
         //handleinput del livello
         handleInput();
@@ -141,11 +144,12 @@ public class Livello1 extends Livello implements Screen{
         Gdx.gl.glViewport(0,75,800, 525);
         //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
-        mapRenderer.render();
+        //mapRenderer.render();
         //guardo entities e renderizzo cose
         batch.begin();
         for(Entity e:entities)
             e.draw();
+        ef.draw();
         batch.end();
         debug.render(world, cam.combined);
     }

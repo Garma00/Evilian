@@ -29,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Entity;
+import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
 
@@ -148,54 +149,60 @@ public class Livello {
                     case "platform_solid":
                         fdef.filter.categoryBits=(short)8;
                         fdef.filter.maskBits=(short)(4|32|16);
+                        body.createFixture(fdef).setUserData("map_object");
                         break;
                     case "platform":
                         fdef.filter.categoryBits=(short)64;
                         fdef.filter.maskBits=(short)(4|32);
+                        body.createFixture(fdef).setUserData("map_object");
+                        break;
+                    case "platform_wall":
+                        //stessi bit per le platform_solid
+                        fdef.filter.categoryBits=(short)8;
+                        fdef.filter.maskBits=(short)(4|32|16);
+                        body.createFixture(fdef).setUserData("map_wall");
                         break;
                 }
             }
             
-            body.createFixture(fdef).setUserData("map_object");
-            
             s.dispose();
         }
     }
+    
+    private PolygonShape getRectangle(RectangleMapObject rectangleObject) {
+        Rectangle rectangle = rectangleObject.getRectangle();
+        PolygonShape polygon = new PolygonShape();
+        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / Evilian.PPM,
+                                   (rectangle.y + rectangle.height * 0.5f ) / Evilian.PPM);
+        polygon.setAsBox(rectangle.width * 0.5f / Evilian.PPM,
+                         rectangle.height * 0.5f / Evilian.PPM,
+                         size,
+                         0.0f);
+        return polygon;
+    }
 
-        private PolygonShape getRectangle(RectangleMapObject rectangleObject) {
-            Rectangle rectangle = rectangleObject.getRectangle();
-            PolygonShape polygon = new PolygonShape();
-            Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / Evilian.PPM,
-                                       (rectangle.y + rectangle.height * 0.5f ) / Evilian.PPM);
-            polygon.setAsBox(rectangle.width * 0.5f / Evilian.PPM,
-                             rectangle.height * 0.5f / Evilian.PPM,
-                             size,
-                             0.0f);
-            return polygon;
+    private CircleShape getCircle(CircleMapObject circleObject) {
+        Circle circle = circleObject.getCircle();
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(circle.radius / Evilian.PPM);
+        circleShape.setPosition(new Vector2(circle.x / Evilian.PPM, circle.y / Evilian.PPM));
+        return circleShape;
+    }
+
+    private PolygonShape getPolygon(PolygonMapObject polygonObject) {
+        PolygonShape polygon = new PolygonShape();
+        float[] vertices = polygonObject.getPolygon().getTransformedVertices();
+
+        float[] worldVertices = new float[vertices.length];
+
+        for (int i = 0; i < vertices.length; ++i) {
+            //System.out.println(vertices[i]);
+            worldVertices[i] = vertices[i] / Evilian.PPM;
         }
 
-        private CircleShape getCircle(CircleMapObject circleObject) {
-            Circle circle = circleObject.getCircle();
-            CircleShape circleShape = new CircleShape();
-            circleShape.setRadius(circle.radius / Evilian.PPM);
-            circleShape.setPosition(new Vector2(circle.x / Evilian.PPM, circle.y / Evilian.PPM));
-            return circleShape;
-        }
-
-        private PolygonShape getPolygon(PolygonMapObject polygonObject) {
-            PolygonShape polygon = new PolygonShape();
-            float[] vertices = polygonObject.getPolygon().getTransformedVertices();
-
-            float[] worldVertices = new float[vertices.length];
-
-            for (int i = 0; i < vertices.length; ++i) {
-                //System.out.println(vertices[i]);
-                worldVertices[i] = vertices[i] / Evilian.PPM;
-            }
-
-            polygon.set(worldVertices);
-            return polygon;
-        }
+        polygon.set(worldVertices);
+        return polygon;
+    }
     
     public void handleInput()
     {

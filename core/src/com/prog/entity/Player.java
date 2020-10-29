@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.prog.collision.LevelContactListener;
 import com.prog.entity.magia.Magia;
 import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
@@ -29,7 +28,7 @@ public class Player extends Entity{
     public static long[] lastLaunch;
     public static float hp, hpMax;
     public static boolean selectorPressed;
-    public static boolean inAir;
+    public boolean inAir;
     
     public Player(Mouse mouse)
     {
@@ -124,7 +123,6 @@ public class Player extends Entity{
                 body.applyLinearImpulse(new Vector2(0,force), body.getWorldCenter(), false);
             }
         }
-        
         this.body.setLinearVelocity(forza,this.body.getLinearVelocity().y);
         
         if(Gdx.input.isKeyJustPressed(Keys.Z))
@@ -138,7 +136,7 @@ public class Player extends Entity{
     public Vector2 lanciaMagia()
     {
         Vector3 mouse_pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
-        //System.out.println("mouse unproject:"+mouse_pos);
+        System.out.println("mouse unproject:"+mouse_pos);
         Vector2 m = new Vector2(mouse_pos.x, mouse_pos.y);
         Vector2 pg = new Vector2(body.getWorldCenter());
         //System.out.println("player:"+pg);
