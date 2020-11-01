@@ -36,6 +36,13 @@ public class Player extends Entity{
     public static boolean selectorPressed;
     public boolean inAir;
     
+    private class stateContainer
+    {
+        float hp;
+        Vector2 pos;
+        
+    }
+    
     public Player(Mouse mouse, float spawnX, float spawnY)
     {
         this.pos=new Rectangle(spawnX,spawnY,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
@@ -92,7 +99,7 @@ public class Player extends Entity{
 
         //setto la vita a 0.1
         if(Gdx.input.isKeyJustPressed(Keys.X))
-            hp = 0.1f;
+            hp = 1f;
         
         //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
         if(Gdx.input.justTouched())
@@ -224,21 +231,8 @@ public class Player extends Entity{
     public void salvaStato() throws IOException
     {
         FileWriter wr = new FileWriter("save_state.txt");
-        String toWrite = "P " + pos.x + " " + pos.y + "\n";
-        for(Magia m: activeSpells)
-        {
-            if(m instanceof PallaDiFuoco)
-                toWrite += "PDF ";
-            else if(m instanceof PallaDiGhiaccio)
-                toWrite += "PDG ";
-            else if(m instanceof Cura)
-                toWrite += "CUR ";
-            else if(m instanceof Meteora)
-                toWrite += "MET ";
+        String toWrite = "P " + pos.x + " " + pos.y + " " + hp + "\n";
         
-            toWrite += m.pos.x + " " + m.pos.y + "\n";
-        
-        }
         System.out.println(toWrite);
         wr.write(toWrite);
         wr.close();

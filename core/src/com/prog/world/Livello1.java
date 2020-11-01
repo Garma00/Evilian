@@ -2,7 +2,6 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -48,6 +47,8 @@ public class Livello1 extends Livello implements Screen{
             Vector2 pos = loadState();
             p=new Player(mouse, pos.x, pos.y);
             entities.add(p);
+            
+            
         }
         else
         {
@@ -195,7 +196,7 @@ public class Livello1 extends Livello implements Screen{
                     
         if(time - start < 3000)
         {
-            System.out.println("Stampo  prima texture");
+            //System.out.println("Stampo  prima texture");
                     batch.draw(tex, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
         }
             
@@ -205,7 +206,7 @@ public class Livello1 extends Livello implements Screen{
             batch.draw(tex3, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
         else
             batch.draw(tex4, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
-        System.out.println(time - start);
+        //System.out.println(time - start);
     }
 
 }

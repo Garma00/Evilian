@@ -10,4 +10,16 @@ public abstract class Enemy extends Entity implements Poolable{
     
     
     public abstract void init();
+    public void damage(float dmg)
+    {
+        life -= dmg;
+        if(life <= 0)
+            alive = false;
+        System.out.println(this + " vita = " + life);
+    }
+
+    public void save state()
+    {
+        /*posizione, vita, velocità, id*/
+    }
 }

@@ -7,12 +7,15 @@ import com.prog.evilian.Evilian;
 
 public class EnemyA extends Enemy{
     public boolean walkLeft;
-    final float SPEED=0.6f;
+    float SPEED=0.6f;
     
     @Override
     public void update(float delta) {
         pos.x=(body.getPosition().x)-(pos.width/2);
         pos.y=(body.getPosition().y)-(pos.height/2);
+        
+        if(SPEED < 0.6f)
+            SPEED += 0.2f * delta;
         
         if(walkLeft)
             body.setLinearVelocity(-SPEED,body.getLinearVelocity().y);
@@ -50,5 +53,11 @@ public class EnemyA extends Enemy{
         this.pos.width/=Evilian.PPM;
         this.pos.height/=Evilian.PPM;
         walkLeft=true;
+    }
+
+    public void debuffVelocita()
+    {
+        this.SPEED = 0.2f;
+        System.out.println("velocità " + SPEED);
     }
 }
