@@ -28,12 +28,24 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.prog.entity.Enemy;
+import com.prog.entity.EnemyFactory;
 import com.prog.entity.Entity;
-import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Mouse;
+import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
+import com.prog.world.ManagerVfx;
+import java.io.File;
+import java.io.FileNotFoundException;
+//per la funzione salva stato
+import java.io.IOException;
+import java.io.FileWriter;
+import java.util.Scanner;
+
 
 public class Livello {
+    Player p;
+    FileWriter wr;
     public static World world;
     //mappa tiled
     public TiledMap map;
@@ -48,16 +60,18 @@ public class Livello {
     public Mouse mouse;
     public static final ManagerVfx mvfx=new ManagerVfx();
     public UI level_ui;
+    public boolean resume;
+    File file;//file per il caricamento dello stato
+    EnemyFactory ef;
+   
     
-    
-    
-    public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game)
+    public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
     {
         
         //mi serve il riferimento alla classe root per poi cambiare screen (o livelli)
         root=game;
         debug=new Box2DDebugRenderer();
-        
+        Player p = null;
         //creiamo il mondo
         //NOTA:inserire gravita' negativa da parametro
         world=new World(new Vector2(0,gravity),Sleep);
@@ -77,10 +91,15 @@ public class Livello {
         
         atlas=new TextureAtlas("atlas/game.atlas");
         
+        
+        file = new File("save_state.txt");
         mouse = new Mouse(cam);
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
+        ef = new EnemyFactory(p);
+
+        
     }
     
     public Livello(boolean Sleep, int cameraWidth, int cameraHeight, Evilian game)
@@ -96,6 +115,7 @@ public class Livello {
         atlas=new TextureAtlas("atlas/game.atlas");
 
         mouse = new Mouse(cam);
+        
     }
     
     public void dispose()
@@ -204,10 +224,15 @@ public class Livello {
         return polygon;
     }
     
-    public void handleInput()
+    public void handleInput() throws IOException
     {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
+            //salvo lo stato del player
+            p.salvaStato();
+            //salvo lo stato dei nemici
+            salvaStato();
+            
             root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
             
             //questo pezzo di codice fa crashare l'app appena si preme esc e si passa da livello1 a opzioni
@@ -217,4 +242,70 @@ public class Livello {
         }
     }
     
+    
+    //legge dal file del player posizione e vita e le ritorna dentro uno state container
+    public StateContainer caricaStatoPlayer() throws FileNotFoundException
+    {
+        try
+        {
+            float x = 50, y = 100, hp = 1;
+            System.out.println("entro per leggere");
+            Scanner scan = new Scanner(file);
+            while(scan.hasNextLine())
+            {
+                
+                String line = scan.nextLine();
+                String[] words = line.split(" ");
+                if(words[0].equals("P"))
+                {
+                    x = Float.parseFloat(words[1]);
+                    y = Float.parseFloat(words[2]);
+                    hp = Float.parseFloat(words[3]);
+                }    
+            }
+            scan.close();
+            return new StateContainer(new Vector2(x, y), hp);
+        }
+        catch(FileNotFoundException e)
+        {
+                System.out.println("no file found");
+                return null;
+        }
+            
+    }
+    
+    public Array<StateContainer> caricaStatoNemico() throws FileNotFoundException
+    {
+        Array<StateContainer> arr;
+        File f = new File("enemy_state.txt");
+        try (Scanner scan = new Scanner(f)){
+            int n = scan.nextInt();
+            scan.nextLine();
+            arr = new Array<>();
+            for(int i = 0; i < n; i++)
+            {
+                String line = scan.nextLine();
+                String[] words = line.split(" ");
+                arr.add(new StateContainer(new Vector2(Float.parseFloat(words[1]), Float.parseFloat(words[2])), Float.parseFloat(words[3]), words[0]));
+            }
+        }
+        return arr;
+    }
+    
+    //salva lo stato per ogni nemico ed il numero di nemici come primo valore 
+    public void salvaStato() throws IOException
+    {
+        Array <Enemy> list = ef.getActiveEnemies();
+        int size = ef.getSize();
+        FileWriter wr = new FileWriter("enemy_state.txt");
+        String toWrite = "" + size + "\n";
+        System.out.println("ci sono " + size + " nemici");
+        wr.write(toWrite);
+        for(int i = 0; i < size; i ++)
+            list.get(i).salvStato(wr);
+        wr.close();
+    }
+        
 }
+    
+

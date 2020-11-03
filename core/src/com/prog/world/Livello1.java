@@ -2,10 +2,12 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.EnemyFactory;
 import com.prog.entity.Entity;
@@ -13,30 +15,53 @@ import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Livello1 extends Livello implements Screen{
-    Player p;
     float delta;
+    long start, time;
     LevelContactListener lcl;
-    EnemyFactory ef;
+ 
     
     public static ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
 
+    //test tutorial
+    Texture tex, tex2, tex3, tex4;
     
-    public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game)
+    public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game, boolean resume) throws IOException
     {
         super(gravity, Sleep, path, cameraWidth, cameraHeight,uiWidth,uiHeight,game);
         lcl=new LevelContactListener();
         world.setContactListener(lcl);
-
+        //ef=new EnemyFactory(p);
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
-        
+        //non spostare assolutamente da qui questione di vita o morte 
         //ho bisgno di passare il listener come parametro per avere il flag inAir
-        p=new Player(mouse);
+        this.resume = resume;
+        if(this.resume)
+        {
+            
+            StateContainer playerContainer = caricaStatoPlayer();
+            p=new Player(mouse, playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
+            entities.add(p);
+            
+            //instanzio n nemici 
+            Array<StateContainer> arr = caricaStatoNemico();
+            ef.addEnemies(arr);
+            
+            
+        }
+        else
+        {
+            p = new Player(mouse, 50, 150, 1f);
+            entities.add(p);
+        }
         
-        entities.add(p);
+        
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravit� applicata essendo un body
         world.destroyBody(mouse.body);
@@ -77,8 +102,17 @@ public class Livello1 extends Livello implements Screen{
         
         //selector
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
+        
+            
+        start = TimeUtils.millis();  
+        tex = new Texture("images/tutorial1.png");
+        tex2 = new Texture("images/tutorial2.png");
+        tex3 = new Texture("images/tutorial3.png");
+        tex4 = new Texture("images/tutorial4.png");
 
-        ef=new EnemyFactory(p);
+
+
+        
     }
 
     @Override
@@ -87,6 +121,8 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void render(float f) {
+
+        time = TimeUtils.millis();
         cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
         level_ui.update();
@@ -99,8 +135,12 @@ public class Livello1 extends Livello implements Screen{
         //enemyfactory update
         ef.update(f);
         
-        //handleinput del livello
-        handleInput();
+        try {
+            //handleinput del livello
+            handleInput();
+        } catch (IOException ex) {
+            Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         //guardo entities e faccio gli update
         for(Entity e:entities)
@@ -149,9 +189,29 @@ public class Livello1 extends Livello implements Screen{
         batch.begin();
         for(Entity e:entities)
             e.draw();
+        if(time - start<= 12000 && !resume)
+            tutorial();
         ef.draw();
         batch.end();
         debug.render(world, cam.combined);
+    }
+    
+    public void tutorial()
+    {
+                    
+        if(time - start < 3000)
+        {
+            //System.out.println("Stampo  prima texture");
+                    batch.draw(tex, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+        }
+            
+        else if(time - start >= 3000 && time -start < 6000)
+            batch.draw(tex2, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+        else if(time-start >= 6000 && time -start < 9000)
+            batch.draw(tex3, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+        else
+            batch.draw(tex4, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+        //System.out.println(time - start);
     }
 
 }

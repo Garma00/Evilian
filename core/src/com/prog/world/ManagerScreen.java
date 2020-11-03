@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.world.Livello.world;
+import java.io.IOException;
 
 public class ManagerScreen 
 {
@@ -19,13 +20,15 @@ public class ManagerScreen
         index = 0;
     }
     
-    public void changeScreen(Array<Entity> entities, Evilian game)
+    public void changeScreen(Array<Entity> entities, Evilian game) throws IOException
     {
         switch(index)
         {
             case 1:
+                //l'ultimo booleano serve per dire se il livello deve leggere lo stato dal file
+                //nel primo caso è messo a false perchè stiamo iniziando una nuova partita
                 if(clear(entities))
-                    game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.SCREEN_WIDTH, 525,800,75, game));
+                    game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.SCREEN_WIDTH, 525,800,75, game, false));
                 else
                     return;
                 break;
@@ -35,6 +38,14 @@ public class ManagerScreen
                 else
                     return;
                 break;
+
+            case 3:
+                if(clear(entities))                    
+                    game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.SCREEN_WIDTH, 525,800,75, game, true));
+                else
+                    return;
+                break;                
+                
                 
             default:
                 if(clear(entities))

@@ -11,6 +11,9 @@ import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.world;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Opzioni extends Livello implements Screen {
@@ -54,7 +57,11 @@ public class Opzioni extends Livello implements Screen {
         {
             //System.out.println("collided in opzioni");
             super.dispose();
-            MANAGER_SCREEN.changeScreen(entities, root);
+            try {
+                MANAGER_SCREEN.changeScreen(entities, root);
+            } catch (IOException ex) {
+                Logger.getLogger(Opzioni.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         for(Entity e:entities)

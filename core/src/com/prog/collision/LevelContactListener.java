@@ -8,6 +8,9 @@ import com.prog.entity.EnemyA;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Player;
 import com.prog.entity.magia.Magia;
+import com.prog.entity.magia.Meteora;
+import com.prog.entity.magia.PallaDiFuoco;
+import com.prog.entity.magia.PallaDiGhiaccio;
 
 public class LevelContactListener implements ContactListener{
     userDataContainer a,b;
@@ -17,24 +20,27 @@ public class LevelContactListener implements ContactListener{
     public void beginContact(Contact c) {
         check(c);
         
-        System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
+        //System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
         
         //check player
         if(isSensorA && a.type=="player_foot")
         {
+            System.out.println("Personaggio a terra");
             //System.out.println(a+" "+b);
             ((Player)a.e).inAir=false;
         }
         
         if(isSensorB && b.type=="player_foot")
         {
+            System.out.println("Personaggio a terra");
             //System.out.println(a+" "+b);
             ((Player)b.e).inAir=false;
         }
         
         //check magie
-        //check di null perchè non è detto che la funzione check instanzi a e b
+        //check di null perche' non e' detto che la funzione check instanzi a e b
         //(ovvero non entra negli if)
+        
         if(!isSensorA && a!=null && a.type == "magia")
         {
             Magia spellA=(Magia)a.e;
@@ -46,6 +52,37 @@ public class LevelContactListener implements ContactListener{
             Magia spellB=(Magia)b.e;
             spellB.alive=false;
         }
+        
+        if(!isSensorB && !isSensorA && a != null && a.type == "magia" &&  b != null && b.type == "enemyA")
+        {
+            if(a.e instanceof PallaDiFuoco)
+                ((EnemyA)b.e).damage(0.4f);
+            else if(a.e instanceof PallaDiGhiaccio)
+            {
+                ((EnemyA)b.e).debuffVelocita();
+                ((EnemyA)b.e).damage(0.2f);
+            }
+            else if(a.e instanceof Meteora)
+                ((EnemyA)b.e).damage(0.8f);
+                
+        }
+        
+        if(!isSensorA && !isSensorB && b != null && a != null &&  b.type == "magia" && a.type == "enemyA")
+        {
+            if(b.e instanceof PallaDiFuoco)
+                ((EnemyA)a.e).damage(0.4f);
+            else if(b.e instanceof PallaDiGhiaccio)
+            {
+                ((EnemyA)a.e).damage(0.2f);
+                ((EnemyA)a.e).debuffVelocita();
+            }
+            else if(b.e instanceof Meteora)
+                ((EnemyA)a.e).damage(0.8f);
+        }
+        
+        
+        
+        
         
         //se un nemico tocca un muro
         if(isSensorA && a.type=="enemyLeftFoot")
@@ -79,12 +116,14 @@ public class LevelContactListener implements ContactListener{
         //check player
         if(isSensorA && a.type=="player_foot")
         {
+            System.out.println("Personaggio in aria");
             //System.out.println("fine "+a+" "+b);
             ((Player)a.e).inAir=true;
         }
         
         if(isSensorB && b.type=="player_foot")
         {
+            System.out.println("Personaggio in aria");
             //System.out.println("fine "+a+" "+b);
             ((Player)b.e).inAir=true;
         }
