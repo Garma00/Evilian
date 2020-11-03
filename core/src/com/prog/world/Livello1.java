@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.EnemyFactory;
 import com.prog.entity.Entity;
@@ -23,7 +24,7 @@ public class Livello1 extends Livello implements Screen{
     float delta;
     long start, time;
     LevelContactListener lcl;
-    EnemyFactory ef;
+ 
     
     public static ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
 
@@ -35,24 +36,28 @@ public class Livello1 extends Livello implements Screen{
         super(gravity, Sleep, path, cameraWidth, cameraHeight,uiWidth,uiHeight,game);
         lcl=new LevelContactListener();
         world.setContactListener(lcl);
-
+        //ef=new EnemyFactory(p);
         //prendo i poligoni della mappa e li inserisco nel mondo
         parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
-        
         //non spostare assolutamente da qui questione di vita o morte 
         //ho bisgno di passare il listener come parametro per avere il flag inAir
         this.resume = resume;
         if(this.resume)
         {
-            Vector2 pos = loadState();
-            p=new Player(mouse, pos.x, pos.y);
+            
+            StateContainer playerContainer = caricaStatoPlayer();
+            p=new Player(mouse, playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
             entities.add(p);
+            
+            //instanzio n nemici 
+            Array<StateContainer> arr = caricaStatoNemico();
+            ef.addEnemies(arr);
             
             
         }
         else
         {
-            p = new Player(mouse, 50, 150);
+            p = new Player(mouse, 50, 150, 1f);
             entities.add(p);
         }
         
@@ -107,7 +112,7 @@ public class Livello1 extends Livello implements Screen{
 
 
 
-        ef=new EnemyFactory(p);
+        
     }
 
     @Override

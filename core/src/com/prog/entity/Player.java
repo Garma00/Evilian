@@ -36,14 +36,9 @@ public class Player extends Entity{
     public static boolean selectorPressed;
     public boolean inAir;
     
-    private class stateContainer
-    {
-        float hp;
-        Vector2 pos;
-        
-    }
     
-    public Player(Mouse mouse, float spawnX, float spawnY)
+    
+    public Player(Mouse mouse, float spawnX, float spawnY, float hp)
     {
         this.pos=new Rectangle(spawnX,spawnY,atlas.findRegion("knight_m_idle_anim", 0).getRegionWidth(),atlas.findRegion("knight_m_idle_anim", 0).getRegionHeight());
         this.anim=stand;
@@ -64,7 +59,7 @@ public class Player extends Entity{
         spellSelector=0;
         lastLaunch=new long[4];
         time=TimeUtils.millis();
-        this.hp = 0.1f;
+        this.hp = hp;
         this.hpMax = 1.0f;
         this.sound = 0;
         selectorPressed=false;
@@ -99,7 +94,7 @@ public class Player extends Entity{
 
         //setto la vita a 0.1
         if(Gdx.input.isKeyJustPressed(Keys.X))
-            hp = 1f;
+            hp = 0.1f;
         
         //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
         if(Gdx.input.justTouched())

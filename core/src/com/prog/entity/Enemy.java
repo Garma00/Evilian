@@ -1,6 +1,9 @@
 package com.prog.entity;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public abstract class Enemy extends Entity implements Poolable{
     float life;
@@ -10,6 +13,7 @@ public abstract class Enemy extends Entity implements Poolable{
     
     
     public abstract void init();
+    public abstract void init(Vector2 loadingPosition, float hp);
     public void damage(float dmg)
     {
         life -= dmg;
@@ -18,8 +22,15 @@ public abstract class Enemy extends Entity implements Poolable{
         System.out.println(this + " vita = " + life);
     }
 
-    public void save state()
+    public void salvStato(FileWriter wr) throws IOException
     {
         /*posizione, vita, velocità, id*/
+        
+        String toWrite = "E " + pos.x + " " + pos.y + " " + life + "\n";
+        
+        System.out.println(toWrite);
+        wr.write(toWrite);
+        
     }
+   
 }

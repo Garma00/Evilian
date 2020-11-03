@@ -5,11 +5,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.evilian.Evilian;
+import com.prog.world.StateContainer;
 
 public class EnemyFactory {
     static Player p;
     long time,lastCall;
-    static Array<Enemy> activeEnemies=new Array<Enemy>();
+    //l'array va reso publico perchè serve conoscere il numero di elementi e iterarli per salvare lo stato
+    public Array<Enemy> activeEnemies=new Array<Enemy>();
     //da aggiungere altri tipi
     public enum EnemyType {
         A,
@@ -94,4 +96,30 @@ public class EnemyFactory {
             e.draw();
     }
     
+    /*carico i nemici con i dati dal file*/
+    public void addEnemies(Array<StateContainer> arr)
+    {
+        for(StateContainer s: arr)
+        {
+            switch(s.getType())
+            {
+                case "E":
+                    Enemy e = createEnemy(EnemyType.A);
+                    e.init(s.getPos(), s.getHp());
+                    activeEnemies.add(e);
+                    break;
+                
+            }
+        }
+    }
+    
+    public int getSize()
+    {
+        return activeEnemies.size;
+    }
+    
+    public Array<Enemy> getActiveEnemies()
+    {
+        return activeEnemies;
+    }
 }
