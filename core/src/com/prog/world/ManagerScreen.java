@@ -44,7 +44,14 @@ public class ManagerScreen
                     game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.SCREEN_WIDTH, 525,800,75, game, true));
                 else
                     return;
-                break;                
+                break;  
+                
+            case 4:
+                if(clear(entities))                    
+                    game.setScreen(new MainMenu(game.SCREEN_WIDTH, game.SCREEN_HEIGHT, game));
+                else
+                    return;
+                break;
                 
                 
             default:

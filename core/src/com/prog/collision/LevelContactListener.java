@@ -20,7 +20,8 @@ public class LevelContactListener implements ContactListener{
     public void beginContact(Contact c) {
         check(c);
         
-        //System.out.println("Collisione tra "+c.getFixtureA().getUserData()+ " e "+c.getFixtureB().getUserData());
+        if(a != null && b != null)
+            System.out.println("Collisione tra " + a.type + " e " + b.type);
         
         //check player
         if(isSensorA && a.type=="player_foot")
@@ -81,26 +82,30 @@ public class LevelContactListener implements ContactListener{
         }
         
         
+        if(!isSensorA && !isSensorB && b != null && a != null && a.type == "player" && b.type == "enemyA")
+            ((Player)a.e).applyDmg(0.25f);
+        
+        if(!isSensorA && !isSensorB && b != null && a != null && b.type == "player" && a.type == "enemyA")
+            ((Player)b.e).applyDmg(0.25f);
         
         
-        
-        //se un nemico tocca un muro
-        if(isSensorA && a.type=="enemyLeftFoot")
+        //se un nemico tocca qualunque cosa che non sia il player 
+        if(isSensorA && a.type=="enemyLeftFoot" &&!(b != null && (b.type == "player" || b.type == "player_foot")))
         {
             ((EnemyA)a.e).walkLeft=false;
         }
         
-        if(isSensorB && b.type=="enemyLeftFoot")
+        if(isSensorB && b.type=="enemyLeftFoot" && !(a != null && (a.type == "player" || a.type == "player_foot")))
         {
             ((EnemyA)b.e).walkLeft=false;
         }
         
-        if(isSensorA && a.type=="enemyRightFoot")
+        if(isSensorA && a.type=="enemyRightFoot" &&!(b != null && (b.type == "player" || b.type == "player_foot")))
         {
             ((EnemyA)a.e).walkLeft=true;
         }
         
-        if(isSensorB && b.type=="enemyRightFoot")
+        if(isSensorB && b.type=="enemyRightFoot"&& !(a != null && (a.type == "player" || a.type == "player_foot")))
         {
             ((EnemyA)b.e).walkLeft=true;
         }
@@ -114,14 +119,16 @@ public class LevelContactListener implements ContactListener{
         check(c);
         
         //check player
-        if(isSensorA && a.type=="player_foot")
+        //se il piede del player smette di collidere con qualunque cosa che non siano i piedi del nemico 
+        if(isSensorA && a.type=="player_foot" && !(isSensorB && (b.type == "enemyLeftFoot" || b.type == "enemyRightFoot")))
         {
             System.out.println("Personaggio in aria");
             //System.out.println("fine "+a+" "+b);
             ((Player)a.e).inAir=true;
         }
         
-        if(isSensorB && b.type=="player_foot")
+        
+        if(isSensorB && b.type=="player_foot" && !(isSensorA && (a.type == "enemyLeftFoot" || a.type == "enemyRightFoot")))
         {
             System.out.println("Personaggio in aria");
             //System.out.println("fine "+a+" "+b);
@@ -160,6 +167,8 @@ public class LevelContactListener implements ContactListener{
     
     public void check(Contact c)
     {
+        a=null;
+        b=null;
         //ATTENZIONE:
         //gli oggetti della mappa hanno come userdata la stringa map_object e non loro stessi
         if(c.getFixtureA().isSensor())
@@ -172,8 +181,9 @@ public class LevelContactListener implements ContactListener{
         {
             a=(userDataContainer)c.getFixtureA().getUserData();
             isSensorA=false;
-        }
-        
+        }else
+            isSensorA=false;
+
         if(c.getFixtureB().isSensor())
         {
             //allora la fixture e' un sensore
@@ -184,6 +194,7 @@ public class LevelContactListener implements ContactListener{
         {
             b=(userDataContainer)c.getFixtureB().getUserData();
             isSensorB=false;
-        }
+        }else
+            isSensorB=false;
     }
 }

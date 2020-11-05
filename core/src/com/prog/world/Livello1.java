@@ -15,6 +15,8 @@ import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.evilian.Evilian.MANAGER_MUSIC;
+import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
+import static com.prog.world.ManagerScreen.index;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -127,6 +129,18 @@ public class Livello1 extends Livello implements Screen{
         cam.update();
         level_ui.update();
         batch.setProjectionMatrix(cam.combined);
+        
+        if(!p.alive)
+        {
+            index = 4;
+            try {
+                MANAGER_SCREEN.changeScreen(entities, root);
+            } catch (IOException ex) {
+                Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            
+            
         
         //handleinput entita'
         for(Entity e:entities)

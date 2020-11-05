@@ -34,9 +34,9 @@ public class Player extends Entity{
     public static long[] lastLaunch;
     public static float hp, hpMax;
     public static boolean selectorPressed;
-    public boolean inAir;
-    
-    
+    public boolean inAir, alive;
+    private boolean invincibile;
+    private float dmgTimer;
     
     public Player(Mouse mouse, float spawnX, float spawnY, float hp)
     {
@@ -45,6 +45,7 @@ public class Player extends Entity{
         //true perche' il player starta in aria
         inAir=true;
         this.body = createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32|64));
+        this.mouse = mouse;
         //imposto width e height al valore corretto
         this.pos.width=this.pos.width/Evilian.PPM;
         this.pos.height=this.pos.height/Evilian.PPM;
@@ -52,7 +53,6 @@ public class Player extends Entity{
         attachFixture(body,new Vector2(0,-0.15f), true,"player_foot", 12f, 5f, 0, 0, 0);
         this.flipX=false;
         this.flipY=false;
-        this.mouse = mouse;
         activeSpells = new Array<Magia>();
         
         spellFactory=new SpellFactory(this);
@@ -63,6 +63,10 @@ public class Player extends Entity{
         this.hpMax = 1.0f;
         this.sound = 0;
         selectorPressed=false;
+        alive = true;
+        invincibile = false;
+        dmgTimer = 1f;
+        
     }
 
     @Override
@@ -72,6 +76,17 @@ public class Player extends Entity{
         //NOTA: getPosition di body mi ritorna il centro del corpo
         pos.x=(body.getPosition().x)-(pos.width/2);
         pos.y=(body.getPosition().y)-(pos.height/2);
+        
+        if(this.invincibile)
+        {
+            dmgTimer -= delta;
+            if(dmgTimer <= 0)
+            {
+                invincibile = false;
+                dmgTimer =  1f;
+            }
+                
+        }
         
         for(Magia m:activeSpells)
             m.update(delta);
@@ -232,6 +247,19 @@ public class Player extends Entity{
         wr.write(toWrite);
         wr.close();
         
+    }
+
+    public void applyDmg(float dmg)
+    {
+        if(!invincibile)
+        {
+            this.hp -= dmg;
+            if(this.hp <= 0)
+                this.alive = false;
+            this.invincibile = true;
+        }
+            
+    
     }
 
 }
