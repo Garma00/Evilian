@@ -17,7 +17,6 @@ public class EnemyFactory {
         A,
         B
     };
-    
     public EnemyFactory(Player p)
     {
         this.p=p;
@@ -69,17 +68,6 @@ public class EnemyFactory {
     
     public void update(float delta)
     {
-        //uncommentare se si vogliono spawnare i nemici ogni tot tempo
-        //time=TimeUtils.millis();
-        
-        if(time - lastCall > 10000)
-        {
-            lastCall=time;
-            Enemy e=createEnemy(EnemyType.A);
-            e.init();
-            activeEnemies.add(e);
-        }
-        
         for(Enemy e : activeEnemies)
             if(!e.alive)
             {
@@ -94,6 +82,21 @@ public class EnemyFactory {
     {
         for(Enemy e : activeEnemies)
             e.draw();
+    }
+    
+    public void addEnemy()
+    {
+        Enemy e = createEnemy(EnemyType.A);
+        e.init();
+        activeEnemies.add(e);
+    }
+    
+    public void addEnemy(float x,float y,float hp)
+    {
+        Vector2 tmp=new Vector2();
+        Enemy e = createEnemy(EnemyType.A);
+        e.init(tmp.set(x,y),hp);
+        activeEnemies.add(e);
     }
     
     /*carico i nemici con i dati dal file*/
