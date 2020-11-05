@@ -124,6 +124,7 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void render(float f) {
 
+        timeEmployed += delta;
         time = TimeUtils.millis();
         cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
@@ -227,5 +228,7 @@ public class Livello1 extends Livello implements Screen{
             batch.draw(tex4, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
         //System.out.println(time - start);
     }
+    
+    
 
 }

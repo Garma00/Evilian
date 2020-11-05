@@ -53,6 +53,14 @@ public class ManagerScreen
                     return;
                 break;
                 
+            case 5:
+                if(clear(entities))                    
+                    game.setScreen(new EndLevel(game.SCREEN_WIDTH, game.SCREEN_HEIGHT, game));
+                else
+                    return;
+                break;
+                
+                
                 
             default:
                 if(clear(entities))

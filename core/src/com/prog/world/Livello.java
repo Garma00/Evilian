@@ -41,7 +41,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.Scanner;
-
+import static com.prog.world.ManagerScreen.index;
+import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
 
 public class Livello {
     Player p;
@@ -63,6 +64,7 @@ public class Livello {
     public boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
+    protected float score, timeEmployed;
    
     
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
@@ -98,6 +100,8 @@ public class Livello {
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
         ef = new EnemyFactory(p);
+        timeEmployed = 0;
+        score = 0f;
 
         
     }
@@ -111,7 +115,7 @@ public class Livello {
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         
-        camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        //camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
         atlas=new TextureAtlas("atlas/game.atlas");
 
         mouse = new Mouse(cam);
@@ -226,6 +230,8 @@ public class Livello {
     
     public void handleInput() throws IOException
     {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.E))
+            endLevel();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             //salvo lo stato del player
@@ -304,6 +310,21 @@ public class Livello {
         for(int i = 0; i < size; i ++)
             list.get(i).salvStato(wr);
         wr.close();
+    }
+    
+    //questa funzione verrà chiamata alla fine del livello
+    protected void endLevel() throws FileNotFoundException, IOException
+    {
+        
+        //calcolo lo score effettivo e lo scrivo sul file
+        score -= timeEmployed;
+        index = 5;
+        FileWriter wr = new FileWriter("score.txt");
+        String toWrite = "" + score;
+        wr.write(toWrite);
+        wr.close();
+        MANAGER_SCREEN.changeScreen(entities, root);
+        
     }
         
 }

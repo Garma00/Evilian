@@ -100,7 +100,7 @@ public class MainMenu extends Livello implements Screen
     
     @Override
     public void resize(int width, int height) {
-        camvp.update(width, height);
+        //camvp.update(width, height);
         mvfx.resize(width, height);
     }
 
