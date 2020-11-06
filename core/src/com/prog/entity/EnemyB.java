@@ -10,8 +10,8 @@ import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
 import static com.prog.world.Livello.world;
 
-public class EnemyA extends Enemy{
-    private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("pig_run"),Animation.PlayMode.LOOP);
+public class EnemyB extends Enemy{
+    private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,atlas.findRegions("king_pig_run"),Animation.PlayMode.LOOP);
     
     @Override
     public void update(float delta) {
@@ -69,8 +69,8 @@ public class EnemyA extends Enemy{
     public void init() {
         this.alive=true;
         this.life=1;
-        this.pos=new Rectangle(MathUtils.random(100f,300f),MathUtils.random(100f, 300f),18f,19f);
-        this.body=createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyA",1f,0f,0f,(short)32,(short)(4|8|16|64));
+        this.pos=new Rectangle(MathUtils.random(100f,300f),MathUtils.random(100f, 300f),19f,22f);
+        this.body=createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
         this.attachFixture(this.body, new Vector2(-0.1f,-0.15f), true, "enemyLeftFoot", 5, 3, 0, 0, 0);
         this.attachFixture(this.body, new Vector2(0.1f,-0.15f),  true, "enemyRightFoot", 5, 3, 0, 0, 0);
         this.pos.width/=Evilian.PPM;
@@ -86,8 +86,8 @@ public class EnemyA extends Enemy{
     {
         this.alive=true;
         this.life=hp;
-        this.pos=new Rectangle(loadingPosition.x * Evilian.PPM, loadingPosition.y * Evilian.PPM, 18f,19f);
-        this.body=createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyA",1f,0f,0f,(short)32,(short)(4|8|16|64));
+        this.pos=new Rectangle(loadingPosition.x * Evilian.PPM, loadingPosition.y * Evilian.PPM, 19f,22f);
+        this.body=createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
         this.attachFixture(this.body, new Vector2(-0.1f,-0.15f), true, "enemyLeftFoot", 5, 3, 0, 0, 0);
         this.attachFixture(this.body, new Vector2(0.1f,-0.15f),  true, "enemyRightFoot", 5, 3, 0, 0, 0);
         this.pos.width/=Evilian.PPM;
@@ -97,5 +97,11 @@ public class EnemyA extends Enemy{
         this.flipX=false;
         this.anim=walking;
         SPEED=0.6f;
+    }
+
+    public void debuffVelocita()
+    {
+        this.SPEED = 0.2f;
+        //System.out.println("velocita'  " + SPEED);
     }
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.prog.entity.EnemyA;
+import com.prog.entity.Enemy;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Player;
 import com.prog.entity.magia.Magia;
@@ -54,60 +54,59 @@ public class LevelContactListener implements ContactListener{
             spellB.alive=false;
         }
         
-        if(!isSensorB && !isSensorA && a != null && a.type == "magia" &&  b != null && b.type == "enemyA")
+        if(!isSensorB && !isSensorA && a != null && a.type == "magia" &&  b != null && (b.type == "enemyA" || b.type == "enemyB"))
         {
             if(a.e instanceof PallaDiFuoco)
-                ((EnemyA)b.e).damage(0.4f);
+                ((Enemy)b.e).damage(0.4f);
             else if(a.e instanceof PallaDiGhiaccio)
             {
-                ((EnemyA)b.e).debuffVelocita();
-                ((EnemyA)b.e).damage(0.2f);
+                ((Enemy)b.e).debuffVelocita();
+                ((Enemy)b.e).damage(0.2f);
             }
             else if(a.e instanceof Meteora)
-                ((EnemyA)b.e).damage(0.8f);
-                
+                ((Enemy)b.e).damage(0.8f); 
         }
         
-        if(!isSensorA && !isSensorB && b != null && a != null &&  b.type == "magia" && a.type == "enemyA")
+        if(!isSensorA && !isSensorB && b != null && a != null &&  b.type == "magia" && (a.type == "enemyA" || a.type == "enemyB"))
         {
             if(b.e instanceof PallaDiFuoco)
-                ((EnemyA)a.e).damage(0.4f);
+                ((Enemy)a.e).damage(0.4f);
             else if(b.e instanceof PallaDiGhiaccio)
             {
-                ((EnemyA)a.e).damage(0.2f);
-                ((EnemyA)a.e).debuffVelocita();
+                ((Enemy)a.e).damage(0.2f);
+                ((Enemy)a.e).debuffVelocita();
             }
             else if(b.e instanceof Meteora)
-                ((EnemyA)a.e).damage(0.8f);
+                ((Enemy)a.e).damage(0.8f);
         }
         
         
-        if(!isSensorA && !isSensorB && b != null && a != null && a.type == "player" && b.type == "enemyA")
+        if(!isSensorA && !isSensorB && b != null && a != null && a.type == "player" && (b.type == "enemyA" || b.type == "enemyB"))
             ((Player)a.e).applyDmg(0.25f);
         
-        if(!isSensorA && !isSensorB && b != null && a != null && b.type == "player" && a.type == "enemyA")
+        if(!isSensorA && !isSensorB && b != null && a != null && b.type == "player" && (a.type == "enemyA" || a.type == "enemyB"))
             ((Player)b.e).applyDmg(0.25f);
         
         
         //se un nemico tocca qualunque cosa che non sia il player 
         if(isSensorA && a.type=="enemyLeftFoot" &&!(b != null && (b.type == "player" || b.type == "player_foot")))
         {
-            ((EnemyA)a.e).walkLeft=false;
+            ((Enemy)a.e).walkLeft=false;
         }
         
         if(isSensorB && b.type=="enemyLeftFoot" && !(a != null && (a.type == "player" || a.type == "player_foot")))
         {
-            ((EnemyA)b.e).walkLeft=false;
+            ((Enemy)b.e).walkLeft=false;
         }
         
         if(isSensorA && a.type=="enemyRightFoot" &&!(b != null && (b.type == "player" || b.type == "player_foot")))
         {
-            ((EnemyA)a.e).walkLeft=true;
+            ((Enemy)a.e).walkLeft=true;
         }
         
         if(isSensorB && b.type=="enemyRightFoot"&& !(a != null && (a.type == "player" || a.type == "player_foot")))
         {
-            ((EnemyA)b.e).walkLeft=true;
+            ((Enemy)b.e).walkLeft=true;
         }
         
         //fine collisione piedi del nemico con le mura
@@ -138,22 +137,22 @@ public class LevelContactListener implements ContactListener{
         //piediiiii
         if(isSensorA && a.type=="enemyLeftFoot")
         {
-            ((EnemyA)a.e).walkLeft=false;
+            ((Enemy)a.e).walkLeft=false;
         }
         
         if(isSensorB && b.type=="enemyLeftFoot")
         {
-            ((EnemyA)b.e).walkLeft=false;
+            ((Enemy)b.e).walkLeft=false;
         }
         
         if(isSensorA && a.type=="enemyRightFoot")
         {
-            ((EnemyA)a.e).walkLeft=true;
+            ((Enemy)a.e).walkLeft=true;
         }
         
         if(isSensorB && b.type=="enemyRightFoot")
         {
-            ((EnemyA)b.e).walkLeft=true;
+            ((Enemy)b.e).walkLeft=true;
         }
     }
 

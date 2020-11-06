@@ -30,22 +30,21 @@ public class EnemyFactory {
         }
     };
     
-    /*
+    
     private final Pool<EnemyB> EnemyBPool = new Pool<EnemyB>() {
         @Override
         protected EnemyB newObject() {
             return new EnemyB();
         }
-    };*/
+    };
     
     //chiamala quando vuoi creare una spell
     public Enemy createEnemy(EnemyType t){
        switch(t){
          case A:
             return EnemyAPool.obtain();
-         /*case B:
+         case B:
              return EnemyBPool.obtain();
-         */
         }
         //altrimenti ritorno null
         return null;
@@ -56,9 +55,9 @@ public class EnemyFactory {
        if(e instanceof EnemyA){
          EnemyAPool.free((EnemyA)e);
        }
-       /*else if(e instanceof EnemyB){
+       else if(e instanceof EnemyB){
          EnemyBPool.free((EnemyB)e);
-       }*/
+       }
     }
     
     public static Vector2 getPlayerPos()
@@ -112,7 +111,11 @@ public class EnemyFactory {
                     e.init(s.getPos(), s.getHp());
                     activeEnemies.add(e);
                     break;
-                
+                case "E2":
+                    Enemy e2 = createEnemy(EnemyType.B);
+                    e2.init(s.getPos(),s.getHp());
+                    activeEnemies.add(e2);
+                    break;
             }
         }
     }
