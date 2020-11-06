@@ -3,7 +3,9 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.prog.evilian.Evilian;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,12 +16,15 @@ public class EndLevel extends Livello implements Screen {
     
     private float score;
     private BitmapFont font;
+    private OrthographicCamera endCamera;
     
     
     public EndLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian game) throws FileNotFoundException
     { 
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, game);
-        cam.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        endCamera = new OrthographicCamera();
+        endCamera.setToOrtho(resume, SCREEN_WIDTH, SCREEN_HEIGHT);
+        
         
         //leggo lo score dal file
         score = readScore();
@@ -35,8 +40,8 @@ public class EndLevel extends Livello implements Screen {
     @Override
     public void render(float f)
     {
-        cam.update();
-        batch.setProjectionMatrix(cam.combined);
+        endCamera.update();
+        batch.setProjectionMatrix(endCamera.combined);
         
         
         batch.begin();
@@ -47,6 +52,7 @@ public class EndLevel extends Livello implements Screen {
 
     @Override
     public void resize(int i, int i1) {
+        
     }
 
     @Override
