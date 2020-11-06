@@ -31,6 +31,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Enemy;
 import com.prog.entity.EnemyFactory;
+import com.prog.entity.EnemyFactory.EnemyType;
 import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
 import com.prog.entity.Player;
@@ -239,8 +240,22 @@ public class Livello {
             Rectangle rec;
             if (o instanceof RectangleMapObject) 
             {
+                MapProperties mp=o.getProperties();
                 rec =((RectangleMapObject) o).getRectangle();
-                this.ef.addEnemy(rec.x/Evilian.PPM, rec.y/Evilian.PPM, 1f);
+                if(mp.containsKey("type"))
+                {
+                    String type=(String)mp.get("type");
+
+                    switch(type)
+                    {
+                        case "A":
+                            this.ef.addEnemy(rec.x/Evilian.PPM, rec.y/Evilian.PPM, 1f,EnemyType.A);
+                            break;
+                        case "B":
+                            this.ef.addEnemy(rec.x/Evilian.PPM, rec.y/Evilian.PPM, 1f,EnemyType.B);
+                            break;
+                    }
+                }
             }
         }
     }

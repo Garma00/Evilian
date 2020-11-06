@@ -91,10 +91,19 @@ public class EnemyFactory {
         activeEnemies.add(e);
     }
     
-    public void addEnemy(float x,float y,float hp)
+    public void addEnemy(float x,float y,float hp,EnemyType type)
     {
         Vector2 tmp=new Vector2();
-        Enemy e = createEnemy(EnemyType.A);
+        Enemy e=null;
+        switch (type)
+        {
+            case A:
+                e = createEnemy(EnemyType.A);
+                break;
+            case B:
+                e = createEnemy(EnemyType.B);
+                break;
+        }
         e.init(tmp.set(x,y),hp);
         activeEnemies.add(e);
     }
