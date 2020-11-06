@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -44,6 +45,7 @@ public class Livello1 extends Livello implements Screen{
         //non spostare assolutamente da qui questione di vita o morte 
         //ho bisgno di passare il listener come parametro per avere il flag inAir
         this.resume = resume;
+        
         if(this.resume)
         {
             
@@ -105,14 +107,16 @@ public class Livello1 extends Livello implements Screen{
         //selector
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
         
-            
+        //timer 
+        level_ui.add(727,43,40,16, UI.ElementType.TIMER);
+        
         start = TimeUtils.millis();  
         tex = new Texture("images/tutorial1.png");
         tex2 = new Texture("images/tutorial2.png");
         tex3 = new Texture("images/tutorial3.png");
         tex4 = new Texture("images/tutorial4.png");
 
-
+        
 
         
     }
@@ -124,6 +128,7 @@ public class Livello1 extends Livello implements Screen{
     @Override
     public void render(float f) {
 
+        timeEmployed += f;
         time = TimeUtils.millis();
         cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
         cam.update();
@@ -206,6 +211,7 @@ public class Livello1 extends Livello implements Screen{
         if(time - start<= 12000 && !resume)
             tutorial();
         ef.draw();
+        
         batch.end();
         debug.render(world, cam.combined);
     }
@@ -227,5 +233,7 @@ public class Livello1 extends Livello implements Screen{
             batch.draw(tex4, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
         //System.out.println(time - start);
     }
+    
+    
 
 }
