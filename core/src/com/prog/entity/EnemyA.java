@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.prog.evilian.Evilian;
+import static com.prog.world.Livello.world;
 
 public class EnemyA extends Enemy{
     public boolean walkLeft;
@@ -38,8 +39,14 @@ public class EnemyA extends Enemy{
 
     @Override
     public void reset() {
-        this.alive=true;
-        this.life=1;
+        //setto la vita uguale a 1 e pronto per essere rispawnato
+        //NOTA: il nemico non viene spawnato affinche' non verra' settato alive=true nella init successiva
+        this.life=1f;
+        if(!world.isLocked())
+            if(body != null)
+            {
+                world.destroyBody(body);
+            }
     }
 
     @Override
@@ -71,6 +78,6 @@ public class EnemyA extends Enemy{
     public void debuffVelocita()
     {
         this.SPEED = 0.2f;
-        System.out.println("velocit√† " + SPEED);
+        System.out.println("velocita'† " + SPEED);
     }
 }

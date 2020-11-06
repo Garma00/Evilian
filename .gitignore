@@ -1,6 +1,7 @@
 ## Java
 core/assets/*.log
-
+note.txt
+core/assets/*.txt
 
 *.class
 *.war

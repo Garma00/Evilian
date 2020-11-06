@@ -56,13 +56,12 @@ public class Livello1 extends Livello implements Screen{
             //instanzio n nemici 
             Array<StateContainer> arr = caricaStatoNemico();
             ef.addEnemies(arr);
-            
-            
         }
         else
         {
             p = new Player(mouse, 50, 150, 1f);
             entities.add(p);
+            super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());
         }
         
         

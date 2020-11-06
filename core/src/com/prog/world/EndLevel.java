@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.prog.evilian.Evilian;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,21 +15,15 @@ public class EndLevel extends Livello implements Screen {
     
     private float score;
     private BitmapFont font;
-    private OrthographicCamera endCamera;
-    
     
     public EndLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian game) throws FileNotFoundException
     { 
+        
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, game);
-        endCamera = new OrthographicCamera();
-        endCamera.setToOrtho(resume, SCREEN_WIDTH, SCREEN_HEIGHT);
-        
-        
+        cam.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         //leggo lo score dal file
         score = readScore();
         font = new BitmapFont();
-        
-        
     }
     
     @Override
@@ -40,14 +33,18 @@ public class EndLevel extends Livello implements Screen {
     @Override
     public void render(float f)
     {
-        endCamera.update();
-        batch.setProjectionMatrix(endCamera.combined);
+        //resetto la viewport
         
+        cam.update();
+        batch.setProjectionMatrix(cam.combined);
+        
+        Gdx.gl.glViewport(0,0,800,600);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
         draw();
         batch.end();
-        
     }
 
     @Override
@@ -73,13 +70,7 @@ public class EndLevel extends Livello implements Screen {
     
     public void draw()
     {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
-        font.draw(batch, "hai totalizzato " + score , root.SCREEN_WIDTH /  2, root.SCREEN_HEIGHT / 2);
-        
-        
-        
+        font.draw(batch, "hai totalizzato "+score , 400,300);
     }
     
     private float readScore() throws FileNotFoundException

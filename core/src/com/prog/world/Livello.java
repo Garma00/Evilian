@@ -231,6 +231,20 @@ public class Livello {
         return polygon;
     }
     
+    public void parseEnemiesSpawnPoints(MapObjects objects)
+    {
+        //mi faccio passare come parametro la lista dei blocchi in cui ci staranno i nemici
+        for(MapObject o:objects)
+        {
+            Rectangle rec;
+            if (o instanceof RectangleMapObject) 
+            {
+                rec =((RectangleMapObject) o).getRectangle();
+                this.ef.addEnemy(rec.x/Evilian.PPM, rec.y/Evilian.PPM, 1f);
+            }
+        }
+    }
+    
     public void handleInput() throws IOException
     {
         if(Gdx.input.isKeyJustPressed(Input.Keys.E))
