@@ -3,6 +3,7 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -64,7 +65,9 @@ public class Livello {
     public boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
-    protected float score, timeEmployed;
+    protected float score;
+    protected static float timeEmployed;
+    
    
     
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
@@ -115,7 +118,7 @@ public class Livello {
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         
-        //camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
         atlas=new TextureAtlas("atlas/game.atlas");
 
         mouse = new Mouse(cam);
