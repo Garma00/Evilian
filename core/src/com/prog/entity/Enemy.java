@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import java.io.FileWriter;
 import java.io.IOException;
+import static com.prog.world.Livello.score;
 
 public abstract class Enemy extends Entity implements Poolable{
     float life;
@@ -18,7 +19,12 @@ public abstract class Enemy extends Entity implements Poolable{
     {
         life -= dmg;
         if(life <= 0)
+        {
+            //assegno 20 punti ogni volta che muore un nemico 
+            score += 20;
             alive = false;
+        }
+            
         System.out.println(this + " vita = " + life);
     }
 

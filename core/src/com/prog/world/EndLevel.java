@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import static com.prog.evilian.Evilian.batch;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EndLevel extends Livello implements Screen {
     
@@ -24,10 +26,11 @@ public class EndLevel extends Livello implements Screen {
         //leggo lo score dal file
         score = readScore();
         font = new BitmapFont();
+    
     }
     
     @Override
-    public void show() {
+    public void show(){
     }
 
     @Override
@@ -43,7 +46,12 @@ public class EndLevel extends Livello implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        draw();
+        //try cathc perchè dentro draw viene chiamata punteggi() che legge da file 
+        try {
+            draw();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(EndLevel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         batch.end();
     }
 
@@ -68,11 +76,15 @@ public class EndLevel extends Livello implements Screen {
     public void dispose() {
     }
     
-    public void draw()
+    //punteggi() causa throws FileNotFoundException
+    public void draw() throws FileNotFoundException
     {
-        font.draw(batch, "hai totalizzato "+score , 400,300);
+        font.draw(batch, "hai totalizzato "+score , root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT / 2);
+        font.draw(batch, "i tuoi record", root.SCREEN_WIDTH / 2,  (root.SCREEN_HEIGHT / 2) - 25);
+        punteggi();
     }
     
+    //legge lo score effettuato durante la partita corrente dal file score
     private float readScore() throws FileNotFoundException
     {
         File file = new File("score.txt");
@@ -82,4 +94,18 @@ public class EndLevel extends Livello implements Screen {
         return s;
     }
     
+    //legge i record dal file e li stampa
+    private void punteggi() throws FileNotFoundException
+    {
+        File f = new File("general_info.txt");
+        Scanner scan = new Scanner(f);
+        int i = 2;
+        while(scan.hasNextLine())
+        {
+            font.draw(batch, scan.nextLine(), root.SCREEN_WIDTH / 2, (root.SCREEN_HEIGHT / 2) - 25 * i);
+            i ++;
+        }
+            
+        scan.close();
+    }
 }

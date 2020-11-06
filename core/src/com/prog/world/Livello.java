@@ -65,8 +65,9 @@ public class Livello {
     public boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
-    protected float score;
+    public static float score;
     protected static float timeEmployed;
+    private Array<Float> scores;
     
    
     
@@ -105,6 +106,7 @@ public class Livello {
         ef = new EnemyFactory(p);
         timeEmployed = 0;
         score = 0f;
+        scores = new Array<>();
 
         
     }
@@ -340,10 +342,47 @@ public class Livello {
         String toWrite = "" + score;
         wr.write(toWrite);
         wr.close();
+        
+        //inserisco lo score attuale nell'array
+        scores.add(score);
+        
+        writeScores();
         MANAGER_SCREEN.changeScreen(entities, root);
         
     }
+    
+    //carico i migliori score
+    protected void loadScore() throws FileNotFoundException
+    {
+        File f = new File("general_info.txt");
+        Scanner scan = new Scanner(f);
+        while(scan.hasNextLine())
+            insertScore(scan.nextFloat());
+        scan.close();
+    }
+    
+    //scrivo gli score sul file
+    protected void writeScores() throws IOException
+    {
+        FileWriter wr = new FileWriter("general_info.txt");
         
+        for(float n: scores)
+            wr.append(String.valueOf(n));
+        
+        wr.close();
+        
+    }
+        
+    private void insertScore(float s)
+    {
+        //carico in ordine dal più grande al più piccolo gli score
+        for(float i: scores)
+        {
+            if(s > i)
+                i = s;
+        }
+    }
+    
 }
     
 
