@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-
+import static com.prog.world.Livello.timeEmployed;
 public class UI 
 {   
     public enum ElementType
@@ -20,9 +20,11 @@ public class UI
         IB_BAR,
         H_BAR,
         M_BAR,
-        SELECTOR
+        SELECTOR,
+        TIMER
     };
     
+    private OrthographicCamera textCamera;
     private OrthographicCamera cam;
     private Viewport camvp;
     public static float UI_WIDTH;
@@ -32,6 +34,7 @@ public class UI
     Array<UIElement> bgElements;
     //elementi in foreground
     Array<UIElement> fgElements;
+    UIText timer;
     
     public UI(float uiWidth,float uiHeight)
     {
@@ -40,6 +43,9 @@ public class UI
         this.cam=new OrthographicCamera();
         cam.setToOrtho(false,UI_WIDTH,UI_HEIGHT);
         this.camvp=new ExtendViewport(UI_WIDTH,UI_HEIGHT,cam);
+        
+        this.textCamera = new OrthographicCamera();
+        textCamera.setToOrtho(false, uiWidth, uiHeight);
         
         bgElements=new Array<UIElement>();
         fgElements=new Array<UIElement>();
@@ -54,6 +60,12 @@ public class UI
             e.draw();
         for(UIElement e: fgElements)
             e.draw();
+            
+        batch.end();
+        
+        batch.setProjectionMatrix(textCamera.combined);
+        batch.begin();
+        timer.draw();
         batch.end();
     }
     
@@ -102,9 +114,16 @@ public class UI
             case SELECTOR:
                 fgElements.add(e);
                 break;
+               
             default:
                 e.dispose();
                 e=null;
         }
+    }
+    
+    public void add(float x,float y, float width,float height, ElementType type)
+    {
+        timer = new UIText(x, y, width, height, type);
+        
     }
 }

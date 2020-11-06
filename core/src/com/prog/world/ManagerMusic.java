@@ -22,7 +22,7 @@ public class ManagerMusic
                 if(musica != null)
                     musica.dispose();
                 musica = Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3"));
-                musica.play();
+                //musica.play();
                 musica.setVolume(0.4f);
                 musica.setLooping(true);
                 break;
@@ -31,7 +31,7 @@ public class ManagerMusic
                 if(musica != null)
                     musica.dispose();
                 musica = Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3"));
-                musica.play();
+                //musica.play();
                 musica.setVolume(0.4f);
                 musica.setLooping(true);
                 break;

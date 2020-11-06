@@ -3,6 +3,7 @@ package com.prog.world;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.prog.entity.Player;
@@ -27,6 +28,8 @@ class UIElement
     float cd;
     float original_pos;
     
+    
+    
     public UIElement(float x,float y,float width,float height,String path,ElementType type)
     {
         
@@ -35,7 +38,9 @@ class UIElement
         this.type=type;
         cd=1;
         this.original_pos=this.pos.x;
+        
     }
+    
     
     public void draw()
     {
@@ -89,12 +94,15 @@ class UIElement
                 batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
                 batch.setColor(Color.WHITE);
                 break;
+                
             default:
                 //da aggiungere le animazioni, punto di rotazione, flip e quant'altro
                 batch.draw(tex,pos.x,pos.y,pos.width,pos.height);
         }
             
     }
+    
+    
 
     public void update() 
     {
