@@ -72,6 +72,7 @@ public class EnemyFactory {
             if(!e.alive)
             {
                 destroyEnemy(e);
+                activeEnemies.removeValue(e, true);
             }else
             {
                 e.update(delta);
