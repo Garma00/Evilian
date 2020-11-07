@@ -45,6 +45,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import static com.prog.world.ManagerScreen.index;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
+import java.util.HashSet;
 
 public class Livello {
     Player p;
@@ -66,9 +67,9 @@ public class Livello {
     public boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
-    protected float score;
+    public static int points;
     protected static float timeEmployed;
-    
+   
    
     
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
@@ -105,7 +106,7 @@ public class Livello {
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
         ef = new EnemyFactory(p);
         timeEmployed = 0;
-        score = 0f;
+        points = 0;
 
         
     }
@@ -347,18 +348,22 @@ public class Livello {
     //questa funzione verrà chiamata alla fine del livello
     protected void endLevel() throws FileNotFoundException, IOException
     {
+        //creo uno score con i punti totalizzati
+        Score score = new Score(points, java.time.LocalDate.now(), java.time.LocalTime.now());
         
-        //calcolo lo score effettivo e lo scrivo sul file
-        score -= timeEmployed;
         index = 5;
         FileWriter wr = new FileWriter("score.txt");
-        String toWrite = "" + score;
+        String toWrite = "" + score.getPoints() + " " + score.getDate() + " " +  score.getTime();
         wr.write(toWrite);
         wr.close();
+        
+        
+        
+        
         MANAGER_SCREEN.changeScreen(entities, root);
         
     }
-        
+    
 }
     
 

@@ -80,16 +80,26 @@ public class ManagerScreen
             
         
         if(!world.isLocked())
-            for(Entity e : entities)
+        {
+            //entities è null quando passiamo da endLevel a main menu
+            if(entities != null)
             {
-                done = true;
-                //System.out.println("entrato" + e.body);
-                e.body.setActive(false);
-                world.destroyBody(e.body);
-            }
+                for(Entity e : entities)
+                {
+                    done = true;
+                    //System.out.println("entrato" + e.body);
+                    e.body.setActive(false);
+                    world.destroyBody(e.body);
+                }
 
-        entities.clear();
-        return done;
+                entities.clear();
+            }
+            
+            else
+                done = true;
+            
+        }
+            return done;
     }
     
 }
