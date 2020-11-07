@@ -3,7 +3,6 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -45,7 +44,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import static com.prog.world.ManagerScreen.index;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
-import java.util.HashSet;
+import java.time.format.DateTimeFormatter;
 
 public class Livello {
     Player p;
@@ -348,8 +347,10 @@ public class Livello {
     //questa funzione verrà chiamata alla fine del livello
     protected void endLevel() throws FileNotFoundException, IOException
     {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //creo uno score con i punti totalizzati
-        Score score = new Score(points, java.time.LocalDate.now(), java.time.LocalTime.now());
+        Score score = new Score(points, java.time.LocalDate.now().format(dateFormatter), java.time.LocalTime.now().format(timeFormatter));
         
         index = 5;
         FileWriter wr = new FileWriter("score.txt");
