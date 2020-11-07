@@ -9,7 +9,8 @@ public abstract class Enemy extends Entity implements Poolable{
     float life;
     //public perche' dovra' essere accessibile dal level contact listener
     public boolean alive;
-    //da assegnare solo al leader dopo l'impl del formation motion
+    public boolean walkLeft;
+    float SPEED;
     
     
     public abstract void init();
@@ -24,13 +25,22 @@ public abstract class Enemy extends Entity implements Poolable{
 
     public void salvStato(FileWriter wr) throws IOException
     {
+        String toWrite=null;
         /*posizione, vita, velocit√†, id*/
-        
-        String toWrite = "E " + pos.x + " " + pos.y + " " + life + "\n";
+        if(this instanceof EnemyA)
+            toWrite = "E " + pos.x + " " + pos.y + " " + life + "\n";
+        else if(this instanceof EnemyB)
+            toWrite = "E2 " + pos.x + " " + pos.y + " " + life + "\n";
         
         System.out.println(toWrite);
-        wr.write(toWrite);
-        
+        if(toWrite != null)
+            wr.write(toWrite);
+    }
+    
+    public void debuffVelocita()
+    {
+        this.SPEED = 0.2f;
+        System.out.println("velocita'† " + SPEED);
     }
    
 }
