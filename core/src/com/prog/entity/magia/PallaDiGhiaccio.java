@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.evilian.Evilian;
 import static com.prog.world.Livello.atlas;
 
@@ -45,8 +44,6 @@ public class PallaDiGhiaccio extends Magia{
             //dare impulso con parametro tmp
             pos.x = this.body.getPosition().x - (pos.width / 2);
             pos.y = this.body.getPosition().y - (pos.height / 2);
-            //System.out.println(pos);
-            //System.out.println(body.getWorldCenter());
 
             //inclinazione proiettile(utilizzo arcotangente)
             Vector2 vel=body.getLinearVelocity();

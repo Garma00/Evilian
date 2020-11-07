@@ -24,7 +24,7 @@ public class Player extends Entity{
     Mouse mouse;
     Array<Magia> activeSpells;
     SpellFactory spellFactory;
-    public static int spellSelector, sound;//sound è l'indice per selezionare l'effetto sonoro corretto
+    public static int spellSelector;
     public static long time;
     public static long[] lastLaunch;
     public static float hp, hpMax;
@@ -56,7 +56,6 @@ public class Player extends Entity{
         time=TimeUtils.millis();
         this.hp = hp;
         this.hpMax = 1.0f;
-        this.sound = 0;
         selectorPressed=false;
         alive = true;
         invincibile = false;
@@ -147,7 +146,6 @@ public class Player extends Entity{
         {
             spellSelector=(spellSelector+1)%4;
             selectorPressed = true;
-            sound = spellSelector;//l'indice sound corrisponde sempre al valore di Z
         }
     }
     
@@ -183,11 +181,7 @@ public class Player extends Entity{
     public void draw_fireball()
     {
         for(Magia m:activeSpells)
-        {
             m.draw();
-            
-            
-        }
             
     }
 
@@ -221,7 +215,7 @@ public class Player extends Entity{
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
-            Evilian.getManagerSound().selectSound(sound);
+            Evilian.getManagerSound().selectSound(spellSelector);
         }else
             spellFactory.destroySpell(m);
     }

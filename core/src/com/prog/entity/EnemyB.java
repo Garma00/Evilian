@@ -102,6 +102,5 @@ public class EnemyB extends Enemy{
     public void debuffVelocita()
     {
         this.SPEED = 0.2f;
-        //System.out.println("velocita'  " + SPEED);
     }
 }

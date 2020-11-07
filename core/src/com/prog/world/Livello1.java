@@ -77,7 +77,11 @@ public class Livello1 extends Livello implements Screen{
         
         //se il player non e' vivo cambio la schermata al gameover
         if(!p.alive)
-            super.changeScreenTo(4);
+            try {
+                super.endLevel();
+            } catch (IOException ex) {
+                Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
         //handleinput entita'
         for(Entity e:entities)

@@ -32,17 +32,11 @@ public class Cura extends Magia{
         pos.height /= Evilian.PPM;
         this.potenza=0.1f;
         durata=3000;
-        
-        //System.out.println("sto spawnando il cerchio in "+pos);
-        //this.body = createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)32);
-        
-        
         this.anim=moving;
         time=TimeUtils.millis();
         //solo per i buff
         lastLaunch=time;
         alive=true;
-        
     }
 
     @Override

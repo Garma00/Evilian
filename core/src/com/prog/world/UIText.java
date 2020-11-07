@@ -1,5 +1,6 @@
 package com.prog.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import static com.prog.evilian.Evilian.batch;
@@ -20,7 +21,7 @@ public class UIText
         this.type=type;
         
         //this.original_pos=this.pos.x;
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
         //font.getData().setScale(1/3f, 1/6f);
     
     }

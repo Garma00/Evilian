@@ -255,9 +255,6 @@ public class Livello {
     
     public void handleInput() throws IOException
     {
-        //da cambiare questo if
-        if(Gdx.input.isKeyJustPressed(Input.Keys.E))
-            endLevel();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             //salvo lo stato del player
@@ -331,7 +328,7 @@ public class Livello {
         wr.close();
     }
     
-    //questa funzione verra'  chiamata alla fine del livello
+    //questa funzione verra' chiamata alla fine del livello
     protected void endLevel() throws FileNotFoundException, IOException
     {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");

@@ -25,8 +25,6 @@ public abstract class Enemy extends Entity implements Poolable{
             Livello.addPoints(20);
             alive = false;
         }
-            
-        System.out.println(this + " vita = " + life);
     }
 
     public void salvStato(FileWriter wr) throws IOException
@@ -46,7 +44,6 @@ public abstract class Enemy extends Entity implements Poolable{
     public void debuffVelocita()
     {
         this.SPEED = 0.2f;
-        System.out.println("velocita'  " + SPEED);
     }
    
 }
