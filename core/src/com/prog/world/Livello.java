@@ -44,6 +44,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 import static com.prog.world.ManagerScreen.index;
 import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
+import java.util.HashSet;
 
 public class Livello {
     Player p;
@@ -65,10 +66,9 @@ public class Livello {
     public boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
-    public static float score;
+    public static int points;
     protected static float timeEmployed;
-    private Array<Float> scores;
-    
+   
    
     
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
@@ -105,8 +105,7 @@ public class Livello {
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
         ef = new EnemyFactory(p);
         timeEmployed = 0;
-        score = 0f;
-        scores = new Array<>();
+        points = 0;
 
         
     }
@@ -334,53 +333,20 @@ public class Livello {
     //questa funzione verrà chiamata alla fine del livello
     protected void endLevel() throws FileNotFoundException, IOException
     {
+        //creo uno score con i punti totalizzati
+        Score score = new Score(points, java.time.LocalDate.now(), java.time.LocalTime.now());
         
-        //calcolo lo score effettivo e lo scrivo sul file
-        score -= timeEmployed;
         index = 5;
         FileWriter wr = new FileWriter("score.txt");
-        String toWrite = "" + score;
+        String toWrite = "" + score.getPoints() + " " + score.getDate() + " " +  score.getTime();
         wr.write(toWrite);
         wr.close();
         
-        //inserisco lo score attuale nell'array
-        scores.add(score);
         
-        writeScores();
+        
+        
         MANAGER_SCREEN.changeScreen(entities, root);
         
-    }
-    
-    //carico i migliori score
-    protected void loadScore() throws FileNotFoundException
-    {
-        File f = new File("general_info.txt");
-        Scanner scan = new Scanner(f);
-        while(scan.hasNextLine())
-            insertScore(scan.nextFloat());
-        scan.close();
-    }
-    
-    //scrivo gli score sul file
-    protected void writeScores() throws IOException
-    {
-        FileWriter wr = new FileWriter("general_info.txt");
-        
-        for(float n: scores)
-            wr.append(String.valueOf(n));
-        
-        wr.close();
-        
-    }
-        
-    private void insertScore(float s)
-    {
-        //carico in ordine dal più grande al più piccolo gli score
-        for(float i: scores)
-        {
-            if(s > i)
-                i = s;
-        }
     }
     
 }
