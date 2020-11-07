@@ -2,6 +2,7 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,7 +24,8 @@ public class EndLevel extends Livello implements Screen {
         cam.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         //leggo lo score dal file
         score = readScore();
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
+        font.setColor(Color.RED);
     }
     
     @Override
