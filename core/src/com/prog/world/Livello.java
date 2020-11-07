@@ -35,42 +35,39 @@ import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
-import com.prog.world.ManagerVfx;
+import static com.prog.world.ManagerScreen.index;
 import java.io.File;
 import java.io.FileNotFoundException;
-//per la funzione salva stato
 import java.io.IOException;
 import java.io.FileWriter;
 import java.util.Scanner;
-import static com.prog.world.ManagerScreen.index;
-import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Livello {
     Player p;
     FileWriter wr;
     public static World world;
     //mappa tiled
-    public TiledMap map;
+    TiledMap map;
     //renderer mappa ortogonale(esiste anche l'isometric ma non serve al nostro gioco)
-    public OrthogonalTiledMapRenderer mapRenderer;
-    public OrthographicCamera cam;
-    public Viewport camvp;
-    public Array<Entity> entities;
-    public Evilian root;
-    public Box2DDebugRenderer debug;
+    OrthogonalTiledMapRenderer mapRenderer;
+    OrthographicCamera cam;
+    Viewport camvp;
+    Array<Entity> entities;
+    Evilian root;
+    Box2DDebugRenderer debug;
     public static TextureAtlas atlas;
-    public Mouse mouse;
+    Mouse mouse;
     public static final ManagerVfx mvfx=new ManagerVfx();
-    public UI level_ui;
-    public boolean resume;
+    UI level_ui;
+    boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
-    public static int points;
-    protected static float timeEmployed;
-   
-   
-    
+    private static int points;
+    static float gameplayTime;
+
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
     {
         
@@ -97,14 +94,13 @@ public class Livello {
         
         atlas=new TextureAtlas("atlas/game.atlas");
         
-        
         file = new File("save_state.txt");
         mouse = new Mouse(cam);
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
         ef = new EnemyFactory(p);
-        timeEmployed = 0;
+        gameplayTime = 0;
         points = 0;
 
         
@@ -119,7 +115,7 @@ public class Livello {
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         
-        camvp=new FitViewport(game.SCREEN_WIDTH/Evilian.PPM,game.SCREEN_HEIGHT/Evilian.PPM,cam);
+        camvp=new FitViewport(game.getScreenWidth()/Evilian.PPM,game.getScreenHeight()/Evilian.PPM,cam);
         atlas=new TextureAtlas("atlas/game.atlas");
 
         mouse = new Mouse(cam);
@@ -136,9 +132,6 @@ public class Livello {
         }
         atlas.dispose();
         mvfx.removeAllEffects();
-        //mvfx.dispose();
-        //forse non conviene fare il dispose del mondo visto che ne abbiamo solo uno istanziato
-        //world.dispose();
     }
     
     public void parseCollisions(World w,MapObjects objects)
@@ -262,21 +255,17 @@ public class Livello {
     
     public void handleInput() throws IOException
     {
+        //da cambiare questo if
         if(Gdx.input.isKeyJustPressed(Input.Keys.E))
             endLevel();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             //salvo lo stato del player
-            p.salvaStato();
+            p.saveState();
             //salvo lo stato dei nemici
-            salvaStato();
+            this.saveEnemyState();
             
-            root.setScreen(new Opzioni(root.SCREEN_WIDTH, root.SCREEN_HEIGHT, root));
-            
-            //questo pezzo di codice fa crashare l'app appena si preme esc e si passa da livello1 a opzioni
-            //dispose();
-            //root.dispose();
-            //Gdx.app.exit();
+            this.changeScreenTo(2);
         }
     }
     
@@ -287,7 +276,6 @@ public class Livello {
         try
         {
             float x = 50, y = 100, hp = 1;
-            System.out.println("entro per leggere");
             Scanner scan = new Scanner(file);
             while(scan.hasNextLine())
             {
@@ -331,20 +319,19 @@ public class Livello {
     }
     
     //salva lo stato per ogni nemico ed il numero di nemici come primo valore 
-    public void salvaStato() throws IOException
+    public void saveEnemyState() throws IOException
     {
         Array <Enemy> list = ef.getActiveEnemies();
         int size = ef.getSize();
         FileWriter wr = new FileWriter("enemy_state.txt");
         String toWrite = "" + size + "\n";
-        System.out.println("ci sono " + size + " nemici");
         wr.write(toWrite);
         for(int i = 0; i < size; i ++)
             list.get(i).salvStato(wr);
         wr.close();
     }
     
-    //questa funzione verrÃ  chiamata alla fine del livello
+    //questa funzione verra'  chiamata alla fine del livello
     protected void endLevel() throws FileNotFoundException, IOException
     {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -352,19 +339,79 @@ public class Livello {
         //creo uno score con i punti totalizzati
         Score score = new Score(points, java.time.LocalDate.now().format(dateFormatter), java.time.LocalTime.now().format(timeFormatter));
         
-        index = 5;
         FileWriter wr = new FileWriter("score.txt");
         String toWrite = "" + score.getPoints() + " " + score.getDate() + " " +  score.getTime();
         wr.write(toWrite);
         wr.close();
         
-        
-        
-        
-        MANAGER_SCREEN.changeScreen(entities, root);
-        
+        this.changeScreenTo(5);
     }
     
+    void loadUI()
+    {
+        //NOTA: METTI GLI ELEMENTI IN ORDINE
+        level_ui.add(0,0,800,75,"images/ui/bg.png",UI.ElementType.BACKGROUND);
+        //fb
+        level_ui.add(300,15,40,40,"images/ui/fireball_2.png",UI.ElementType.FOREGROUND);
+        level_ui.add(301,56,38,4,"images/ui/health_only.png", UI.ElementType.FB_BAR);
+        level_ui.add(300, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        //ib
+        level_ui.add(400, 15, 40, 40, "images/ui/iceball.png", UI.ElementType.FOREGROUND);
+        level_ui.add(401,56,38,4,"images/ui/health_only.png", UI.ElementType.IB_BAR);
+        level_ui.add(400, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        //heal
+        level_ui.add(500, 15, 40, 40, "images/ui/heal.png", UI.ElementType.FOREGROUND);
+        level_ui.add(501,56,38,4,"images/ui/health_only.png", UI.ElementType.H_BAR);
+        level_ui.add(500, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        
+        //meteor
+        level_ui.add(600, 15, 40, 40, "images/ui/meteor.png", UI.ElementType.FOREGROUND);
+        level_ui.add(601,56,38,4,"images/ui/health_only.png", UI.ElementType.M_BAR);
+        level_ui.add(600, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        
+        //health
+        level_ui.add(56,31,50*3,4*3,"images/ui/health_only.png", UI.ElementType.HEALTH_BAR);
+        level_ui.add(56,31,50*3,1*3,"images/ui/health_only_shade.png", UI.ElementType.HEALTH_SHADE);
+        level_ui.add(20,25,64*3,8*3,"images/ui/health_bar_empty.png",UI.ElementType.FOREGROUND);
+        
+        //selector
+        level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
+        
+        //timer 
+        level_ui.add(727,43,40,16, UI.ElementType.TIMER);
+    }
+
+    void adjustCameraToPlayer() 
+    {
+        cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
+    }
+
+    void changeScreenTo(int i) 
+    {
+        index=i;
+        try {
+            ManagerScreen.getManagerScreen().changeScreen(entities, root);
+        } catch (IOException ex) {
+            Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void changeScreenTo() 
+    {
+        try {
+            ManagerScreen.getManagerScreen().changeScreen(entities, root);
+        } catch (IOException ex) {
+            Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void addPoints(int toAdd)
+    {
+        points+=toAdd;
+    }
 }
     
 

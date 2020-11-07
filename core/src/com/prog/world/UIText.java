@@ -2,7 +2,6 @@ package com.prog.world;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
-import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.UI.ElementType;
 
@@ -29,7 +28,7 @@ public class UIText
     public void draw()
     {
         //batch.draw(new Texture("images/ui/sword.png"), pos.x, pos.y, pos.width, pos.height);
-        font.draw(batch, String.valueOf((int)Livello.timeEmployed), pos.x, pos.y);
+        font.draw(batch, String.valueOf((int)Livello.gameplayTime), pos.x, pos.y);
     }
     
 }

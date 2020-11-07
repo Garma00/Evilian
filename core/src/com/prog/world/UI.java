@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import static com.prog.world.Livello.timeEmployed;
 public class UI 
 {   
     public enum ElementType

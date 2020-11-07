@@ -14,7 +14,6 @@ import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.atlas;
-import static com.prog.evilian.Evilian.MANAGER_SOUND;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -222,7 +221,7 @@ public class Player extends Entity{
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
-            MANAGER_SOUND.selectSound(sound);
+            Evilian.getManagerSound().selectSound(sound);
         }else
             spellFactory.destroySpell(m);
     }
@@ -234,7 +233,7 @@ public class Player extends Entity{
         return new Vector2(m_pos.x, m_pos.y + 3f);
     }
 
-    public void salvaStato() throws IOException
+    public void saveState() throws IOException
     {
         FileWriter wr = new FileWriter("save_state.txt");
         String toWrite = "P " + pos.x + " " + pos.y + " " + hp + "\n";

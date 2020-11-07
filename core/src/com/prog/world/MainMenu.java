@@ -12,8 +12,6 @@ import com.prog.entity.Button;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
-import static com.prog.evilian.Evilian.MANAGER_MUSIC;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,10 +30,10 @@ public class MainMenu extends Livello implements Screen
         world.setContactListener(c);
 
         entities.add(mouse);
-        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 2 , 150, 50, "gioca", "images/gioca.png", false));
-        entities.add(new Button(root.SCREEN_WIDTH / 2 , root.SCREEN_HEIGHT / 4 , 150, 50, "opzioni","images/opzioni.png", false));
+        entities.add(new Button(root.getScreenWidth() / 2 , root.getScreenHeight() / 2 , 150, 50, "gioca", "images/gioca.png", false));
+        entities.add(new Button(root.getScreenWidth() / 2 , root.getScreenHeight() / 4 , 150, 50, "opzioni","images/opzioni.png", false));
         bg = new Texture("images/menu.png");
-        MANAGER_MUSIC.selectMusic(1);
+        Evilian.getManagerMusic().selectMusic();
         mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
         mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
@@ -53,18 +51,13 @@ public class MainMenu extends Livello implements Screen
         batch.setProjectionMatrix(cam.combined);
         
         mouse.handleInput();
+        //se il mouse collide con qualche button
         if(c.collided)
         {
-            System.out.println("Collisione fra mouse e opzioni");
-
             super.dispose();
-            try {
-                MANAGER_SCREEN.changeScreen(entities, root);
-            } catch (IOException ex) {
-                Logger.getLogger(MainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            super.changeScreenTo();
         }
-            
+
         for(Entity e:entities)
             e.update(f);
         
@@ -73,19 +66,14 @@ public class MainMenu extends Livello implements Screen
        
     }
 
-    //chiamata tra batch begin e batch end;
-    //questo metodo potrebbe essere astratto ed essere riscritto per opzioni, salva ecc
     public void draw()
     {
-
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         mvfx.initCapture();
-        //il metodo draw sta sopra il debug perchè se lo metto dopo i body vengono coperti dalla 
-        //texture di bg ed è scomodo, la foto di sfondo l'ho presa random
         batch.begin();
-        batch.draw(bg, 0, 0, root.SCREEN_WIDTH/Evilian.PPM, root.SCREEN_HEIGHT/Evilian.PPM);
+        batch.draw(bg, 0, 0, root.getScreenWidth()/Evilian.PPM, root.getScreenHeight()/Evilian.PPM);
         batch.end();
         mvfx.endCapture();
         mvfx.render();

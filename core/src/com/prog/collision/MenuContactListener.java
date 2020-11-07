@@ -4,7 +4,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.prog.entity.Entity;
 import com.prog.entity.Entity.userDataContainer;
 import static com.prog.world.ManagerScreen.index;
 
@@ -25,7 +24,6 @@ public class MenuContactListener implements ContactListener{
                 //System.out.println("Gioca");
                 collided = true;
                 index = 1;
-                
             }
                 
         }
@@ -48,7 +46,6 @@ public class MenuContactListener implements ContactListener{
                 //System.out.println("opzioni");
                 collided = true;
                 index = 2;
-                
             }
                 
         }
