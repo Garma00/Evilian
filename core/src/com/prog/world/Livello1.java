@@ -113,11 +113,7 @@ public class Livello1 extends Livello implements Screen{
         tex = new Texture("images/tutorial1.png");
         tex2 = new Texture("images/tutorial2.png");
         tex3 = new Texture("images/tutorial3.png");
-        tex4 = new Texture("images/tutorial4.png");
-
-        
-
-        
+        tex4 = new Texture("images/tutorial4.png"); 
     }
 
     @Override
@@ -202,7 +198,7 @@ public class Livello1 extends Livello implements Screen{
         Gdx.gl.glViewport(0,75,800, 525);
         //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
-        //mapRenderer.render();
+        mapRenderer.render();
         //guardo entities e renderizzo cose
         batch.begin();
         for(Entity e:entities)
