@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
+import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import java.io.IOException;
@@ -37,6 +38,8 @@ public class Livello1 extends Livello implements Screen{
             //instanzio n nemici 
             Array<StateContainer> arr = caricaStatoNemico();
             ef.addEnemies(arr);
+            //pulisci tutte le magie
+            SpellFactory.INSTANCE.clearActiveSpells();
         }
         else
         {

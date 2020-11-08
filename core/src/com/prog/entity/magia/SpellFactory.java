@@ -199,4 +199,9 @@ public class SpellFactory{
     {
         return spellSelector;
     }
+    
+    public void clearActiveSpells()
+    {
+        activeSpells.clear();
+    }
 }
