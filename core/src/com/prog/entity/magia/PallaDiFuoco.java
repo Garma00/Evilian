@@ -30,7 +30,7 @@ public class PallaDiFuoco extends Magia{
         this.potenza=0.1f;
         
         //System.out.println("sto spawnando il cerchio in "+pos);
-        this.body = createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)(32|8));
+        createBody(pos.x*Evilian.PPM, pos.y*Evilian.PPM, 10, 1, "magia", 0.6f, 0, 1,(short)16,(short)(32|8));
         
         body.applyLinearImpulse(impulso.scl(potenza),new Vector2(pos.x,pos.y),true);
         

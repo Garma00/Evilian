@@ -70,7 +70,7 @@ public class EnemyB extends Enemy{
         this.alive=true;
         this.life=1;
         this.pos=new Rectangle(MathUtils.random(100f,300f),MathUtils.random(100f, 300f),19f,22f);
-        this.body=createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
+        createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
         this.attachFixture(this.body, new Vector2(-0.1f,-0.15f), true, "enemyLeftFoot", 5, 3, 0, 0, 0);
         this.attachFixture(this.body, new Vector2(0.1f,-0.15f),  true, "enemyRightFoot", 5, 3, 0, 0, 0);
         this.pos.width/=Evilian.PPM;
@@ -87,7 +87,7 @@ public class EnemyB extends Enemy{
         this.alive=true;
         this.life=hp;
         this.pos=new Rectangle(loadingPosition.x * Evilian.PPM, loadingPosition.y * Evilian.PPM, 19f,22f);
-        this.body=createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
+        createBody(pos.x,pos.y,pos.width,pos.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
         this.attachFixture(this.body, new Vector2(-0.1f,-0.15f), true, "enemyLeftFoot", 5, 3, 0, 0, 0);
         this.attachFixture(this.body, new Vector2(0.1f,-0.15f),  true, "enemyRightFoot", 5, 3, 0, 0, 0);
         this.pos.width/=Evilian.PPM;

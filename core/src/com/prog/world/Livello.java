@@ -78,6 +78,7 @@ public class Livello {
         //creiamo il mondo
         //NOTA:inserire gravita' negativa da parametro
         world=new World(new Vector2(0,gravity),Sleep);
+        mouse=Mouse.getInstance();
         entities=new Array<Entity>();
         //TmxMapLoader e' il loader del file che descrive la tiled map
         //il file dovra' avere estensione .tmx
@@ -95,7 +96,8 @@ public class Livello {
         atlas=new TextureAtlas("atlas/game.atlas");
         
         file = new File("save_state.txt");
-        mouse = new Mouse(cam);
+        mouse.addCamToMouse(cam);
+        mouse.addToWorld();
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
@@ -111,6 +113,7 @@ public class Livello {
         root = game;
         debug = new Box2DDebugRenderer();
         world = new World(new Vector2(0, 0), Sleep);
+        mouse=Mouse.getInstance();
         entities = new Array<Entity>();
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
@@ -118,8 +121,8 @@ public class Livello {
         camvp=new FitViewport(game.getScreenWidth()/Evilian.PPM,game.getScreenHeight()/Evilian.PPM,cam);
         atlas=new TextureAtlas("atlas/game.atlas");
 
-        mouse = new Mouse(cam);
-        
+        mouse.addCamToMouse(cam);
+        mouse.addToWorld();
     }
     
     public void dispose()

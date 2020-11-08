@@ -12,9 +12,6 @@ import com.prog.entity.Button;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 //dichiara una istanza di custom contact listener
 public class MainMenu extends Livello implements Screen

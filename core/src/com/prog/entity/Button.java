@@ -16,30 +16,22 @@ public class Button extends Entity
     public Button(float x, float y, float width, float height, String userData, String path, boolean isDouble)
     {
         this.pos=new Rectangle(x,y,width/Evilian.PPM,height/Evilian.PPM);
-        body = createBody(pos.x,pos.y, width, height, 0, userData, 0, 0, 0,(short)1,(short)2);
+        createBody(pos.x,pos.y, width, height, 0, userData, 0, 0, 0,(short)1,(short)2);
         this.img = new Texture (path);
         
         switch(((userDataContainer)this.body.getFixtureList().get(0).getUserData()).type)
         {
             case "sound":
-                if(Evilian.getManagerSound().getVolume() == 0)
-                    isActive=false;
-                else
-                    isActive=true;
+                isActive=Evilian.getManagerSound().getVolume() == 0?false:true;
                 break;
             case "music":
-                if(Evilian.getManagerMusic().getVolume()==0)
-                    isActive=false;
-                else
-                    isActive=true;
+                isActive=Evilian.getManagerMusic().getVolume() == 0?false:true;
                 break;
         }
         
         this.hasDouble=isDouble;
         if(isDouble)
-        {
             this.img_off = new Texture(path.replace(".png", "_off.png"));
-        }
     }
     
     
@@ -57,15 +49,9 @@ public class Button extends Entity
     @Override
     public void draw()
     {
-        //da fare conversione in tutti i menu
-        //da implementare larghezza altezza e posizione sul pos
         if(hasDouble)
-        {
-            if(isActive)
-                batch.draw(img, pos.x, pos.y, pos.width, pos.height);
-            else
-                batch.draw(img_off, pos.x, pos.y, pos.width, pos.height);
-        }else
+            batch.draw(isActive==true?img:img_off, pos.x, pos.y, pos.width, pos.height);
+        else
             batch.draw(img, pos.x, pos.y, pos.width, pos.height);
     }
 

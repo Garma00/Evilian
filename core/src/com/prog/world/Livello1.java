@@ -31,7 +31,7 @@ public class Livello1 extends Livello implements Screen{
         if(this.resume)
         {
             StateContainer playerContainer = caricaStatoPlayer();
-            p=new Player(mouse, playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
+            p=new Player(playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
             entities.add(p);
             
             //instanzio n nemici 
@@ -40,14 +40,14 @@ public class Livello1 extends Livello implements Screen{
         }
         else
         {
-            p = new Player(mouse, 50, 150, 1f);
+            p = new Player(50, 150, 1f);
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());
         }
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravita' applicata essendo un body
-        world.destroyBody(mouse.body);
+        mouse.body.setActive(false);
         
         Evilian.getManagerMusic().selectMusic();
         

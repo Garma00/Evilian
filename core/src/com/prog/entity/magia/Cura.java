@@ -12,13 +12,7 @@ import static com.prog.world.Livello.atlas;
 public class Cura extends Magia{
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,atlas.findRegions("heal"),Animation.PlayMode.LOOP_PINGPONG);
     long durata;
-    Player pg;
     public static long UI_CD;
-
-    public Cura(Player pg)
-    {
-        this.pg = pg;
-    }
     
     @Override
     public void init(Vector2 position,Vector2 impulso) {
@@ -43,16 +37,16 @@ public class Cura extends Magia{
     public void update(float delta) {
         animationTime+=delta;
         time=TimeUtils.millis();
-        if(pg.hp >= pg.hpMax)
+        if(Player.hp >= Player.hpMax)
         {
-            pg.hp = pg.hpMax;
+            Player.hp = Player.hpMax;
             //System.out.println("hp gia' al massimo non uso la cura");
             alive = false;
         }
             
-        if(alive && pg.hp < pg.hpMax)
+        if(alive && Player.hp < Player.hpMax)
         {
-            pg.hp+= potenza*delta;
+            Player.hp+= potenza*delta;
             //System.out.println("HP:\t" + pg.hp + "/" + pg.hpMax);
         }
         
@@ -61,9 +55,10 @@ public class Cura extends Magia{
             alive=false;
         }
         
-        pos.x = pg.pos.x - pos.width/2 + 10/Evilian.PPM;
-        pos.y = pg.pos.y;
-        this.flipX = pg.flipX;
+        
+        pos.x = Player.healPosX - pos.width/2 + 10/Evilian.PPM;
+        pos.y = Player.healPosY;
+        //this.flipX = pg.flipX;
     }
     
 }

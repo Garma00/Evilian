@@ -10,9 +10,6 @@ import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.world;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class Opzioni extends Livello implements Screen {
@@ -49,9 +46,6 @@ public class Opzioni extends Livello implements Screen {
         batch.setProjectionMatrix(cam.combined);
         mouse.handleInput();
         
-        //qui ontrolliamo se c'è una collisione nello screen opzioni, ma se c'è una collisione con il
-        //bottone musica viene comuqneu chiamata la change screen che non essendo modificato l'index setta lo screen
-        //nuovamente ad opzioni quindi credo che questo metodo vada rivisto
         if(c.collided)
         {
             //System.out.println("collided in opzioni");
