@@ -101,30 +101,26 @@ public class Player extends Entity{
     public void handleInput() {
         float forza=0;
 
-        //setto la vita a 0.1
+        //setto la vita a 0.1(inserito solo per debugging)
         if(Gdx.input.isKeyJustPressed(Keys.X))
             hp = 0.1f;
         
-        //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'inpulso
+        //se il mouse viene clickato spara la magia, instanzio il proiettile e passo l'impulso
         if(Gdx.input.justTouched())
         {
+            //calcolo vettore distanza tra player e mouse
             Vector2 res=lanciaMagia();
             spellSelect(res);
 
-            //logica player dopo il lancio
-            if(res.x < 0)
-                flipX=true;
-            else
-                flipX=false;
+            //giriamo il personaggio in base al lancio della magia
+            flipX=res.x<0?true:false;
         }
         
-        // apply left impulse, but only if max velocity is not reached yet
         if (Gdx.input.isKeyPressed(Keys.A)) {
             anim=walking;
             forza-=1.5;
             flipX=true;
         }
-        // apply right impulse, but only if max velocity is not reached yet
         else if (Gdx.input.isKeyPressed(Keys.D)) {
             anim=walking;
             forza+=1.5;
@@ -132,16 +128,17 @@ public class Player extends Entity{
         }else
             anim=stand;
 
+        //logica salto
         if(Gdx.input.isKeyPressed(Keys.W)){
             if(!inAir)
             {
                 float force = body.getMass() * 1.5f;
-                //System.out.println("massa:"+body.getMass()+"\tforza:"+force);
                 body.applyLinearImpulse(new Vector2(0,force), body.getWorldCenter(), false);
             }
         }
         this.body.setLinearVelocity(forza,this.body.getLinearVelocity().y);
         
+        //selezionamento abilita'
         if(Gdx.input.isKeyJustPressed(Keys.Z))
         {
             spellSelector=(spellSelector+1)%4;
@@ -155,24 +152,18 @@ public class Player extends Entity{
         System.out.println("mouse unproject:"+mouse_pos);
         Vector2 m = new Vector2(mouse_pos.x, mouse_pos.y);
         Vector2 pg = new Vector2(body.getWorldCenter());
-        //System.out.println("player:"+pg);
         Vector2 tmp = m.cpy();
         tmp.sub(pg);
-        //System.out.println("vettore distanza:"+tmp);
         //tmp = (mouse - player) normalizzato
         tmp.nor();
-        //System.out.println("vettore normalizzato:"+tmp);
         return tmp;
     }
 
     @Override
     public void draw() {
-        //batch importato staticamente
         if(anim!=null)
         {
             TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
-            //System.out.println("player in:"+body.getPosition());
-            //System.out.println(pos.x+"\t"+pos.y);
             batch.draw(region,pos.x,pos.y,pos.width/2,pos.height/2,pos.width,pos.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
         }
         draw_fireball();
@@ -182,7 +173,6 @@ public class Player extends Entity{
     {
         for(Magia m:activeSpells)
             m.draw();
-            
     }
 
     @Override
@@ -211,6 +201,7 @@ public class Player extends Entity{
 
         
         m.init(this.body.getWorldCenter(), res);
+        //logica cooldown magie
         if(time-lastLaunch[spellSelector]>m.COOLDOWN)
         {
             activeSpells.add(m);
@@ -223,7 +214,7 @@ public class Player extends Entity{
     public Vector2 lanciaMeteora()
     {
         Vector3 m_pos = mouse.fixedPosition(Gdx.input.getX(), Gdx.input.getY(), mouse.cam);
-        //+3f = +300px
+        //meteora spawna a 300px sopra il personaggio(+3m ---> 3m * 100px/m = 300px)
         return new Vector2(m_pos.x, m_pos.y + 3f);
     }
 
@@ -235,7 +226,6 @@ public class Player extends Entity{
         System.out.println(toWrite);
         wr.write(toWrite);
         wr.close();
-        
     }
 
     public void applyDmg(float dmg)
@@ -247,8 +237,6 @@ public class Player extends Entity{
                 this.alive = false;
             this.invincibile = true;
         }
-            
-    
     }
 
 }
