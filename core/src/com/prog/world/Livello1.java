@@ -43,7 +43,7 @@ public class Livello1 extends Livello implements Screen{
         }
         else
         {
-            p = new Player(3100, 800, 1f);
+            p = new Player(50, 150, 1f);
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());

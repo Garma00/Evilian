@@ -10,6 +10,7 @@ public class DesktopLauncher
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
                 config.setWindowedMode(800, 600);
                 config.setIdleFPS(60);
+                config.setResizable(false);
 		new Lwjgl3Application(new Evilian(), config);
 	}
 }
