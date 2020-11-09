@@ -8,14 +8,12 @@ import com.prog.world.ManagerSound;
 
 public class Evilian extends Game 
 {
-
         public static SpriteBatch batch;
-        public final int SCREEN_WIDTH=800;
-        public final int SCREEN_HEIGHT=600;
+        private final int SCREEN_WIDTH=800;
+        private final int SCREEN_HEIGHT=600;
         public static final float PPM=100f;
-        public static ManagerMusic MANAGER_MUSIC;
-        public static ManagerSound MANAGER_SOUND;
-        
+        private static ManagerMusic MANAGER_MUSIC;
+        private static ManagerSound MANAGER_SOUND;
     
 	@Override
 	public void create () 
@@ -25,8 +23,6 @@ public class Evilian extends Game
             MANAGER_MUSIC = new ManagerMusic();
             MANAGER_SOUND = new ManagerSound();
             this.setScreen(new MainMenu(SCREEN_WIDTH,SCREEN_HEIGHT,this));
-           
-
 	}
 
 	@Override
@@ -35,9 +31,32 @@ public class Evilian extends Game
             super.render();
 	}
 	
+        //chiamata quando l'applicazione viene terminata
 	@Override
 	public void dispose () 
         {
             batch.dispose();
+            MANAGER_MUSIC.dispose();
+            MANAGER_SOUND.dispose();
 	}
+        
+        public int getScreenWidth()
+        {
+            return SCREEN_WIDTH;
+        }
+        
+        public int getScreenHeight()
+        {
+            return SCREEN_HEIGHT;
+        }
+        
+        public static ManagerMusic getManagerMusic()
+        {
+            return MANAGER_MUSIC;
+        }
+        
+        public static ManagerSound getManagerSound()
+        {
+            return MANAGER_SOUND;
+        }
 }

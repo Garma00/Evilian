@@ -6,39 +6,14 @@ import com.badlogic.gdx.audio.Music;
 
 public class ManagerMusic 
 {
-    /*elenco musice corrispondenti a traccia
-    1           mainmenu
-    2           livello1
-    default     dispose della musica
-    */
-    private Music musica;
+    private final Music musica=Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3"));
     
-    public void selectMusic(int traccia)
+    public void selectMusic()
     {
-        
-        switch(traccia)
+        if(!musica.isPlaying())
         {
-            case 1:
-                if(musica != null)
-                    musica.dispose();
-                musica = Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3"));
-                //musica.play();
-                musica.setVolume(0.4f);
-                musica.setLooping(true);
-                break;
-        
-            case 2:
-                if(musica != null)
-                    musica.dispose();
-                musica = Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3"));
-                //musica.play();
-                musica.setVolume(0.4f);
-                musica.setLooping(true);
-                break;
-        
-            default:
-                if(musica != null)
-                    musica.dispose();
+            musica.setVolume(0.4f);
+            musica.play();
         }
     }
     
@@ -50,8 +25,16 @@ public class ManagerMusic
             System.out.println("volume errato");
     }
 
-    public float getVolume() {
+    public float getVolume() 
+    {
         return musica.getVolume();
+    }
+    
+    public void dispose()
+    {
+        if(musica.isPlaying())
+            musica.pause();
+        musica.dispose();
     }
 
 }

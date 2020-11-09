@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="89">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="100" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="91">
  <tileset firstgid="1" source="Terrain (32x32).tsx"/>
  <tileset firstgid="248" source="Opening (46x56).tsx"/>
  <tileset firstgid="253" source="Decorations (32x32).tsx"/>
@@ -315,6 +315,11 @@
     <property name="type" value="platform_solid"/>
    </properties>
    <polygon points="0,0 32,0 32,32 0,32"/>
+  </object>
+  <object id="90" x="3117.26" y="195.333" width="19.75" height="27.25">
+   <properties>
+    <property name="type" value="end_level"/>
+   </properties>
   </object>
  </objectgroup>
  <objectgroup id="11" name="enemy_spawn">

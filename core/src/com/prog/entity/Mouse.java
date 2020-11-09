@@ -10,15 +10,16 @@ public class Mouse extends Entity
     OrthographicCamera cam;
     Vector3 realPos;
     public boolean toReposition;
+    public static Mouse INSTANCE=null;
     
-    public Mouse(OrthographicCamera cam)
+    public Mouse()
     {
-        this.cam = cam;
         toReposition=false;
-        realPos = fixedPosition(0, 0, cam);
-        //se il mouse non è di tipo dinamico non vengono rilevate le collisioni coi bottoni
-        this.body = createBody(realPos.x, realPos.y, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);
-        
+    }
+    
+    public void addCamToMouse(OrthographicCamera cam)
+    {
+        this.cam=cam;
     }
     
     public Vector3 fixedPosition(float x, float y, OrthographicCamera cam)
@@ -27,8 +28,6 @@ public class Mouse extends Entity
         mousePos.x = x;
         mousePos.y = y;
         return cam.unproject(mousePos);
-        
-     
     }
     
     @Override
@@ -59,6 +58,24 @@ public class Mouse extends Entity
 
     @Override
     public void dispose() {
+    }
+    
+    public OrthographicCamera getCam()
+    {
+        return this.cam;
+    }
+    
+    public static Mouse getInstance()
+    {
+        if(INSTANCE == null)
+            INSTANCE=new Mouse();
+        
+        return INSTANCE;
+    }
+    
+    public void addToWorld()
+    {
+        super.createBody(0, 0, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);
     }
     
 }

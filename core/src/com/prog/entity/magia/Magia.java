@@ -15,16 +15,16 @@ public abstract class Magia extends Entity implements Poolable{
     float potenza;
     Vector2 impulso;
     //pos lo rendo publico per richiamarlo nel momento in cui voglio verificare la posizione della skill 
-    public Rectangle pos;
+    Rectangle pos;
     float angle;
-    public long COOLDOWN;
+    long COOLDOWN;
     public boolean alive;
     long time;
     //lastlaunch dentro la magia e' solo per i buff
-    public long lastLaunch;
+    long lastLaunch;
+    
     public abstract void init(Vector2 position, Vector2 impulso);
     
-
     @Override
     public abstract void update(float delta);
 
@@ -47,7 +47,6 @@ public abstract class Magia extends Entity implements Poolable{
 
     @Override
     public void dispose() {
-        
     }
 
     @Override

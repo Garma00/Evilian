@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Array;
 import com.prog.evilian.Evilian;
@@ -15,15 +14,10 @@ import java.util.Scanner;
 import static com.prog.evilian.Evilian.batch;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static com.prog.world.ManagerScreen.index;
-import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
 
 public class EndLevel extends Livello implements Screen {
     
@@ -108,9 +102,9 @@ public class EndLevel extends Livello implements Screen {
         font.setColor(Color.RED);
         font.draw(batch, "Hai totalizzato " + score.getPoints(), 10, 580);
         font.setColor(Color.WHITE);
-        font.draw(batch, "I tuoi record:", (root.SCREEN_WIDTH / 2) - 50,  (root.SCREEN_HEIGHT / 2) + 25);
+        font.draw(batch, "I tuoi record:", (root.getScreenWidth() / 2) - 50,  (root.getScreenHeight() / 2) + 25);
         for(int i = 0; i < bestScores.size; i ++)
-            font.draw(batch, (i+1)+". "+bestScores.get(i).getPoints() + " punti, " + bestScores.get(i).getDate() + " " + bestScores.get(i).getTime(), (root.SCREEN_WIDTH / 2) - 50, (root.SCREEN_HEIGHT / 2) - (50  * i + 2));
+            font.draw(batch, (i+1)+". "+bestScores.get(i).getPoints() + " punti, " + bestScores.get(i).getDate() + " " + bestScores.get(i).getTime(), (root.getScreenWidth() / 2) - 50, (root.getScreenHeight() / 2) - (50  * i + 2));
         
         font.draw(batch, "Premi ESC per tornare al menu'", 10, 50);
             
@@ -178,6 +172,7 @@ public class EndLevel extends Livello implements Screen {
                 @Override
                 public int compare(Object a, Object b) 
                 {
+                    //comparazione in maniera decrescente
                     return Integer.compare(((Score)b).getPoints(), ((Score)a).getPoints());
                 }
             }
@@ -203,8 +198,7 @@ public class EndLevel extends Livello implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             index = -1;
-            MANAGER_SCREEN.changeScreen(null, root);
-            
+            ManagerScreen.getManagerScreen().changeScreen(null, root);
         }
     }
         

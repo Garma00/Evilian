@@ -10,10 +10,6 @@ import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import static com.prog.world.Livello.world;
-import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class Opzioni extends Livello implements Screen {
@@ -28,10 +24,10 @@ public class Opzioni extends Livello implements Screen {
         bg = new Texture("images/menu.png");
         world.setContactListener(c);
         
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT -75, 150, 50, "riprendi", "images/riprendi.png", false));
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT -150, 150, 50, "musica", "images/musica.png", true));
+        entities.add(new Button(root.getScreenWidth() / 2, root.getScreenHeight() -75, 150, 50, "riprendi", "images/riprendi.png", false));
+        entities.add(new Button(root.getScreenWidth() / 2, root.getScreenHeight() -150, 150, 50, "music", "images/musica.png", true));
         entities.add(new Button(0 + 185, 0 + 50, 150, 50, "MainMenu", "images/indietro.png", false));
-        entities.add(new Button(root.SCREEN_WIDTH / 2, root.SCREEN_HEIGHT -225, 150, 50, "sound", "images/sound.png", true));
+        entities.add(new Button(root.getScreenWidth() / 2, root.getScreenHeight() -225, 150, 50, "sound", "images/sound.png", true));
         mvfx.enableBlend(true);
         mvfx.addEffect(ManagerVfx.GBLUR_EFFECT);
         mvfx.addEffect(ManagerVfx.BLOOM_EFFECT);
@@ -50,18 +46,11 @@ public class Opzioni extends Livello implements Screen {
         batch.setProjectionMatrix(cam.combined);
         mouse.handleInput();
         
-        //qui ontrolliamo se c'è una collisione nello screen opzioni, ma se c'è una collisione con il
-        //bottone musica viene comuqneu chiamata la change screen che non essendo modificato l'index setta lo screen
-        //nuovamente ad opzioni quindi credo che questo metodo vada rivisto
         if(c.collided)
         {
             //System.out.println("collided in opzioni");
             super.dispose();
-            try {
-                MANAGER_SCREEN.changeScreen(entities, root);
-            } catch (IOException ex) {
-                Logger.getLogger(Opzioni.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            super.changeScreenTo();
         }
         
         for(Entity e:entities)
@@ -69,19 +58,16 @@ public class Opzioni extends Livello implements Screen {
             
         draw();
         world.step(1/60f, 6, 2);
-    
-        
     }
 
     public void draw()
     {
         Gdx.gl20.glClearColor(0, 0, 0, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         
         mvfx.initCapture();
         batch.begin();
-        batch.draw(bg, 0, 0, root.SCREEN_WIDTH/Evilian.PPM, root.SCREEN_HEIGHT/Evilian.PPM);
+        batch.draw(bg, 0, 0, root.getScreenWidth()/Evilian.PPM, root.getScreenHeight()/Evilian.PPM);
         batch.end();
         mvfx.endCapture();
         mvfx.render();

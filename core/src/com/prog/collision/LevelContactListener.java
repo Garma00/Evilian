@@ -20,20 +20,17 @@ public class LevelContactListener implements ContactListener{
     public void beginContact(Contact c) {
         check(c);
         
-        if(a != null && b != null)
-            System.out.println("Collisione tra " + a.type + " e " + b.type);
-        
         //check player
         if(isSensorA && a.type=="player_foot")
         {
-            System.out.println("Personaggio a terra");
+            //System.out.println("Personaggio a terra");
             //System.out.println(a+" "+b);
             ((Player)a.e).inAir=false;
         }
         
         if(isSensorB && b.type=="player_foot")
         {
-            System.out.println("Personaggio a terra");
+            //System.out.println("Personaggio a terra");
             //System.out.println(a+" "+b);
             ((Player)b.e).inAir=false;
         }
@@ -111,6 +108,19 @@ public class LevelContactListener implements ContactListener{
         
         //fine collisione piedi del nemico con le mura
         
+        //collisione fine livello
+        if(!isSensorA && c.getFixtureA().getUserData() instanceof String && c.getFixtureA().getUserData() == "end_level")
+        {
+            //b deve essere per forza il palyer per come abbiamo settato i bit di maschera
+            ((Player)b.e).levelCompleted=true;
+        }
+        
+        if(!isSensorB && c.getFixtureB().getUserData() instanceof String && c.getFixtureB().getUserData() == "end_level")
+        {
+            //b deve essere per forza il palyer per come abbiamo settato i bit di maschera
+            ((Player)a.e).levelCompleted=true;
+        }
+        
     }
 
     @Override
@@ -121,7 +131,7 @@ public class LevelContactListener implements ContactListener{
         //se il piede del player smette di collidere con qualunque cosa che non siano i piedi del nemico 
         if(isSensorA && a.type=="player_foot" && !(isSensorB && (b.type == "enemyLeftFoot" || b.type == "enemyRightFoot")))
         {
-            System.out.println("Personaggio in aria");
+            //System.out.println("Personaggio in aria");
             //System.out.println("fine "+a+" "+b);
             ((Player)a.e).inAir=true;
         }
@@ -129,7 +139,7 @@ public class LevelContactListener implements ContactListener{
         
         if(isSensorB && b.type=="player_foot" && !(isSensorA && (a.type == "enemyLeftFoot" || a.type == "enemyRightFoot")))
         {
-            System.out.println("Personaggio in aria");
+            //System.out.println("Personaggio in aria");
             //System.out.println("fine "+a+" "+b);
             ((Player)b.e).inAir=true;
         }
