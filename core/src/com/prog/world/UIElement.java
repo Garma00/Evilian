@@ -2,8 +2,6 @@ package com.prog.world;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.prog.entity.Player;
 import com.prog.entity.magia.Cura;
@@ -17,10 +15,7 @@ import com.prog.world.UI.ElementType;
 
 class UIElement 
 {
-    public Animation<TextureAtlas.AtlasRegion> anim;
     public Rectangle pos;
-    //elementi della ui posson oavere animazioni
-    public float animationTime;
     public boolean flipX;
     public boolean flipY;
     Texture tex;

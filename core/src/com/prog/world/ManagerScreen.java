@@ -98,6 +98,7 @@ public class ManagerScreen
             else
                 done = true;
             
+            world.dispose();
         }
             return done;
     }

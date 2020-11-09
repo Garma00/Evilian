@@ -17,7 +17,6 @@ public class OpzioniContactListener implements ContactListener{
     public boolean collided = false;
     ManagerMusic m = new ManagerMusic();
     userDataContainer a,b;
-    
 
     @Override
     public void beginContact(Contact c) {
@@ -29,8 +28,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("Riprendi");
                 collided = true;
-                index = 3;//se si vuole riprendere viene settato l'index a riprendi
-                
+                index = 3;
             }
                 
         }
@@ -41,7 +39,6 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("Riprendi");
                 collided = true;
                 index = 3;
-                
             }
                 
         }
@@ -52,7 +49,6 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("MainMenu");
                 collided = true;
                 index = 0;//l'index andrà a default
-                
             }
                 
         }
@@ -63,7 +59,6 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("MainMenu");
                 collided = true;
                 index = 0;
-                
             }
                 
         }
@@ -127,8 +122,6 @@ public class OpzioniContactListener implements ContactListener{
                     Evilian.getManagerSound().soundOn = false;
                     ((Button)a.e).isActive=false;
                 }
-                    
-                    
                 else
                 {
                     Evilian.getManagerSound().soundOn = true;
@@ -159,7 +152,6 @@ public class OpzioniContactListener implements ContactListener{
                     ((Button)b.e).isActive=true;
                 }
             }
-                
         }
     }
 
