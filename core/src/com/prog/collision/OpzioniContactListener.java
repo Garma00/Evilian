@@ -7,10 +7,9 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Button;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Mouse;
+import com.prog.evilian.Evilian;
 import com.prog.world.ManagerMusic;
 import static com.prog.world.ManagerScreen.index;
-import static com.prog.evilian.Evilian.MANAGER_MUSIC;
-import static com.prog.evilian.Evilian.MANAGER_SOUND;
 
 
 
@@ -18,7 +17,6 @@ public class OpzioniContactListener implements ContactListener{
     public boolean collided = false;
     ManagerMusic m = new ManagerMusic();
     userDataContainer a,b;
-    
 
     @Override
     public void beginContact(Contact c) {
@@ -30,8 +28,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("Riprendi");
                 collided = true;
-                index = 3;//se si vuole riprendere viene settato l'index a riprendi
-                
+                index = 3;
             }
                 
         }
@@ -42,7 +39,6 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("Riprendi");
                 collided = true;
                 index = 3;
-                
             }
                 
         }
@@ -53,7 +49,6 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("MainMenu");
                 collided = true;
                 index = 0;//l'index andrà a default
-                
             }
                 
         }
@@ -64,27 +59,26 @@ public class OpzioniContactListener implements ContactListener{
                 System.out.println("MainMenu");
                 collided = true;
                 index = 0;
-                
             }
                 
         }
-        //se viene premuto il bottone musica il volume passa da 0 a 0.1 e viceversa
+        //se viene premuto il bottone music il volume passa da 0 a 0.1 e viceversa
         if(a.type == "mouse")
         {
-            if(b.type == "musica")
+            if(b.type == "music")
             {
                 ((Mouse)a.e).toReposition=true;
-                System.out.println("musica");
-                if(MANAGER_MUSIC.getVolume() > 0)
+                System.out.println("music");
+                if(Evilian.getManagerMusic().getVolume() > 0)
                 {
-                    System.out.println("Volume musica 0");
-                    MANAGER_MUSIC.setVolume(0f);
+                    System.out.println("Volume music 0");
+                    Evilian.getManagerMusic().setVolume(0f);
                     ((Button)b.e).isActive=false;
                 }  
                 else
                 {
-                    MANAGER_MUSIC.setVolume(0.5f);
-                    System.out.println("Volume musica 0.5");
+                    Evilian.getManagerMusic().setVolume(0.5f);
+                    System.out.println("Volume music 0.5");
                     ((Button)b.e).isActive=true;
                 }
             }
@@ -93,22 +87,22 @@ public class OpzioniContactListener implements ContactListener{
         
         if(b.type == "mouse")
         {
-            if(a.type == "musica")
+            if(a.type == "music")
             {
                 ((Mouse)b.e).toReposition=true;
-                System.out.println("musica");
+                System.out.println("music");
                 
-                if(MANAGER_MUSIC.getVolume() > 0)
+                if(Evilian.getManagerMusic().getVolume() > 0)
                 {
-                    System.out.println("Volume musica 0");
-                    MANAGER_MUSIC.setVolume(0f);
+                    System.out.println("Volume music 0");
+                    Evilian.getManagerMusic().setVolume(0f);
                     ((Button)a.e).isActive=false;
                     
                 }                    
                 else
                 {
-                    MANAGER_MUSIC.setVolume(0.5f);
-                    System.out.println("Volume musica 0.5");
+                    Evilian.getManagerMusic().setVolume(0.5f);
+                    System.out.println("Volume music 0.5");
                     ((Button)a.e).isActive=false;
                 }
             }
@@ -122,17 +116,15 @@ public class OpzioniContactListener implements ContactListener{
                 ((Mouse)b.e).toReposition=true;
                 System.out.println("sound");
                 
-                if(MANAGER_SOUND.soundOn)
+                if(Evilian.getManagerSound().soundOn)
                 {
                     System.out.println("Suoni disattivati");
-                    MANAGER_SOUND.soundOn = false;
+                    Evilian.getManagerSound().soundOn = false;
                     ((Button)a.e).isActive=false;
                 }
-                    
-                    
                 else
                 {
-                    MANAGER_SOUND.soundOn = true;
+                    Evilian.getManagerSound().soundOn = true;
                     System.out.println("Suoni attivi");
                     ((Button)a.e).isActive=true;
                 }
@@ -146,21 +138,20 @@ public class OpzioniContactListener implements ContactListener{
             {
                 ((Mouse)a.e).toReposition=true;
                 System.out.println("sound");
-                if(MANAGER_SOUND.soundOn)
+                if(Evilian.getManagerSound().soundOn)
                 {
                     System.out.println("Suoni disattivati");
-                    MANAGER_SOUND.soundOn = false;
+                    Evilian.getManagerSound().soundOn = false;
                     ((Button)b.e).isActive=false;
                 }
                 
                 else
                 {
-                    MANAGER_SOUND.soundOn = true;
+                    Evilian.getManagerSound().soundOn = true;
                     System.out.println("Suoni attivi");
                     ((Button)b.e).isActive=true;
                 }
             }
-                
         }
     }
 

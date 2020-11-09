@@ -1,9 +1,7 @@
 package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.utils.Array;
-import com.prog.entity.Button;
+import com.badlogic.gdx.audio.Sound;
 import com.prog.entity.Player;
 
 
@@ -15,10 +13,12 @@ public class ManagerSound
     2       cura
     3       meteora
     */
-    
-    int sound = -1;
-    public Music effetto;
     public static boolean soundOn = true;
+    private float volume=0.7f;
+    private final Sound fbEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/fireball.mp3"));
+    private final Sound ibEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/iceball.mp3"));
+    private final Sound healEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/heal.mp3"));
+    private final Sound meteorEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/meteora.mp3"));
     
     public void selectSound(int sound)
     {
@@ -27,26 +27,16 @@ public class ManagerSound
             case 0:
                 if(soundOn)
                 {
-                    effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/fireball.mp3"));
-                    //System.out.println(effetto.isPlaying());
-                    effetto.setVolume(0.7f);
-                    effetto.play();
-
+                    fbEffect.play(volume);
                     break;
-
                 }
                 
             case 1:
                  
                 if(soundOn)
                 {
-                    
-                    effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/iceball.mp3"));
-                    effetto.setVolume(0.7f);
-                    effetto.play();
-
+                    ibEffect.play(volume);
                     break;
-
                 }
                 
             case 2:
@@ -55,14 +45,8 @@ public class ManagerSound
                 {
                     if(Player.hp < 1)
                     {
-                        effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/heal.mp3"));
-                        effetto.setVolume(0.7f);
-                        effetto.play();
-
+                        healEffect.play(volume);
                     }
-                        
-                    
-
                     break;
                 }
 
@@ -70,13 +54,8 @@ public class ManagerSound
                 
                 if(soundOn)
                 {
-                    
-                    effetto = Gdx.audio.newMusic(Gdx.files.internal("music/effects/meteora.mp3"));
-                    effetto.setVolume(0.7f);
-                    effetto.play();
-
+                    meteorEffect.play(volume);
                     break;
-
                 }
                 
             default:
@@ -87,14 +66,24 @@ public class ManagerSound
     
     public void setVolume(float v)
     {
-        effetto.setVolume(v);
-        
-            
+        if(v >=0 && v <=1)
+            this.volume=v;
     }
     
     public float getVolume()
     {
-        return effetto.getVolume();
+        if(soundOn)
+            return volume;
+        else
+            return 0f;
+    }
+    
+    public void dispose()
+    {
+        fbEffect.dispose();
+        ibEffect.dispose();
+        healEffect.dispose();
+        meteorEffect.dispose();
     }
 
 }

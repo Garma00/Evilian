@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import static com.prog.world.Livello.timeEmployed;
 public class UI 
 {   
     public enum ElementType
@@ -27,8 +26,8 @@ public class UI
     private OrthographicCamera textCamera;
     private OrthographicCamera cam;
     private Viewport camvp;
-    public static float UI_WIDTH;
-    public static float UI_HEIGHT;
+    float UI_WIDTH;
+    float UI_HEIGHT;
     //utilizzo 2 array per differenziare tra elementi di sfondo ed elementi in primo piano
     //elementi in background
     Array<UIElement> bgElements;
@@ -91,30 +90,15 @@ public class UI
                 bgElements.add(e);
                 break;
             case FOREGROUND:
-                fgElements.add(e);
-                break;
             case HEALTH_BAR:
-                fgElements.add(e);
-                break;
             case HEALTH_SHADE:
-                fgElements.add(e);
-                break;
             case FB_BAR:
-                fgElements.add(e);
-                break;
             case IB_BAR:
-                fgElements.add(e);
-                break;
             case H_BAR:
-                fgElements.add(e);
-                break;
             case M_BAR:
-                fgElements.add(e);
-                break;
             case SELECTOR:
                 fgElements.add(e);
                 break;
-               
             default:
                 e.dispose();
                 e=null;
@@ -124,6 +108,15 @@ public class UI
     public void add(float x,float y, float width,float height, ElementType type)
     {
         timer = new UIText(x, y, width, height, type);
+    }
+    
+    public void dispose()
+    {
+        for(UIElement e:bgElements)
+            e.dispose();
+        for(UIElement e:fgElements)
+            e.dispose();
         
+        timer.dispose();
     }
 }

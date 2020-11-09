@@ -3,8 +3,8 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Array;
 import com.prog.evilian.Evilian;
@@ -14,15 +14,10 @@ import java.util.Scanner;
 import static com.prog.evilian.Evilian.batch;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static com.prog.world.ManagerScreen.index;
-import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
 
 public class EndLevel extends Livello implements Screen {
     
@@ -37,8 +32,10 @@ public class EndLevel extends Livello implements Screen {
         
         bestScores = new Array<Score>();
         cam.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        //leggo lo score dal file
+        score = readScore();
+        font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
         this.score = readScore();
-        font = new BitmapFont();
         //leggo gli score migliori
         loadBestScores();
         updateScores();
@@ -69,7 +66,7 @@ public class EndLevel extends Livello implements Screen {
         
         
         batch.begin();
-        //try catch perchè dentro draw viene chiamata punteggi() che legge da file 
+        //try catch perche' dentro draw viene chiamata punteggi() che legge da file 
         try {
             draw();
         } catch (FileNotFoundException ex) {
@@ -102,12 +99,14 @@ public class EndLevel extends Livello implements Screen {
     //punteggi() causa throws FileNotFoundException
     public void draw() throws FileNotFoundException
     {
-        font.draw(batch, "hai totalizzato " + score.getPoints(), 10, 580);
-        font.draw(batch, "i tuoi record", (root.SCREEN_WIDTH / 2) - 50,  (root.SCREEN_HEIGHT / 2) + 25);
+        font.setColor(Color.RED);
+        font.draw(batch, "Hai totalizzato " + score.getPoints(), 10, 580);
+        font.setColor(Color.WHITE);
+        font.draw(batch, "I tuoi record:", (root.getScreenWidth() / 2) - 50,  (root.getScreenHeight() / 2) + 25);
         for(int i = 0; i < bestScores.size; i ++)
-            font.draw(batch, ""+bestScores.get(i).getPoints() + " " + bestScores.get(i).getDate() + " " + bestScores.get(i).getTime(), (root.SCREEN_WIDTH / 2) - 50, (root.SCREEN_HEIGHT / 2) - (50  * i + 2));
+            font.draw(batch, (i+1)+". "+bestScores.get(i).getPoints() + " punti, " + bestScores.get(i).getDate() + " " + bestScores.get(i).getTime(), (root.getScreenWidth() / 2) - 50, (root.getScreenHeight() / 2) - (50  * i + 2));
         
-        font.draw(batch, "Premi ESC per tornare al menù", 10, 20);
+        font.draw(batch, "Premi ESC per tornare al menu'", 10, 50);
             
         
     }
@@ -140,12 +139,10 @@ public class EndLevel extends Livello implements Screen {
         Scanner scan = new Scanner(f);
         String[] words;
         Score s;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        formatter = formatter.withLocale(Locale.ITALIAN);
         while(scan.hasNextLine())
         {
             words = scan.nextLine().split(" ");
-            s = new Score(Integer.parseInt(words[0]), LocalDate.parse(words[1], formatter), LocalTime.parse(words[2]));
+            s = new Score(Integer.parseInt(words[0]),words[1], words[2]);
             bestScores.add(s);
             
         }
@@ -175,6 +172,7 @@ public class EndLevel extends Livello implements Screen {
                 @Override
                 public int compare(Object a, Object b) 
                 {
+                    //comparazione in maniera decrescente
                     return Integer.compare(((Score)b).getPoints(), ((Score)a).getPoints());
                 }
             }
@@ -200,8 +198,7 @@ public class EndLevel extends Livello implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             index = -1;
-            MANAGER_SCREEN.changeScreen(null, root);
-            
+            ManagerScreen.getManagerScreen().changeScreen(null, root);
         }
     }
         

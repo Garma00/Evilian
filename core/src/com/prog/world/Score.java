@@ -1,24 +1,23 @@
 package com.prog.world;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 public class Score
 {
-
-    private LocalDate date;
-    private LocalTime time;
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private String date;
+    private String time;
     private int points;
     
     public Score(int points)
     {
         this.points = points;
-        date = java.time.LocalDate.now();
-        time = java.time.LocalTime.now();
+        date = java.time.LocalDate.now().format(dateFormatter);
+        time = java.time.LocalTime.now().format(timeFormatter);
     }
     
-    public Score(int points, LocalDate date, LocalTime time)
+    public Score(int points, String date, String time)
     {
         this.date = date;
         this.time = time;
@@ -32,12 +31,12 @@ public class Score
         return this.points;
     }
 
-    public LocalDate getDate()
+    public String getDate()
     {
         return this.date;
     }
     
-    public LocalTime getTime()
+    public String getTime()
     {
         return this.time;
     }

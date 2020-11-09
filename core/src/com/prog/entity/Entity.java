@@ -46,7 +46,7 @@ public abstract class Entity {
     //0 static
     //1 dynamic
     //2 kinematic
-    public Body createBody(float x,float y,float width,float height, int bodyType,String userData,float density, float restitution, float friction,short categoria,short mask)
+    public void createBody(float x,float y,float width,float height, int bodyType,String userData,float density, float restitution, float friction,short categoria,short mask)
     {
         BodyDef bdef= new BodyDef();
         CATEGORY_BIT=categoria;
@@ -68,11 +68,9 @@ public abstract class Entity {
         bdef.position.set(x/Evilian.PPM,y/Evilian.PPM);
         bdef.fixedRotation=true;
 
-        body=world.createBody(bdef);
+        this.body=world.createBody(bdef);
         
         attachFixture(body,new Vector2(0,0),false,userData,width,height,density,restitution,friction);
-        
-        return body;
     }
     
     //overloading

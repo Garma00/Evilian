@@ -4,34 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.prog.collision.LevelContactListener;
-import com.prog.entity.EnemyFactory;
 import com.prog.entity.Entity;
 import com.prog.entity.Player;
+import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import static com.prog.evilian.Evilian.MANAGER_MUSIC;
-import static com.prog.world.ManagerScreen.MANAGER_SCREEN;
-import static com.prog.world.ManagerScreen.index;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import space.earlygrey.shapedrawer.ShapeDrawer;
 
 public class Livello1 extends Livello implements Screen{
-    float delta;
-    long start, time;
     LevelContactListener lcl;
- 
-    
-    public static ShapeDrawer sd=new ShapeDrawer(batch,new TextureRegion(new Texture("images/white_pixel.png")));
-
-    //test tutorial
     Texture tex, tex2, tex3, tex4;
     
     public Livello1(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight, Evilian game, boolean resume) throws IOException
@@ -39,77 +24,41 @@ public class Livello1 extends Livello implements Screen{
         super(gravity, Sleep, path, cameraWidth, cameraHeight,uiWidth,uiHeight,game);
         lcl=new LevelContactListener();
         world.setContactListener(lcl);
-        //ef=new EnemyFactory(p);
         //prendo i poligoni della mappa e li inserisco nel mondo
-        parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
-        //non spostare assolutamente da qui questione di vita o morte 
-        //ho bisgno di passare il listener come parametro per avere il flag inAir
+        parseCollisions(map.getLayers().get("Collision_layer").getObjects());
         this.resume = resume;
         
+        //se stiamo riprendendo il gioco
         if(this.resume)
         {
-            
             StateContainer playerContainer = caricaStatoPlayer();
-            p=new Player(mouse, playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
+            p=new Player(playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
             entities.add(p);
             
             //instanzio n nemici 
             Array<StateContainer> arr = caricaStatoNemico();
             ef.addEnemies(arr);
+            //pulisci tutte le magie
+            SpellFactory.INSTANCE.clearActiveSpells();
         }
         else
         {
-            p = new Player(mouse, 50, 150, 1f);
+            p = new Player(50, 150, 1f);
             entities.add(p);
+            //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());
         }
         
+        //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravita' applicata essendo un body
+        mouse.body.setActive(false);
         
-        
-        //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravit� applicata essendo un body
-        world.destroyBody(mouse.body);
-        
-        MANAGER_MUSIC.selectMusic(2);
+        Evilian.getManagerMusic().selectMusic();
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
+        super.loadUI();
         
-        //cam.translate(0f,-1f);
-        //NOTA: METTI GLI ELEMENTI IN ORDINE
-        level_ui.add(0,0,800,75,"images/ui/bg.png",UI.ElementType.BACKGROUND);
-        //fb
-        level_ui.add(300,15,40,40,"images/ui/fireball_2.png",UI.ElementType.FOREGROUND);
-        level_ui.add(301,56,38,4,"images/ui/health_only.png", UI.ElementType.FB_BAR);
-        level_ui.add(300, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
-        
-        //ib
-        level_ui.add(400, 15, 40, 40, "images/ui/iceball.png", UI.ElementType.FOREGROUND);
-        level_ui.add(401,56,38,4,"images/ui/health_only.png", UI.ElementType.IB_BAR);
-        level_ui.add(400, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
-        
-        //heal
-        level_ui.add(500, 15, 40, 40, "images/ui/heal.png", UI.ElementType.FOREGROUND);
-        level_ui.add(501,56,38,4,"images/ui/health_only.png", UI.ElementType.H_BAR);
-        level_ui.add(500, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
-        
-        
-        //meteor
-        level_ui.add(600, 15, 40, 40, "images/ui/meteor.png", UI.ElementType.FOREGROUND);
-        level_ui.add(601,56,38,4,"images/ui/health_only.png", UI.ElementType.M_BAR);
-        level_ui.add(600, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
-        
-        //health
-        level_ui.add(56,31,50*3,4*3,"images/ui/health_only.png", UI.ElementType.HEALTH_BAR);
-        level_ui.add(56,31,50*3,1*3,"images/ui/health_only_shade.png", UI.ElementType.HEALTH_SHADE);
-        level_ui.add(20,25,64*3,8*3,"images/ui/health_bar_empty.png",UI.ElementType.FOREGROUND);
-        
-        //selector
-        level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
-        
-        //timer 
-        level_ui.add(727,43,40,16, UI.ElementType.TIMER);
-        
-        start = TimeUtils.millis();  
+        //texture per il tutorial
         tex = new Texture("images/tutorial1.png");
         tex2 = new Texture("images/tutorial2.png");
         tex3 = new Texture("images/tutorial3.png");
@@ -122,25 +71,20 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void render(float f) {
-
-        timeEmployed += f;
-        time = TimeUtils.millis();
-        cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
+        gameplayTime += f;
+        //setto la posizione della camera per seguire il player
+        super.adjustCameraToPlayer();
         cam.update();
         level_ui.update();
         batch.setProjectionMatrix(cam.combined);
         
-        if(!p.alive)
-        {
-            index = 4;
+        //se il player non e' vivo cambio la schermata al gameover
+        if(!p.alive || p.levelCompleted)
             try {
-                MANAGER_SCREEN.changeScreen(entities, root);
+                super.endLevel();
             } catch (IOException ex) {
                 Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-            
-            
         
         //handleinput entita'
         for(Entity e:entities)
@@ -151,12 +95,12 @@ public class Livello1 extends Livello implements Screen{
         
         try {
             //handleinput del livello
-            handleInput();
+            super.handleInput();
         } catch (IOException ex) {
             Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //guardo entities e faccio gli update
+        //update entita'
         for(Entity e:entities)
             e.update(f);
         
@@ -169,8 +113,6 @@ public class Livello1 extends Livello implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        //da sistemare il discorso del resize(molto confusionario con le viewport)
-        //mvfx.resize(width, height);
     }
 
     @Override
@@ -199,11 +141,12 @@ public class Livello1 extends Livello implements Screen{
         //prima renderizzo la mappa e poi il player o altre cose
         mapRenderer.setView(cam);
         mapRenderer.render();
-        //guardo entities e renderizzo cose
+        //guardo entities e renderizzo
         batch.begin();
         for(Entity e:entities)
             e.draw();
-        if(time - start<= 12000 && !resume)
+        //display tutorial
+        if(gameplayTime <= 12 && !resume)
             tutorial();
         ef.draw();
         
@@ -211,22 +154,17 @@ public class Livello1 extends Livello implements Screen{
         debug.render(world, cam.combined);
     }
     
-    public void tutorial()
+    private void tutorial()
     {
                     
-        if(time - start < 3000)
-        {
-            //System.out.println("Stampo  prima texture");
-                    batch.draw(tex, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
-        }
-            
-        else if(time - start >= 3000 && time -start < 6000)
+        if(gameplayTime < 3)
+            batch.draw(tex, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+        else if(gameplayTime >= 3 && gameplayTime < 6)
             batch.draw(tex2, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
-        else if(time-start >= 6000 && time -start < 9000)
+        else if(gameplayTime >= 6 && gameplayTime < 9)
             batch.draw(tex3, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
         else
             batch.draw(tex4, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
-        //System.out.println(time - start);
     }
     
     
