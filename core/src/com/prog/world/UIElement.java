@@ -13,7 +13,7 @@ import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.UI.ElementType;
 
-class UIElement 
+class UIElement
 {
     public Rectangle pos;
     public boolean flipX;

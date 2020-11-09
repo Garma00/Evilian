@@ -49,6 +49,7 @@ public class Livello {
     Player p;
     FileWriter wr;
     public static World world;
+    public static Box2DDebugRenderer debug;
     //mappa tiled
     TiledMap map;
     //renderer mappa ortogonale(esiste anche l'isometric ma non serve al nostro gioco)
@@ -57,7 +58,6 @@ public class Livello {
     Viewport camvp;
     Array<Entity> entities;
     Evilian root;
-    Box2DDebugRenderer debug;
     public static TextureAtlas atlas;
     Mouse mouse;
     public static final ManagerVfx mvfx=new ManagerVfx();
@@ -66,7 +66,7 @@ public class Livello {
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
     private static int points;
-    static float gameplayTime;
+    public static float gameplayTime;
 
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
     {
@@ -135,9 +135,11 @@ public class Livello {
         }
         atlas.dispose();
         mvfx.removeAllEffects();
+        if(level_ui != null)
+            level_ui.dispose();
     }
     
-    public void parseCollisions(World w,MapObjects objects)
+    public void parseCollisions(MapObjects objects)
     {
         for(MapObject o: objects)
         {
@@ -158,7 +160,7 @@ public class Livello {
             Body body;
             BodyDef bdef= new BodyDef();
             bdef.type=BodyDef.BodyType.StaticBody;
-            body=w.createBody(bdef);
+            body=world.createBody(bdef);
             FixtureDef fdef=new FixtureDef();
             fdef.friction=0f;
             fdef.shape=s;
@@ -185,6 +187,11 @@ public class Livello {
                         fdef.filter.categoryBits=(short)8;
                         fdef.filter.maskBits=(short)(4|32|16);
                         body.createFixture(fdef).setUserData("map_wall");
+                        break;
+                    case "end_level":
+                        fdef.filter.categoryBits=(short)128;
+                        fdef.filter.maskBits=(short)(4);
+                        body.createFixture(fdef).setUserData("end_level");
                         break;
                 }
             }
@@ -277,18 +284,15 @@ public class Livello {
         {
             float x = 50, y = 100, hp = 1;
             Scanner scan = new Scanner(file);
-            while(scan.hasNextLine())
-            {
-                
-                String line = scan.nextLine();
-                String[] words = line.split(" ");
-                if(words[0].equals("P"))
-                {
-                    x = Float.parseFloat(words[1]);
-                    y = Float.parseFloat(words[2]);
-                    hp = Float.parseFloat(words[3]);
-                }    
-            }
+            //scan del timer
+            String line = scan.nextLine();
+            this.gameplayTime=Float.parseFloat(line);
+            //scan riga del player
+            line = scan.nextLine();
+            String[] words = line.split(" ");
+            x = Float.parseFloat(words[0]);
+            y = Float.parseFloat(words[1]);
+            hp = Float.parseFloat(words[2]);  
             scan.close();
             return new StateContainer(new Vector2(x, y), hp);
         }
@@ -344,6 +348,13 @@ public class Livello {
         wr.write(toWrite);
         wr.close();
         
+        //reset file salvataggio dopo aver completato il livello
+        wr=new FileWriter("enemy_state.txt");
+        wr.close();
+        
+        wr=new FileWriter("save_state.txt");
+        wr.close();
+        
         this.changeScreenTo(5);
     }
     
@@ -381,7 +392,7 @@ public class Livello {
         level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
         
         //timer 
-        level_ui.add(727,43,40,16, UI.ElementType.TIMER);
+        level_ui.add(727,50,40,16, UI.ElementType.TIMER);
     }
 
     void adjustCameraToPlayer() 

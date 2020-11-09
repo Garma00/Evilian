@@ -3,6 +3,7 @@ package com.prog.world;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
+import static com.prog.world.Livello.debug;
 import static com.prog.world.Livello.world;
 import java.io.IOException;
 
@@ -26,7 +27,7 @@ public class ManagerScreen
         {
             case 1:
                 //l'ultimo booleano serve per dire se il livello deve leggere lo stato dal file
-                //nel primo caso è messo a false perchè stiamo iniziando una nuova partita
+                //nel primo caso e' messo a false perche' stiamo iniziando una nuova partita
                 if(clear(entities))
                     game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.getScreenWidth(), 525,800,75, game, false));
                 else
@@ -68,8 +69,6 @@ public class ManagerScreen
                 else
                     return;
                 break;
-                
-                
         }
                 
     }
@@ -81,7 +80,7 @@ public class ManagerScreen
         
         if(!world.isLocked())
         {
-            //entities è null quando passiamo da endLevel a main menu
+            //entities e' null quando passiamo da endLevel a main menu
             if(entities != null)
             {
                 for(Entity e : entities)
@@ -98,6 +97,7 @@ public class ManagerScreen
             else
                 done = true;
             
+            debug.dispose();
             world.dispose();
         }
             return done;

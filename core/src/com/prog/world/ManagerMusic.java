@@ -29,5 +29,12 @@ public class ManagerMusic
     {
         return musica.getVolume();
     }
+    
+    public void dispose()
+    {
+        if(musica.isPlaying())
+            musica.pause();
+        musica.dispose();
+    }
 
 }

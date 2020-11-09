@@ -108,6 +108,19 @@ public class LevelContactListener implements ContactListener{
         
         //fine collisione piedi del nemico con le mura
         
+        //collisione fine livello
+        if(!isSensorA && c.getFixtureA().getUserData() instanceof String && c.getFixtureA().getUserData() == "end_level")
+        {
+            //b deve essere per forza il palyer per come abbiamo settato i bit di maschera
+            ((Player)b.e).levelCompleted=true;
+        }
+        
+        if(!isSensorB && c.getFixtureB().getUserData() instanceof String && c.getFixtureB().getUserData() == "end_level")
+        {
+            //b deve essere per forza il palyer per come abbiamo settato i bit di maschera
+            ((Player)a.e).levelCompleted=true;
+        }
+        
     }
 
     @Override

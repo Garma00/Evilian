@@ -109,4 +109,14 @@ public class UI
     {
         timer = new UIText(x, y, width, height, type);
     }
+    
+    public void dispose()
+    {
+        for(UIElement e:bgElements)
+            e.dispose();
+        for(UIElement e:fgElements)
+            e.dispose();
+        
+        timer.dispose();
+    }
 }

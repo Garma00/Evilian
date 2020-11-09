@@ -30,4 +30,8 @@ public class UIText
         font.draw(batch, String.valueOf((int)Livello.gameplayTime), pos.x, pos.y);
     }
     
+    public void dispose()
+    {
+        font.dispose();
+    }
 }

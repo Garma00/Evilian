@@ -15,7 +15,6 @@ public class Mouse extends Entity
     public Mouse()
     {
         toReposition=false;
-        //se il mouse non e' di tipo dinamico non vengono rilevate le collisioni coi bottoni
     }
     
     public void addCamToMouse(OrthographicCamera cam)

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
+import com.prog.world.Livello;
 import static com.prog.world.Livello.atlas;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class Player extends Entity{
     public boolean inAir, alive;
     private boolean invincibile;
     private float dmgTimer;
+    public boolean levelCompleted;
     
     public Player(float spawnX, float spawnY, float hp)
     {
@@ -32,7 +34,7 @@ public class Player extends Entity{
         this.anim=stand;
         //true perche' il player starta in aria
         inAir=true;
-        createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32|64));
+        createBody(pos.x, pos.y, pos.width, pos.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32|64|128));
         //imposto width e height al valore corretto
         this.pos.width/=Evilian.PPM;
         this.pos.height/=Evilian.PPM;
@@ -46,6 +48,7 @@ public class Player extends Entity{
         invincibile = false;
         //1 secondo
         dmgTimer = 1f;
+        levelCompleted=false;
     }
 
     @Override
@@ -137,9 +140,9 @@ public class Player extends Entity{
     public void saveState() throws IOException
     {
         FileWriter wr = new FileWriter("save_state.txt");
-        String toWrite = "P " + pos.x + " " + pos.y + " " + hp + "\n";
+        String toWrite = ""+Livello.gameplayTime+"\n";
+        toWrite+=pos.x + " " + pos.y + " " + hp + "\n";
         
-        System.out.println(toWrite);
         wr.write(toWrite);
         wr.close();
     }

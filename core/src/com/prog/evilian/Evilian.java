@@ -8,7 +8,6 @@ import com.prog.world.ManagerSound;
 
 public class Evilian extends Game 
 {
-
         public static SpriteBatch batch;
         private final int SCREEN_WIDTH=800;
         private final int SCREEN_HEIGHT=600;
@@ -32,10 +31,13 @@ public class Evilian extends Game
             super.render();
 	}
 	
+        //chiamata quando l'applicazione viene terminata
 	@Override
 	public void dispose () 
         {
             batch.dispose();
+            MANAGER_MUSIC.dispose();
+            MANAGER_SOUND.dispose();
 	}
         
         public int getScreenWidth()

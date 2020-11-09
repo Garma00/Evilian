@@ -172,6 +172,7 @@ public class EndLevel extends Livello implements Screen {
                 @Override
                 public int compare(Object a, Object b) 
                 {
+                    //comparazione in maniera decrescente
                     return Integer.compare(((Score)b).getPoints(), ((Score)a).getPoints());
                 }
             }
@@ -198,7 +199,6 @@ public class EndLevel extends Livello implements Screen {
         {
             index = -1;
             ManagerScreen.getManagerScreen().changeScreen(null, root);
-            
         }
     }
         

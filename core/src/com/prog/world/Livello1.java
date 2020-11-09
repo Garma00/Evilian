@@ -25,7 +25,7 @@ public class Livello1 extends Livello implements Screen{
         lcl=new LevelContactListener();
         world.setContactListener(lcl);
         //prendo i poligoni della mappa e li inserisco nel mondo
-        parseCollisions(world,map.getLayers().get("Collision_layer").getObjects());
+        parseCollisions(map.getLayers().get("Collision_layer").getObjects());
         this.resume = resume;
         
         //se stiamo riprendendo il gioco
@@ -43,7 +43,7 @@ public class Livello1 extends Livello implements Screen{
         }
         else
         {
-            p = new Player(50, 150, 1f);
+            p = new Player(3100, 800, 1f);
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());
@@ -79,7 +79,7 @@ public class Livello1 extends Livello implements Screen{
         batch.setProjectionMatrix(cam.combined);
         
         //se il player non e' vivo cambio la schermata al gameover
-        if(!p.alive)
+        if(!p.alive || p.levelCompleted)
             try {
                 super.endLevel();
             } catch (IOException ex) {

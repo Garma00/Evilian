@@ -13,7 +13,6 @@ public class ManagerSound
     2       cura
     3       meteora
     */
-    int sound = -1;
     public static boolean soundOn = true;
     private float volume=0.7f;
     private final Sound fbEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/fireball.mp3"));
@@ -77,6 +76,14 @@ public class ManagerSound
             return volume;
         else
             return 0f;
+    }
+    
+    public void dispose()
+    {
+        fbEffect.dispose();
+        ibEffect.dispose();
+        healEffect.dispose();
+        meteorEffect.dispose();
     }
 
 }
