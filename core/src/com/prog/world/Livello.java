@@ -35,7 +35,6 @@ import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
-import static com.prog.world.ManagerScreen.index;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,8 +47,8 @@ import java.util.logging.Logger;
 public class Livello {
     Player p;
     FileWriter wr;
-    public static World world;
-    public static Box2DDebugRenderer debug;
+    protected static World world;
+    protected static Box2DDebugRenderer debug;
     //mappa tiled
     TiledMap map;
     //renderer mappa ortogonale(esiste anche l'isometric ma non serve al nostro gioco)
@@ -58,15 +57,15 @@ public class Livello {
     Viewport camvp;
     Array<Entity> entities;
     Evilian root;
-    public static TextureAtlas atlas;
+    private static TextureAtlas atlas;
     Mouse mouse;
-    public static final ManagerVfx mvfx=new ManagerVfx();
+    protected static final ManagerVfx mvfx=ManagerVfx.getInstance();
     UI level_ui;
     boolean resume;
     File file;//file per il caricamento dello stato
     EnemyFactory ef;
     private static int points;
-    public static float gameplayTime;
+    protected static float gameplayTime;
 
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
     {
@@ -101,7 +100,7 @@ public class Livello {
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        ef = new EnemyFactory(p);
+        ef = new EnemyFactory();
         gameplayTime = 0;
         points = 0;
 
@@ -397,12 +396,13 @@ public class Livello {
 
     void adjustCameraToPlayer() 
     {
-        cam.position.set(Math.max(p.pos.x+0.5f,2f), Math.max(p.pos.y+0.2f,1.4f),0f);
+        Rectangle r=p.getPos();
+        cam.position.set(Math.max(r.x+0.5f,2f), Math.max(r.y+0.2f,1.4f),0f);
     }
 
     void changeScreenTo(int i) 
     {
-        index=i;
+        ManagerScreen.setIndex(i);
         try {
             ManagerScreen.getManagerScreen().changeScreen(entities, root);
         } catch (IOException ex) {
@@ -423,6 +423,24 @@ public class Livello {
     {
         points+=toAdd;
     }
-}
     
-
+    public static World getWorld()
+    {
+        return world;
+    }
+    
+    public static Box2DDebugRenderer getDebug()
+    {
+        return debug;
+    }
+    
+    public static TextureAtlas getAtlas()
+    {
+        return atlas;
+    }
+    
+    public static float getGameplayTime()
+    {
+        return gameplayTime;
+    }
+}

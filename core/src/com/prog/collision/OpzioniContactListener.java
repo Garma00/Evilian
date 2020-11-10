@@ -8,15 +8,13 @@ import com.prog.entity.Button;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
-import com.prog.world.ManagerMusic;
-import static com.prog.world.ManagerScreen.index;
+import com.prog.world.ManagerScreen;
 
 
 
 public class OpzioniContactListener implements ContactListener{
-    public boolean collided = false;
-    ManagerMusic m = new ManagerMusic();
-    userDataContainer a,b;
+    private boolean collided = false;
+    private userDataContainer a,b;
 
     @Override
     public void beginContact(Contact c) {
@@ -28,7 +26,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("Riprendi");
                 collided = true;
-                index = 3;
+                ManagerScreen.setIndex(3);
             }
                 
         }
@@ -38,7 +36,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("Riprendi");
                 collided = true;
-                index = 3;
+                ManagerScreen.setIndex(3);
             }
                 
         }
@@ -48,7 +46,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("MainMenu");
                 collided = true;
-                index = 0;//l'index andrà a default
+                ManagerScreen.setIndex(0);//l'index andra' a default
             }
                 
         }
@@ -58,7 +56,7 @@ public class OpzioniContactListener implements ContactListener{
             {
                 System.out.println("MainMenu");
                 collided = true;
-                index = 0;
+                ManagerScreen.setIndex(0);
             }
                 
         }
@@ -67,19 +65,19 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(b.type == "music")
             {
-                ((Mouse)a.e).toReposition=true;
+                ((Mouse)a.e).setToReposition(true);
                 System.out.println("music");
                 if(Evilian.getManagerMusic().getVolume() > 0)
                 {
                     System.out.println("Volume music 0");
                     Evilian.getManagerMusic().setVolume(0f);
-                    ((Button)b.e).isActive=false;
+                    ((Button)b.e).setActive(false);
                 }  
                 else
                 {
                     Evilian.getManagerMusic().setVolume(0.5f);
                     System.out.println("Volume music 0.5");
-                    ((Button)b.e).isActive=true;
+                    ((Button)b.e).setActive(true);
                 }
             }
                 
@@ -89,21 +87,21 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(a.type == "music")
             {
-                ((Mouse)b.e).toReposition=true;
+                ((Mouse)b.e).setToReposition(true);
                 System.out.println("music");
                 
                 if(Evilian.getManagerMusic().getVolume() > 0)
                 {
                     System.out.println("Volume music 0");
                     Evilian.getManagerMusic().setVolume(0f);
-                    ((Button)a.e).isActive=false;
+                    ((Button)a.e).setActive(false);
                     
                 }                    
                 else
                 {
                     Evilian.getManagerMusic().setVolume(0.5f);
                     System.out.println("Volume music 0.5");
-                    ((Button)a.e).isActive=false;
+                    ((Button)a.e).setActive(false);
                 }
             }
                 
@@ -113,20 +111,20 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(a.type == "sound")
             {
-                ((Mouse)b.e).toReposition=true;
+                ((Mouse)b.e).setToReposition(true);
                 System.out.println("sound");
                 
-                if(Evilian.getManagerSound().soundOn)
+                if(Evilian.getManagerSound().isSoundOn())
                 {
                     System.out.println("Suoni disattivati");
-                    Evilian.getManagerSound().soundOn = false;
-                    ((Button)a.e).isActive=false;
+                    Evilian.getManagerSound().setSoundOn(false);
+                    ((Button)a.e).setActive(false);
                 }
                 else
                 {
-                    Evilian.getManagerSound().soundOn = true;
+                    Evilian.getManagerSound().setSoundOn(true);
                     System.out.println("Suoni attivi");
-                    ((Button)a.e).isActive=true;
+                    ((Button)a.e).setActive(true);
                 }
             }
                 
@@ -136,20 +134,20 @@ public class OpzioniContactListener implements ContactListener{
         {
             if(b.type == "sound")
             {
-                ((Mouse)a.e).toReposition=true;
+                ((Mouse)a.e).setToReposition(true);
                 System.out.println("sound");
-                if(Evilian.getManagerSound().soundOn)
+                if(Evilian.getManagerSound().isSoundOn())
                 {
                     System.out.println("Suoni disattivati");
-                    Evilian.getManagerSound().soundOn = false;
-                    ((Button)b.e).isActive=false;
+                    Evilian.getManagerSound().setSoundOn(false);
+                    ((Button)b.e).setActive(false);
                 }
                 
                 else
                 {
-                    Evilian.getManagerSound().soundOn = true;
+                    Evilian.getManagerSound().setSoundOn(true);
                     System.out.println("Suoni attivi");
-                    ((Button)b.e).isActive=true;
+                    ((Button)b.e).setActive(true);
                 }
             }
         }
@@ -168,4 +166,8 @@ public class OpzioniContactListener implements ContactListener{
     public void postSolve(Contact cntct, ContactImpulse ci) {
     }
     
+    public boolean getCollided()
+    {
+        return collided;
+    }
 }

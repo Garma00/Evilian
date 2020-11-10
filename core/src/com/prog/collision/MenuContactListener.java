@@ -5,12 +5,12 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Entity.userDataContainer;
-import static com.prog.world.ManagerScreen.index;
+import com.prog.world.ManagerScreen;
 
 public class MenuContactListener implements ContactListener{
     //il contact listener si setta tramite world.setContactListener(istanza di questa classe)
-    public boolean collided = false; 
-    userDataContainer a,b;
+    private boolean collided = false; 
+    private userDataContainer a,b;
     //chiamato quando due fixture cominciano a collidere
     @Override
     public void beginContact(Contact c) {
@@ -23,7 +23,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("Gioca");
                 collided = true;
-                index = 1;
+                ManagerScreen.setIndex(1);
             }
                 
         }
@@ -34,7 +34,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("Gioca");
                 collided = true;
-                index = 1;
+                ManagerScreen.setIndex(1);
             }
                 
         }
@@ -45,7 +45,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("opzioni");
                 collided = true;
-                index = 2;
+                ManagerScreen.setIndex(2);
             }
                 
         }
@@ -56,7 +56,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("opzioni");
                 collided = true;
-                index = 2;
+                ManagerScreen.setIndex(2);
             }
                 
         }
@@ -84,5 +84,10 @@ public class MenuContactListener implements ContactListener{
     @Override
     public void postSolve(Contact c, ContactImpulse ci) {
         
+    }
+    
+    public boolean getCollided()
+    {
+        return collided;
     }
 }

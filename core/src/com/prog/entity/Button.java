@@ -2,6 +2,7 @@ package com.prog.entity;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.prog.collision.OpzioniContactListener;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
@@ -11,15 +12,17 @@ public class Button extends Entity
     Texture img;
     Texture img_off;
     OpzioniContactListener c;
-    public boolean isActive;
+    private boolean isActive;
     private boolean hasDouble;
     public Button(float x, float y, float width, float height, String userData, String path, boolean isDouble)
     {
-        this.pos=new Rectangle(x,y,width/Evilian.PPM,height/Evilian.PPM);
-        createBody(pos.x,pos.y, width, height, 0, userData, 0, 0, 0,(short)1,(short)2);
+        super();
+        setPos(x,y,width/Evilian.PPM,height/Evilian.PPM);
+        Rectangle r=getPos();
+        createBody(r.x,r.y, width, height, 0, userData, 0, 0, 0,(short)1,(short)2);
         this.img = new Texture (path);
         
-        switch(((userDataContainer)this.body.getFixtureList().get(0).getUserData()).type)
+        switch(((userDataContainer)getBody().getFixtureList().get(0).getUserData()).type)
         {
             case "sound":
                 isActive=Evilian.getManagerSound().getVolume() == 0?false:true;
@@ -37,9 +40,13 @@ public class Button extends Entity
     
     
     @Override
-    public void update(float delta) {
-        pos.x=body.getWorldCenter().x - (pos.width/2);
-        pos.y=body.getWorldCenter().y - (pos.height/2);
+    public void update(float delta) 
+    {
+        //chiamiamo getPos egetBody una sola volta per evitare di chiamarli piu' volte 
+        //all'interno degli argomenti
+        Body b=getBody();
+        Rectangle r=getPos();
+        super.setPos(b.getWorldCenter().x - (r.width/2),b.getWorldCenter().y - (r.height/2));  
     }
 
     @Override
@@ -49,14 +56,22 @@ public class Button extends Entity
     @Override
     public void draw()
     {
+        //chiamiamo getPos una sola volta per evitare di chiamarlo piu' volte 
+        //all'interno degli argomenti
+        Rectangle r=getPos();
         if(hasDouble)
-            batch.draw(isActive==true?img:img_off, pos.x, pos.y, pos.width, pos.height);
+            batch.draw(isActive==true?img:img_off, r.x, r.y, r.width, r.height);
         else
-            batch.draw(img, pos.x, pos.y, pos.width, pos.height);
+            batch.draw(img, r.x, r.y, r.width, r.height);
     }
 
     @Override
     public void dispose() {
+    }
+    
+    public void setActive(boolean f)
+    {
+        isActive=f;
     }
     
 }
