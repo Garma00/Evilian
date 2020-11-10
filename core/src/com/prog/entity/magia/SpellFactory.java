@@ -12,8 +12,8 @@ import com.prog.evilian.Evilian;
 
 public class SpellFactory{
 
-    public static SpellFactory INSTANCE=new SpellFactory();
-    final Mouse mouse=Mouse.INSTANCE;
+    private static SpellFactory INSTANCE=null;
+    final Mouse mouse=Mouse.getInstance();
     private long time;
     private int spellSelector;
     private Array<Magia> activeSpells;
@@ -203,5 +203,12 @@ public class SpellFactory{
     public void clearActiveSpells()
     {
         activeSpells.clear();
+    }
+    
+    public static SpellFactory getInstance()
+    {
+        if(INSTANCE==null)
+            INSTANCE=new SpellFactory();
+        return INSTANCE;
     }
 }

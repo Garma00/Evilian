@@ -17,13 +17,12 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static com.prog.world.ManagerScreen.index;
 
 public class EndLevel extends Livello implements Screen {
     
     private Score score;
     private BitmapFont font;
-    Array<Score> bestScores;
+    private Array<Score> bestScores;
     
     public EndLevel(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian game) throws FileNotFoundException, IOException
     { 
@@ -197,7 +196,7 @@ public class EndLevel extends Livello implements Screen {
     {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
-            index = -1;
+            ManagerScreen.setIndex(-1);
             ManagerScreen.getManagerScreen().changeScreen(null, root);
         }
     }

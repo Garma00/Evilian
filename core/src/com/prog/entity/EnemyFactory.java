@@ -3,25 +3,17 @@ package com.prog.entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.prog.evilian.Evilian;
 import com.prog.world.StateContainer;
 
 public class EnemyFactory {
-    static Player p;
-    long time,lastCall;
     //l'array va reso publico perchè serve conoscere il numero di elementi e iterarli per salvare lo stato
-    public Array<Enemy> activeEnemies=new Array<Enemy>();
+    private Array<Enemy> activeEnemies=new Array<Enemy>();
+    
     //da aggiungere altri tipi
     public enum EnemyType {
         A,
         B
     };
-    public EnemyFactory(Player p)
-    {
-        this.p=p;
-        time=TimeUtils.millis();
-    }
     
     private final Pool<Enemy> EnemyAPool = new Pool<Enemy>() {
         @Override
@@ -60,11 +52,6 @@ public class EnemyFactory {
        }
     }
     
-    public static Vector2 getPlayerPos()
-    {
-        return p.body.getWorldCenter().scl(Evilian.PPM);
-    }
-    
     public void update(float delta)
     {
         for(Enemy e : activeEnemies)
@@ -82,13 +69,6 @@ public class EnemyFactory {
     {
         for(Enemy e : activeEnemies)
             e.draw();
-    }
-    
-    public void addEnemy()
-    {
-        Enemy e = createEnemy(EnemyType.A);
-        e.init();
-        activeEnemies.add(e);
     }
     
     public void addEnemy(float x,float y,float hp,EnemyType type)

@@ -13,7 +13,7 @@ public class ManagerSound
     2       cura
     3       meteora
     */
-    public static boolean soundOn = true;
+    private boolean soundOn = true;
     private float volume=0.7f;
     private final Sound fbEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/fireball.mp3"));
     private final Sound ibEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/iceball.mp3"));
@@ -43,7 +43,7 @@ public class ManagerSound
                 
                 if(soundOn)
                 {
-                    if(Player.hp < 1)
+                    if(Player.getHP() < 1)
                     {
                         healEffect.play(volume);
                     }
@@ -85,5 +85,14 @@ public class ManagerSound
         healEffect.dispose();
         meteorEffect.dispose();
     }
-
+    
+    public boolean isSoundOn()
+    {
+        return soundOn;
+    }
+    
+    public void setSoundOn(boolean f)
+    {
+        soundOn=f;
+    }
 }

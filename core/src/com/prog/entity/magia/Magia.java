@@ -3,10 +3,11 @@ package com.prog.entity.magia;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.prog.entity.Entity;
 import static com.prog.evilian.Evilian.batch;
-import static com.prog.world.Livello.world;
+import com.prog.world.Livello;
 
 
 
@@ -15,13 +16,17 @@ public abstract class Magia extends Entity implements Poolable{
     float potenza;
     Vector2 impulso;
     //pos lo rendo publico per richiamarlo nel momento in cui voglio verificare la posizione della skill 
-    Rectangle pos;
     float angle;
     long COOLDOWN;
-    public boolean alive;
+    boolean alive;
     long time;
     //lastlaunch dentro la magia e' solo per i buff
     long lastLaunch;
+    
+    public Magia()
+    {
+        super();
+    }
     
     public abstract void init(Vector2 position, Vector2 impulso);
     
@@ -35,13 +40,14 @@ public abstract class Magia extends Entity implements Poolable{
     @Override
     public void draw()
     {
+        Rectangle r=getPos();
         if(alive)
             if(anim!=null)
             {
                 TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
                 //System.out.println("player in:"+body.getPosition());
                 //System.out.println(pos.x+"\t"+pos.y);
-                batch.draw(region,pos.x,pos.y,pos.width/2,pos.height/2,pos.width,pos.height,(flipX?-1:1)*1,(flipY?-1:1)*1,angle);
+                batch.draw(region,r.x,r.y,r.width/2,r.height/2,r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,angle);
             }
     }
 
@@ -51,13 +57,19 @@ public abstract class Magia extends Entity implements Poolable{
 
     @Override
     public void reset() {
+        Body b=getBody();
+        
         alive=true;
         //da rivedere in futuro
-        if(!world.isLocked())
-            if(body != null)
-                world.destroyBody(this.body);
+        if(!Livello.getWorld().isLocked())
+            if(b != null)
+                Livello.getWorld().destroyBody(b);
         lastLaunch=0;
         time=0;
     }
     
+    public void setAlive(boolean f)
+    {
+        alive=f;
+    }
 }
