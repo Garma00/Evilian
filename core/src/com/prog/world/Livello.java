@@ -1,5 +1,6 @@
 package com.prog.world;
 
+import com.prog.world.UI.UI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;

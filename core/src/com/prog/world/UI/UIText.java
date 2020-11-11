@@ -1,10 +1,11 @@
-package com.prog.world;
+package com.prog.world.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
+import com.prog.world.Livello;
 import static com.prog.evilian.Evilian.batch;
-import com.prog.world.UI.ElementType;
+import com.prog.world.UI.UI.ElementType;
 
 
 public class UIText
@@ -27,7 +28,7 @@ public class UIText
     
     public void draw()
     {
-        font.draw(batch, String.valueOf((int)Livello.gameplayTime), pos.x, pos.y);
+        font.draw(batch, String.valueOf((int)Livello.getGameplayTime()), pos.x, pos.y);
     }
     
     public void dispose()
