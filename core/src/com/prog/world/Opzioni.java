@@ -16,6 +16,7 @@ public class Opzioni extends Livello implements Screen {
 
     OpzioniContactListener c;
     Texture bg;
+    
     public Opzioni(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian root)
     {
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, root);
@@ -46,7 +47,7 @@ public class Opzioni extends Livello implements Screen {
         batch.setProjectionMatrix(cam.combined);
         mouse.handleInput();
         
-        if(c.collided)
+        if(c.getCollided())
         {
             //System.out.println("collided in opzioni");
             super.dispose();

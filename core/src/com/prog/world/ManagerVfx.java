@@ -26,6 +26,8 @@ public class ManagerVfx {
     private final MotionBlurEffect mblur=new MotionBlurEffect(Pixmap.Format.RGBA8888,MixEffect.Method.MAX,0.9f);
     private final ChromaticAberrationEffect chrome=new ChromaticAberrationEffect(5);
     
+    private static ManagerVfx INSTANCE=null;
+    
     int active;
     
     public ManagerVfx()
@@ -154,5 +156,12 @@ public class ManagerVfx {
     {
         manager.removeAllEffects();
         manager.dispose();
+    }
+    
+    public static ManagerVfx getInstance()
+    {
+        if(INSTANCE==null)
+            INSTANCE=new ManagerVfx();
+        return INSTANCE;
     }
 }

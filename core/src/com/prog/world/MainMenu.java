@@ -49,7 +49,7 @@ public class MainMenu extends Livello implements Screen
         
         mouse.handleInput();
         //se il mouse collide con qualche button
-        if(c.collided)
+        if(c.getCollided())
         {
             super.dispose();
             super.changeScreenTo();

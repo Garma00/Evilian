@@ -3,17 +3,17 @@ package com.prog.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import static com.prog.world.Livello.world;
+import com.prog.world.Livello;
 
 public class Mouse extends Entity
 {
-    OrthographicCamera cam;
-    Vector3 realPos;
-    public boolean toReposition;
-    public static Mouse INSTANCE=null;
+    private OrthographicCamera cam;
+    private boolean toReposition;
+    private static Mouse INSTANCE=null;
     
     public Mouse()
     {
+        super();
         toReposition=false;
     }
     
@@ -33,9 +33,9 @@ public class Mouse extends Entity
     @Override
     public void update(float delta) {
         if(toReposition)
-            if(!world.isLocked())
+            if(!Livello.getWorld().isLocked())
             {
-                body.setTransform(0, 0, 0);
+                getBody().setTransform(0, 0, 0);
                 toReposition=false;
             }
     }
@@ -47,7 +47,7 @@ public class Mouse extends Entity
         if(Gdx.input.justTouched())
         {
             pos = fixedPosition(Gdx.input.getX(), Gdx.input.getY(), cam);
-            this.body.setTransform(pos.x, pos.y, 0);
+            getBody().setTransform(pos.x, pos.y, 0);
             //System.out.println(pos.x + "\t" + pos.y);
         }
     }
@@ -76,6 +76,11 @@ public class Mouse extends Entity
     public void addToWorld()
     {
         super.createBody(0, 0, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);
+    }
+    
+    public void setToReposition(boolean f)
+    {
+        toReposition=f;
     }
     
 }

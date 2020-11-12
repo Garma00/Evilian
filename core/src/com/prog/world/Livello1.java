@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.prog.collision.LevelContactListener;
 import com.prog.entity.Entity;
@@ -39,7 +40,7 @@ public class Livello1 extends Livello implements Screen{
             Array<StateContainer> arr = caricaStatoNemico();
             ef.addEnemies(arr);
             //pulisci tutte le magie
-            SpellFactory.INSTANCE.clearActiveSpells();
+            SpellFactory.getInstance().clearActiveSpells();
         }
         else
         {
@@ -50,7 +51,7 @@ public class Livello1 extends Livello implements Screen{
         }
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravita' applicata essendo un body
-        mouse.body.setActive(false);
+        mouse.getBody().setActive(false);
         
         Evilian.getManagerMusic().selectMusic();
         
@@ -79,7 +80,7 @@ public class Livello1 extends Livello implements Screen{
         batch.setProjectionMatrix(cam.combined);
         
         //se il player non e' vivo cambio la schermata al gameover
-        if(!p.alive || p.levelCompleted)
+        if(!p.isAlive() || p.isLevelCompleted())
             try {
                 super.endLevel();
             } catch (IOException ex) {
@@ -156,15 +157,15 @@ public class Livello1 extends Livello implements Screen{
     
     private void tutorial()
     {
-                    
+        Rectangle r=p.getPos();
         if(gameplayTime < 3)
-            batch.draw(tex, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+            batch.draw(tex, r.x - 0.75f, r.y + 0.50f, 1.5f, 0.5f);
         else if(gameplayTime >= 3 && gameplayTime < 6)
-            batch.draw(tex2, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+            batch.draw(tex2, r.x - 0.75f, r.y + 0.50f, 1.5f, 0.5f);
         else if(gameplayTime >= 6 && gameplayTime < 9)
-            batch.draw(tex3, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+            batch.draw(tex3, r.x - 0.75f, r.y + 0.50f, 1.5f, 0.5f);
         else
-            batch.draw(tex4, p.pos.x - 0.75f, p.pos.y + 0.50f, 1.5f, 0.5f);
+            batch.draw(tex4, r.x - 0.75f, r.y + 0.50f, 1.5f, 0.5f);
     }
     
     

@@ -10,17 +10,18 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.prog.evilian.Evilian;
-import static com.prog.world.Livello.world;
+import com.prog.world.Livello;
 
 public abstract class Entity {
-    public Animation<TextureAtlas.AtlasRegion> anim;
-    public Rectangle pos;
-    public float animationTime;
-    public boolean flipX;
-    public boolean flipY;
-    public Body body;
-    public short CATEGORY_BIT;
-    public short MASK_BIT;
+    protected Animation<TextureAtlas.AtlasRegion> anim;
+    private Rectangle pos;
+    //protected per farlo accedere alle sottoclassi
+    protected float animationTime;
+    protected boolean flipX;
+    protected boolean flipY;
+    private Body body;
+    short CATEGORY_BIT;
+    short MASK_BIT;
     
     public class userDataContainer
     {
@@ -32,6 +33,11 @@ public abstract class Entity {
             this.type=u;
             this.e=e;
         }
+    }
+    
+    public Entity()
+    {
+        this.pos=new Rectangle();
     }
     
     public abstract void update(float delta);
@@ -68,7 +74,7 @@ public abstract class Entity {
         bdef.position.set(x/Evilian.PPM,y/Evilian.PPM);
         bdef.fixedRotation=true;
 
-        this.body=world.createBody(bdef);
+        this.body=Livello.getWorld().createBody(bdef);
         
         attachFixture(body,new Vector2(0,0),false,userData,width,height,density,restitution,friction);
     }
@@ -95,7 +101,7 @@ public abstract class Entity {
         
         bdef.position.set(x/Evilian.PPM,y/Evilian.PPM);
         
-        body=world.createBody(bdef);
+        body=Livello.getWorld().createBody(bdef);
         
         attachFixture(body,new Vector2(0,0),false,userData,radius,density,restitution,friction);
         
@@ -145,5 +151,46 @@ public abstract class Entity {
         b.createFixture(fdef).setUserData(new userDataContainer(userData, this));
         
         shape.dispose();
+    }
+    
+    public Body getBody()
+    {
+        return body;
+    }
+    
+    public Rectangle getPos()
+    {
+        return pos;
+    }
+    
+    public void setPos(float x, float y, float width, float height)
+    {
+        pos.set(x, y, width, height);
+    }
+    
+    public void setPosX(float x)
+    {
+        pos.x=x;
+    }
+    
+    public void setPosY(float y)
+    {
+        pos.y=y;
+    }
+    
+    public void setPosWidth(float w)
+    {
+        pos.width=w;
+    }
+    
+    public void setPosHeight(float h)
+    {
+        pos.height=h;
+    }
+    
+    public void setPos(float x,float y)
+    {
+        pos.x=x;
+        pos.y=y;
     }
 }

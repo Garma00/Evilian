@@ -1,5 +1,6 @@
 package com.prog.world;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
@@ -13,7 +14,7 @@ public class ManagerScreen
     //main menu default
     //gioca     1
     //opzioni   2
-    public static int index;
+    private static int index;
     private final static ManagerScreen MANAGER_SCREEN = new ManagerScreen();
     
     public ManagerScreen()
@@ -76,7 +77,7 @@ public class ManagerScreen
     public boolean clear(Array<Entity> entities)
     {
         boolean  done = false;
-            
+        
         
         if(!world.isLocked())
         {
@@ -85,10 +86,11 @@ public class ManagerScreen
             {
                 for(Entity e : entities)
                 {
+                    Body b=e.getBody();
                     done = true;
                     //System.out.println("entrato" + e.body);
-                    e.body.setActive(false);
-                    world.destroyBody(e.body);
+                    b.setActive(false);
+                    world.destroyBody(b);
                 }
 
                 entities.clear();
@@ -107,5 +109,10 @@ public class ManagerScreen
     public static ManagerScreen getManagerScreen()
     {
         return MANAGER_SCREEN;
+    }
+    
+    public static void setIndex(int i)
+    {
+        index=i;
     }
 }

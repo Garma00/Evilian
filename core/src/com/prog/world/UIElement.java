@@ -15,16 +15,12 @@ import com.prog.world.UI.ElementType;
 
 class UIElement
 {
-    public Rectangle pos;
-    public boolean flipX;
-    public boolean flipY;
+    private Rectangle pos;
     Texture tex;
     ElementType type;
     float cd;
     float original_pos;
-    SpellFactory sp=SpellFactory.INSTANCE;
-    
-    
+    SpellFactory sp=SpellFactory.getInstance();
     
     public UIElement(float x,float y,float width,float height,String path,ElementType type)
     {
@@ -40,53 +36,54 @@ class UIElement
     
     public void draw()
     {
+        float playerHP=Player.getHP();
         switch(type)
         {
             case HEALTH_BAR:
-                if(Player.hp > 0.26f && Player.hp < 0.7f)
+                if(playerHP > 0.26f && playerHP < 0.7f)
                     batch.setColor(0.89f,0.76f,0.25f,1f);
-                else if(Player.hp <= 0.26f)
+                else if(playerHP <= 0.26f)
                     batch.setColor(0.67f,0.19f,0.19f,1f);
                 else
                     batch.setColor(0f,0.76f,0.45f,1f);
 
-                batch.draw(tex,pos.x,pos.y,pos.width*Player.hp,pos.height);
+                batch.draw(tex,pos.x,pos.y,pos.width*playerHP,pos.height);
 
                 batch.setColor(Color.WHITE);
                 break;
             case HEALTH_SHADE:
-                if(Player.hp > 0.26f && Player.hp < 0.7f)
+                if(playerHP > 0.26f && playerHP < 0.7f)
                     batch.setColor(0.58f,0.47f,0f,1f);
-                else if(Player.hp <= 0.26f)
+                else if(playerHP <= 0.26f)
                     batch.setColor(0.48f,0.14f,0.14f,1f);
                 else
                     batch.setColor(0.19f,0.5f,0.37f,1f);
 
-                batch.draw(tex,pos.x,pos.y,pos.width*Player.hp,pos.height);
+                batch.draw(tex,pos.x,pos.y,pos.width*playerHP,pos.height);
 
                 batch.setColor(Color.WHITE);
                 break;
             case FB_BAR:
                 batch.setColor(0f,0.43f,1f,1f);
-                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[0],0,PallaDiFuoco.UI_CD),0,PallaDiFuoco.UI_CD,1,0);
+                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[0],0,PallaDiFuoco.getCD()),0,PallaDiFuoco.getCD(),1,0);
                 batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
                 batch.setColor(Color.WHITE);
                 break;
             case IB_BAR:
                 batch.setColor(0f,0.43f,1f,1f);
-                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[1],0,PallaDiGhiaccio.UI_CD),0,PallaDiGhiaccio.UI_CD,1,0);
+                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[1],0,PallaDiGhiaccio.getCD()),0,PallaDiGhiaccio.getCD(),1,0);
                 batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
                 batch.setColor(Color.WHITE);
                 break;
             case H_BAR:
                 batch.setColor(0f,0.43f,1f,1f);
-                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[2],0,Cura.UI_CD),0,Cura.UI_CD,1,0);
+                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[2],0,Cura.getCD()),0,Cura.getCD(),1,0);
                 batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
                 batch.setColor(Color.WHITE);
                 break;
             case M_BAR:
                 batch.setColor(0f,0.43f,1f,1f);
-                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[3],0,Meteora.UI_CD),0,Meteora.UI_CD,1,0);
+                cd=map(clamp(sp.getTime()-sp.getLastLaunch()[3],0,Meteora.getCD()),0,Meteora.getCD(),1,0);
                 batch.draw(tex,pos.x,pos.y,pos.width*cd,pos.height);
                 batch.setColor(Color.WHITE);
                 break;
