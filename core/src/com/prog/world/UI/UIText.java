@@ -1,37 +1,38 @@
-package com.prog.world;
+package com.prog.world.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
+import com.prog.world.Livello;
 import static com.prog.evilian.Evilian.batch;
-import com.prog.world.UI.ElementType;
 
 
-public class UIText
+public class UIText implements UIElement
 {
-    private Rectangle pos;
     private BitmapFont font;
-    ElementType type;
+    final Rectangle pos=new Rectangle();
+    //ElementType type;
     
-    public UIText(float x, float y, float width, float height, ElementType type)
+    public UIText(float x, float y, float width, float height)
     {
         //disegnamo il testo usando la posizione in pixel con una nuova telecamera 
-        this.pos=new Rectangle(x,y,width,height);
-        
-        this.type=type;
-        
-        //this.original_pos=this.pos.x;
+        pos.set(x,y,width,height);
         font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
     
     }
     
     public void draw()
     {
-        font.draw(batch, String.valueOf((int)Livello.gameplayTime), pos.x, pos.y);
+        font.draw(batch, String.valueOf((int)Livello.getGameplayTime()), pos.x, pos.y);
     }
     
     public void dispose()
     {
         font.dispose();
+    }
+
+    @Override
+    public void update() 
+    {
     }
 }
