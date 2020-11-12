@@ -36,6 +36,15 @@ import com.prog.entity.Entity;
 import com.prog.entity.Mouse;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
+import com.prog.world.UI.BackGround;
+import com.prog.world.UI.FBBar;
+import com.prog.world.UI.HBar;
+import com.prog.world.UI.HealthBar;
+import com.prog.world.UI.HealthShade;
+import com.prog.world.UI.IBBar;
+import com.prog.world.UI.MBar;
+import com.prog.world.UI.Selector;
+import com.prog.world.UI.UIText;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -361,38 +370,38 @@ public class Livello {
     void loadUI()
     {
         //NOTA: METTI GLI ELEMENTI IN ORDINE
-        level_ui.add(0,0,800,75,"images/ui/bg.png",UI.ElementType.BACKGROUND);
+        level_ui.add(new BackGround(0,0,800,75,"images/ui/bg.png"));
         //fb
-        level_ui.add(300,15,40,40,"images/ui/fireball_2.png",UI.ElementType.FOREGROUND);
-        level_ui.add(301,56,38,4,"images/ui/health_only.png", UI.ElementType.FB_BAR);
-        level_ui.add(300, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        level_ui.add(new BackGround(300,15,40,40,"images/ui/fireball_2.png"));
+        level_ui.add(new FBBar(301,56,38,4,"images/ui/health_only.png"));
+        level_ui.add(new BackGround(300, 55, 40, 6, "images/ui/skill_bar.png"));
         
         //ib
-        level_ui.add(400, 15, 40, 40, "images/ui/iceball.png", UI.ElementType.FOREGROUND);
-        level_ui.add(401,56,38,4,"images/ui/health_only.png", UI.ElementType.IB_BAR);
-        level_ui.add(400, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        level_ui.add(new BackGround(400, 15, 40, 40, "images/ui/iceball.png"));
+        level_ui.add(new IBBar(401,56,38,4,"images/ui/health_only.png"));
+        level_ui.add(new BackGround(400, 55, 40, 6, "images/ui/skill_bar.png"));
         
         //heal
-        level_ui.add(500, 15, 40, 40, "images/ui/heal.png", UI.ElementType.FOREGROUND);
-        level_ui.add(501,56,38,4,"images/ui/health_only.png", UI.ElementType.H_BAR);
-        level_ui.add(500, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        level_ui.add(new BackGround(500, 15, 40, 40, "images/ui/heal.png"));
+        level_ui.add(new HBar(501,56,38,4,"images/ui/health_only.png"));
+        level_ui.add(new BackGround(500, 55, 40, 6, "images/ui/skill_bar.png"));
         
         
         //meteor
-        level_ui.add(600, 15, 40, 40, "images/ui/meteor.png", UI.ElementType.FOREGROUND);
-        level_ui.add(601,56,38,4,"images/ui/health_only.png", UI.ElementType.M_BAR);
-        level_ui.add(600, 55, 40, 6, "images/ui/skill_bar.png", UI.ElementType.FOREGROUND);
+        level_ui.add(new BackGround(600, 15, 40, 40, "images/ui/meteor.png"));
+        level_ui.add(new MBar(601,56,38,4,"images/ui/health_only.png"));
+        level_ui.add(new BackGround(600, 55, 40, 6, "images/ui/skill_bar.png"));
         
         //health
-        level_ui.add(56,31,50*3,4*3,"images/ui/health_only.png", UI.ElementType.HEALTH_BAR);
-        level_ui.add(56,31,50*3,1*3,"images/ui/health_only_shade.png", UI.ElementType.HEALTH_SHADE);
-        level_ui.add(20,25,64*3,8*3,"images/ui/health_bar_empty.png",UI.ElementType.FOREGROUND);
+        level_ui.add(new HealthBar(56,31,50*3,4*3,"images/ui/health_only.png"));
+        level_ui.add(new HealthShade(56,31,50*3,1*3,"images/ui/health_only_shade.png"));
+        level_ui.add(new BackGround(20,25,64*3,8*3,"images/ui/health_bar_empty.png"));
         
         //selector
-        level_ui.add(257,25,40,16,"images/ui/sword.png", UI.ElementType.SELECTOR);
+        level_ui.add(new Selector(257,25,40,16,"images/ui/sword.png"));
         
-        //timer 
-        level_ui.add(727,50,40,16, UI.ElementType.TIMER);
+        //timer
+        level_ui.add(new UIText(727,50,40,16));
     }
 
     void adjustCameraToPlayer() 

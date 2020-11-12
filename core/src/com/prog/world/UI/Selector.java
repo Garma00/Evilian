@@ -6,34 +6,38 @@ import com.badlogic.gdx.math.Rectangle;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 
-public class Selector extends UIElement
+public class Selector implements UIElement
 {
-    private final Rectangle r;
+    private Texture tex;
     private float original_pos;
+    final Rectangle pos=new Rectangle();
     
-    public Selector(float x,float y,float width,float height,String path,UI.ElementType type)
+    public Selector(float x,float y,float width,float height,String path)
     {
-        super();
-        r=getPos();
-        setPos(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
+        pos.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
-        this.type=type;
         
-        this.original_pos=r.x;
+        this.original_pos=pos.x;
     }
     
     @Override
     public void draw() {
-        batch.draw(tex,r.x,r.y,r.width,r.height);
+        batch.draw(tex,pos.x,pos.y,pos.width,pos.height);
     }
     
     public void update()
     {
         if(sp.getSelectorPressed())
         {
-            setPosX(sp.getSpellSelector() == 0?original_pos:r.x+1);
+            pos.setX(sp.getSpellSelector() == 0?original_pos:pos.x+1);
             sp.setSelectorPressed(false);
         }
+    }
+
+    @Override
+    public void dispose() 
+    {
+        tex.dispose();
     }
     
 }

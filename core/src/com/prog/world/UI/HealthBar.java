@@ -2,25 +2,19 @@ package com.prog.world.UI;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import com.prog.world.UI.UI.ElementType;
 
-public class HealthBar extends UIElement
+public class HealthBar extends Bar implements UIElement
 {
     //lo dichiaro una volta sola e lo uso nel codice
-    private final Rectangle r;
+    private Texture tex;
     
-    public HealthBar(float x,float y,float width,float height,String path,ElementType type)
+    public HealthBar(float x,float y,float width,float height,String path)
     {
-        super();
-        r=getPos();
-        
-        setPos(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
+        pos.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
-        this.type=type;
     }
     
     @Override
@@ -35,13 +29,19 @@ public class HealthBar extends UIElement
         else
             batch.setColor(0f,0.76f,0.45f,1f);
 
-        batch.draw(tex,r.x,r.y,r.width*playerHP,r.height);
+        batch.draw(tex,pos.x,pos.y,pos.width*playerHP,pos.height);
 
         batch.setColor(Color.WHITE);
     }
 
     @Override
     public void update() {
+    }
+
+    @Override
+    public void dispose() 
+    {
+        tex.dispose();
     }
     
     

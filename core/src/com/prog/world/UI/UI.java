@@ -8,21 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 public class UI 
-{   
-    public enum ElementType
-    {
-        BACKGROUND,
-        FOREGROUND,
-        HEALTH_BAR,
-        HEALTH_SHADE,
-        FB_BAR,
-        IB_BAR,
-        H_BAR,
-        M_BAR,
-        SELECTOR,
-        TIMER
-    };
-    
+{    
     private final OrthographicCamera textCamera;
     private final OrthographicCamera cam;
     private final Viewport camvp;
@@ -30,9 +16,8 @@ public class UI
     float UI_HEIGHT;
     //utilizzo 2 array per differenziare tra elementi di sfondo ed elementi in primo piano
     //elementi in background
-    Array<UIElement> bgElements;
+    Array<UIElement> elements;
     //elementi in foreground
-    Array<UIElement> fgElements;
     //uitext viene trattata separatamente perche' ha bisogno di avere la telecamera
     //impostata in modo diverso(per evitare testo troppo piccolo e sfocato)
     UIText timer;
@@ -48,8 +33,7 @@ public class UI
         this.textCamera = new OrthographicCamera();
         textCamera.setToOrtho(false, uiWidth, uiHeight);
         
-        bgElements=new Array<UIElement>();
-        fgElements=new Array<UIElement>();
+        elements=new Array<UIElement>();
     }
     
     public void draw()
@@ -57,11 +41,8 @@ public class UI
         batch.setProjectionMatrix(cam.combined);
         Gdx.gl.glViewport(0,0,(int)(UI_WIDTH*Evilian.PPM),(int)(UI_HEIGHT*Evilian.PPM));
         batch.begin();
-        for(UIElement e: bgElements)
+        for(UIElement e: elements)
             e.draw();
-        for(UIElement e: fgElements)
-            e.draw();
-            
         batch.end();
         
         batch.setProjectionMatrix(textCamera.combined);
@@ -73,7 +54,7 @@ public class UI
     public void update()
     {
         cam.update();
-        for(UIElement e:fgElements)
+        for(UIElement e:elements)
                 e.update();
     }
     
@@ -83,50 +64,18 @@ public class UI
         camvp.update(width,height);
     }
     
-    public void add(float x,float y, float width,float height, String path,ElementType type)
+    public void add(UIElement ue)
     {
-        switch(type)
-        {
-            case BACKGROUND:
-                bgElements.add(new BackGround(x,y,width,height,path,type));
-                break;
-            case FOREGROUND:
-                fgElements.add(new BackGround(x,y,width,height,path,type));
-                break;
-            case HEALTH_BAR:
-                fgElements.add(new HealthBar(x,y,width,height,path,type));
-                break;
-            case HEALTH_SHADE:
-                fgElements.add(new HealthShade(x,y,width,height,path,type));
-                break;
-            case FB_BAR:
-                fgElements.add(new FBBar(x,y,width,height,path,type));
-                break;
-            case IB_BAR:
-                fgElements.add(new IBBar(x,y,width,height,path,type));
-                break;
-            case H_BAR:
-                fgElements.add(new HBar(x,y,width,height,path,type));
-                break;
-            case M_BAR:
-                fgElements.add(new MBar(x,y,width,height,path,type));
-                break;
-            case SELECTOR:
-                fgElements.add(new Selector(x,y,width,height,path,type));
-                break;
-        }
-    }
-    
-    public void add(float x,float y, float width,float height, ElementType type)
-    {
-        timer = new UIText(x, y, width, height, type);
+        //il testo deve essere trattato diversamente
+        if(ue instanceof UIText)
+            timer=(UIText)ue;
+        else
+            elements.add(ue);
     }
     
     public void dispose()
     {
-        for(UIElement e:bgElements)
-            e.dispose();
-        for(UIElement e:fgElements)
+        for(UIElement e:elements)
             e.dispose();
         
         timer.dispose();

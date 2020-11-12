@@ -5,28 +5,30 @@ import com.badlogic.gdx.math.Rectangle;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 
-public class BackGround extends UIElement 
+public class BackGround implements UIElement 
 {
-    private final Rectangle r;
+    private Texture tex;
+    final Rectangle pos=new Rectangle();
     
-    public BackGround(float x,float y,float width,float height,String path,UI.ElementType type)
+    public BackGround(float x,float y,float width,float height,String path)
     {
-        super();
-        r=getPos();
-        
-        setPos(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
+        pos.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
-        this.type=type;
     }
 
     @Override
     public void draw() 
     {
-        batch.draw(tex,r.x,r.y,r.width,r.height);
+        batch.draw(tex,pos.x,pos.y,pos.width,pos.height);
     }
 
     @Override
     public void update() {
+    }
+
+    @Override
+    public void dispose() {
+        tex.dispose();
     }
     
     

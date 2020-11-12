@@ -7,18 +7,15 @@ import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 
-public class HealthShade extends UIElement
+public class HealthShade implements UIElement
 {
-    private final Rectangle r;
+    private Texture tex;
+    final Rectangle pos=new Rectangle();
     
-    public HealthShade(float x,float y,float width,float height,String path,UI.ElementType type)
+    public HealthShade(float x,float y,float width,float height,String path)
     {
-        super();
-        r=getPos();
-        
-        setPos(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
+        pos.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
-        this.type=type;
     }
     
     @Override
@@ -33,12 +30,18 @@ public class HealthShade extends UIElement
         else
             batch.setColor(0.19f,0.5f,0.37f,1f);
 
-        batch.draw(tex,r.x,r.y,r.width*playerHP,r.height);
+        batch.draw(tex,pos.x,pos.y,pos.width*playerHP,pos.height);
 
         batch.setColor(Color.WHITE);
     }
 
     @Override
     public void update() {
+    }
+
+    @Override
+    public void dispose() 
+    {
+        tex.dispose();
     }
 }
