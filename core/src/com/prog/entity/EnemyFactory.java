@@ -15,9 +15,9 @@ public class EnemyFactory {
         B
     };
     
-    private final Pool<Enemy> EnemyAPool = new Pool<Enemy>() {
+    private final Pool<EnemyA> EnemyAPool = new Pool<EnemyA>() {
         @Override
-        protected Enemy newObject() {
+        protected EnemyA newObject() {
             return new EnemyA();
         }
     };

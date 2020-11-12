@@ -1,4 +1,4 @@
-package com.prog.world;
+package com.prog.world.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,31 +8,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 public class UI 
-{   
-    public enum ElementType
-    {
-        BACKGROUND,
-        FOREGROUND,
-        HEALTH_BAR,
-        HEALTH_SHADE,
-        FB_BAR,
-        IB_BAR,
-        H_BAR,
-        M_BAR,
-        SELECTOR,
-        TIMER
-    };
-    
-    private OrthographicCamera textCamera;
-    private OrthographicCamera cam;
-    private Viewport camvp;
+{    
+    private final OrthographicCamera textCamera;
+    private final OrthographicCamera cam;
+    private final Viewport camvp;
     float UI_WIDTH;
     float UI_HEIGHT;
     //utilizzo 2 array per differenziare tra elementi di sfondo ed elementi in primo piano
     //elementi in background
-    Array<UIElement> bgElements;
+    Array<UIElement> elements;
     //elementi in foreground
-    Array<UIElement> fgElements;
+    //uitext viene trattata separatamente perche' ha bisogno di avere la telecamera
+    //impostata in modo diverso(per evitare testo troppo piccolo e sfocato)
     UIText timer;
     
     public UI(float uiWidth,float uiHeight)
@@ -46,8 +33,7 @@ public class UI
         this.textCamera = new OrthographicCamera();
         textCamera.setToOrtho(false, uiWidth, uiHeight);
         
-        bgElements=new Array<UIElement>();
-        fgElements=new Array<UIElement>();
+        elements=new Array<UIElement>();
     }
     
     public void draw()
@@ -55,11 +41,8 @@ public class UI
         batch.setProjectionMatrix(cam.combined);
         Gdx.gl.glViewport(0,0,(int)(UI_WIDTH*Evilian.PPM),(int)(UI_HEIGHT*Evilian.PPM));
         batch.begin();
-        for(UIElement e: bgElements)
+        for(UIElement e: elements)
             e.draw();
-        for(UIElement e: fgElements)
-            e.draw();
-            
         batch.end();
         
         batch.setProjectionMatrix(textCamera.combined);
@@ -71,7 +54,7 @@ public class UI
     public void update()
     {
         cam.update();
-        for(UIElement e:fgElements)
+        for(UIElement e:elements)
                 e.update();
     }
     
@@ -81,40 +64,18 @@ public class UI
         camvp.update(width,height);
     }
     
-    public void add(float x,float y, float width,float height, String path,ElementType type)
+    public void add(UIElement ue)
     {
-        UIElement e=new UIElement(x,y,width,height,path,type);
-        switch(type)
-        {
-            case BACKGROUND:
-                bgElements.add(e);
-                break;
-            case FOREGROUND:
-            case HEALTH_BAR:
-            case HEALTH_SHADE:
-            case FB_BAR:
-            case IB_BAR:
-            case H_BAR:
-            case M_BAR:
-            case SELECTOR:
-                fgElements.add(e);
-                break;
-            default:
-                e.dispose();
-                e=null;
-        }
-    }
-    
-    public void add(float x,float y, float width,float height, ElementType type)
-    {
-        timer = new UIText(x, y, width, height, type);
+        //il testo deve essere trattato diversamente
+        if(ue instanceof UIText)
+            timer=(UIText)ue;
+        else
+            elements.add(ue);
     }
     
     public void dispose()
     {
-        for(UIElement e:bgElements)
-            e.dispose();
-        for(UIElement e:fgElements)
+        for(UIElement e:elements)
             e.dispose();
         
         timer.dispose();
