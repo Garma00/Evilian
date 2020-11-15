@@ -2,7 +2,6 @@ package com.prog.entity;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import com.prog.world.StateContainer;
 
@@ -29,13 +28,9 @@ public class EnemyFactory {
     }
     
      //chiamala quando vuoi distruggere una spell
-    public void destroyEnemy(Enemy e){
-       if(e instanceof EnemyA){
-         Pools.free(EnemyA.class);
-       }
-       else if(e instanceof EnemyB){
-         Pools.free(EnemyB.class);
-       }
+    public void destroyEnemy(Enemy e)
+    {
+       Pools.free(e);
     }
     
     public void update(float delta)
