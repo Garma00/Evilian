@@ -203,6 +203,7 @@ public class SpellFactory{
     public void clearActiveSpells()
     {
         activeSpells.clear();
+        spellSelector=0;
     }
     
     public static SpellFactory getInstance()
