@@ -197,7 +197,7 @@ public class EndLevel extends Livello implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
             ManagerScreen.setIndex(-1);
-            ManagerScreen.getManagerScreen().changeScreen(null, root);
+            ManagerScreen.getInstance().changeScreen(null, root);
         }
     }
         
