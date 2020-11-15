@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.prog.collision.OpzioniContactListener;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
+import com.prog.world.ManagerMusic;
+import com.prog.world.ManagerSound;
 
 public class Button extends Entity 
 {
@@ -25,10 +27,10 @@ public class Button extends Entity
         switch(((userDataContainer)getBody().getFixtureList().get(0).getUserData()).type)
         {
             case "sound":
-                isActive=Evilian.getManagerSound().getVolume() == 0?false:true;
+                isActive=ManagerSound.getInstance().getVolume() == 0?false:true;
                 break;
             case "music":
-                isActive=Evilian.getManagerMusic().getVolume() == 0?false:true;
+                isActive=ManagerMusic.getInstance().getVolume() == 0?false:true;
                 break;
         }
         

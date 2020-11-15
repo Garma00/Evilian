@@ -48,12 +48,13 @@ public class Livello1 extends Livello implements Screen{
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());
+            ManagerMusic.getInstance().selectMusic(1);
+
         }
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravita' applicata essendo un body
         mouse.getBody().setActive(false);
         
-        Evilian.getManagerMusic().selectMusic();
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
@@ -152,7 +153,7 @@ public class Livello1 extends Livello implements Screen{
         ef.draw();
         
         batch.end();
-        debug.render(world, cam.combined);
+        //debug.render(world, cam.combined);
     }
     
     private void tutorial()

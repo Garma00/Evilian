@@ -51,7 +51,7 @@ public class EnemyA extends Enemy{
         if(anim!=null)
         {
             TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
-            batch.draw(region,r.x,r.y,r.width/2,r.height/2,r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
+            batch.draw(region,r.x,r.y - 0.03f,r.width/2,r.height/2,r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
         }
     }
 

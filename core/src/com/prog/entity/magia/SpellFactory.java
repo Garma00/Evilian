@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
+import com.prog.world.ManagerMusic;
+import com.prog.world.ManagerSound;
 
 
 public class SpellFactory{
@@ -84,7 +86,7 @@ public class SpellFactory{
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
-            Evilian.getManagerSound().selectSound(spellSelector);
+            ManagerSound.getInstance().selectSound(spellSelector);
         }else
             destroySpell(m);
     }
