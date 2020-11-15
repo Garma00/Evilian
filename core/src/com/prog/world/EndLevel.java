@@ -39,7 +39,6 @@ public class EndLevel extends Livello implements Screen {
         loadBestScores();
         updateScores();
         writeBestScores();
-    
     }
     
     @Override
