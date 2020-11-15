@@ -414,7 +414,7 @@ public class Livello {
     {
         ManagerScreen.setIndex(i);
         try {
-            ManagerScreen.getManagerScreen().changeScreen(entities, root);
+            ManagerScreen.getInstance().changeScreen(entities, root);
         } catch (IOException ex) {
             Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -423,7 +423,7 @@ public class Livello {
     void changeScreenTo() 
     {
         try {
-            ManagerScreen.getManagerScreen().changeScreen(entities, root);
+            ManagerScreen.getInstance().changeScreen(entities, root);
         } catch (IOException ex) {
             Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
         }

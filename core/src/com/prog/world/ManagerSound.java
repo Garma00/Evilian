@@ -13,12 +13,14 @@ public class ManagerSound
     2       cura
     3       meteora
     */
+    private static ManagerSound INSTANCE = null;
     private boolean soundOn = true;
     private float volume=0.7f;
-    private final Sound fbEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/fireball.mp3"));
+    private final Sound fbEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/fireball.mp3"));;
     private final Sound ibEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/iceball.mp3"));
     private final Sound healEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/heal.mp3"));
     private final Sound meteorEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/meteora.mp3"));
+    
     
     public void selectSound(int sound)
     {
@@ -94,5 +96,12 @@ public class ManagerSound
     public void setSoundOn(boolean f)
     {
         soundOn=f;
+    }
+    
+    public static ManagerSound getInstance()
+    {
+        if(INSTANCE == null)
+            INSTANCE = new ManagerSound();
+        return INSTANCE;
     }
 }

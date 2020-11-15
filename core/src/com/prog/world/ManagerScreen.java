@@ -15,9 +15,9 @@ public class ManagerScreen
     //gioca     1
     //opzioni   2
     private static int index;
-    private final static ManagerScreen MANAGER_SCREEN = new ManagerScreen();
+    private static ManagerScreen INSTANCE = null;
     
-    public ManagerScreen()
+    private ManagerScreen()
     {
         index = 0;
     }
@@ -106,13 +106,15 @@ public class ManagerScreen
     }
     
     
-    public static ManagerScreen getManagerScreen()
-    {
-        return MANAGER_SCREEN;
-    }
-    
     public static void setIndex(int i)
     {
         index=i;
+    }
+    
+    public static ManagerScreen getInstance()
+    {
+        if(INSTANCE == null)
+            INSTANCE = new ManagerScreen();
+        return INSTANCE;
     }
 }

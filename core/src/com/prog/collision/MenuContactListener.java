@@ -23,7 +23,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("Gioca");
                 collided = true;
-                ManagerScreen.setIndex(1);
+                ManagerScreen.getInstance().setIndex(1);
             }
                 
         }
@@ -34,7 +34,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("Gioca");
                 collided = true;
-                ManagerScreen.setIndex(1);
+                ManagerScreen.getInstance().setIndex(1);
             }
                 
         }
@@ -45,7 +45,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("opzioni");
                 collided = true;
-                ManagerScreen.setIndex(2);
+                ManagerScreen.getInstance().setIndex(2);
             }
                 
         }
@@ -56,7 +56,7 @@ public class MenuContactListener implements ContactListener{
             {
                 //System.out.println("opzioni");
                 collided = true;
-                ManagerScreen.setIndex(2);
+                ManagerScreen.getInstance().setIndex(2);
             }
                 
         }

@@ -2,19 +2,39 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.utils.Array;
 
 
 public class ManagerMusic 
 {
-    private final Music musica=Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3"));
+    private static ManagerMusic INSTANCE = null;
+    private Array<Music> songs;
+    private Music musica;
     
-    public void selectMusic()
+    private ManagerMusic()
     {
-        if(!musica.isPlaying())
-        {
-            musica.setVolume(0.4f);
-            musica.play();
-        }
+        songs = new Array<Music>();
+        songs.add(Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3")));
+        songs.add(Gdx.audio.newMusic(Gdx.files.internal("music/level1.mp3")));
+        musica = songs.first();
+    }
+    
+    public void addMusic(String path)
+    {
+        Music m = Gdx.audio.newMusic(Gdx.files.internal(path));
+        songs.add(m);
+    }
+    
+    public void selectMusic(int i)
+    {
+        if(i >= songs.size)
+            return;
+        if(musica.isPlaying())
+            musica.stop();
+        musica = songs.get(i);
+        musica.setVolume(0.4f);
+        musica.setLooping(true);
+        musica.play();
     }
     
     public void setVolume(float volume)
@@ -37,4 +57,11 @@ public class ManagerMusic
         musica.dispose();
     }
 
+    public static ManagerMusic getInstance()
+    {
+        if(INSTANCE == null)
+            INSTANCE = new ManagerMusic();
+        return INSTANCE;
+    }
+    
 }
