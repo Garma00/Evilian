@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.entity.Mouse;
 import com.prog.evilian.Evilian;
@@ -19,13 +19,6 @@ public class SpellFactory{
     private Array<Magia> activeSpells;
     private long[] lastLaunch;
     private boolean selectorPressed;
-    
-    public enum SpellType {
-      PALLADIFUOCO,
-      PALLADIGHIACCIO,
-      CURA,
-      METEORA
-    };
 
     public SpellFactory()
     {
@@ -35,43 +28,19 @@ public class SpellFactory{
         lastLaunch=new long[4];
         selectorPressed=false;
     }
-    
-    private final Pool<PallaDiFuoco> fireballPool = new Pool<PallaDiFuoco>() {
-        @Override
-        protected PallaDiFuoco newObject() {
-            return new PallaDiFuoco();
-        }
-    };
-    private final Pool<PallaDiGhiaccio> iceballPool = new Pool<PallaDiGhiaccio>() {
-        @Override
-        protected PallaDiGhiaccio newObject() {
-            return new PallaDiGhiaccio();
-        }
-    };
-    private final Pool<Cura> healPool = new Pool<Cura>() {
-        @Override
-        protected Cura newObject() {
-            return new Cura();
-        }
-    };
-    private final Pool<Meteora> meteorPool = new Pool<Meteora>() {
-        @Override
-        protected Meteora newObject() {
-            return new Meteora();
-        }
-    };
 
     //chiamala quando vuoi creare una spell
-    public Magia createSpell(SpellType spell){
-       switch(spell){
-         case PALLADIFUOCO:
-            return fireballPool.obtain();
-         case PALLADIGHIACCIO:
-            return iceballPool.obtain();
-         case CURA:
-             return healPool.obtain();
-         case METEORA:
-             return meteorPool.obtain();
+    public Magia createSpell(int spell){
+       switch(spell)
+       {
+         case 0:
+            return Pools.obtain(PallaDiFuoco.class);
+         case 1:
+            return Pools.obtain(PallaDiGhiaccio.class);
+         case 2:
+             return Pools.obtain(Cura.class);
+         case 3:
+             return Pools.obtain(Meteora.class);
        }
        //altrimenti ritorno null
         return null;
@@ -80,16 +49,7 @@ public class SpellFactory{
     //chiamala quando vuoi distruggere una spell
     public void destroySpell(Magia spell)
     {
-       if(spell instanceof PallaDiFuoco){
-         fireballPool.free((PallaDiFuoco)spell);
-       }
-       else if(spell instanceof PallaDiGhiaccio){
-         iceballPool.free((PallaDiGhiaccio)spell);
-       }else if(spell instanceof Cura){
-         healPool.free((Cura)spell);
-       }else if(spell instanceof Meteora){
-         meteorPool.free((Meteora)spell);
-       }
+       Pools.free(spell);
     }
     
     public void addToSpellSelector(int i)
@@ -114,23 +74,9 @@ public class SpellFactory{
     {
         Magia m = null;
         
-        switch(spellSelector)
-        {
-            case 0:
-                m=createSpell(SpellFactory.SpellType.PALLADIFUOCO);
-                break;
-            case 1:
-                m=createSpell(SpellFactory.SpellType.PALLADIGHIACCIO);
-                break;
-            case 2:
-                m=createSpell(SpellFactory.SpellType.CURA);
-                break;
-            case 3:
-                res = launchMeteor();
-                m=createSpell(SpellFactory.SpellType.METEORA);
-                break;
-        }
-
+        if(spellSelector == 3)
+            res = launchMeteor();
+        m=createSpell(spellSelector);
         
         m.init(pg_pos, res);
         //logica cooldown magie
