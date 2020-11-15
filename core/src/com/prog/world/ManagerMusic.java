@@ -10,6 +10,7 @@ public class ManagerMusic
     private static ManagerMusic INSTANCE = null;
     private Array<Music> songs;
     private Music musica;
+    private boolean musicOn;
     
     private ManagerMusic()
     {
@@ -17,6 +18,7 @@ public class ManagerMusic
         songs.add(Gdx.audio.newMusic(Gdx.files.internal("music/main_theme.mp3")));
         songs.add(Gdx.audio.newMusic(Gdx.files.internal("music/level1.mp3")));
         musica = songs.first();
+        musicOn = true;
     }
     
     public void addMusic(String path)
@@ -27,7 +29,7 @@ public class ManagerMusic
     
     public void selectMusic(int i)
     {
-        if(i >= songs.size)
+        if(i >= songs.size || !musicOn)
             return;
         if(musica.isPlaying())
             musica.stop();
@@ -55,6 +57,11 @@ public class ManagerMusic
         if(musica.isPlaying())
             musica.pause();
         musica.dispose();
+    }
+    
+    public void setMusicOn(boolean b)
+    {
+        this.musicOn = b;
     }
 
     public static ManagerMusic getInstance()

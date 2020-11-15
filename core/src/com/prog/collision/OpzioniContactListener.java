@@ -73,12 +73,14 @@ public class OpzioniContactListener implements ContactListener{
                 {
                     System.out.println("Volume music 0");
                     ManagerMusic.getInstance().setVolume(0f);
+                    ManagerMusic.getInstance().setMusicOn(false);
                     ((Button)b.e).setActive(false);
                 }  
                 else
                 {
                    ManagerMusic.getInstance().setVolume(0.5f);
                     System.out.println("Volume music 0.5");
+                    ManagerMusic.getInstance().setMusicOn(true);
                     ((Button)b.e).setActive(true);
                 }
             }
@@ -96,6 +98,7 @@ public class OpzioniContactListener implements ContactListener{
                 {
                     System.out.println("Volume music 0");
                     ManagerMusic.getInstance().setVolume(0f);
+                    ManagerMusic.getInstance().setMusicOn(false);
                     ((Button)a.e).setActive(false);
                     
                 }                    
@@ -103,6 +106,7 @@ public class OpzioniContactListener implements ContactListener{
                 {
                     ManagerMusic.getInstance().setVolume(0.5f);
                     System.out.println("Volume music 0.5");
+                    ManagerMusic.getInstance().setMusicOn(true);
                     ((Button)a.e).setActive(false);
                 }
             }

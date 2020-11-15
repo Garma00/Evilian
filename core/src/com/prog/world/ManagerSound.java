@@ -2,6 +2,7 @@ package com.prog.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Player;
 
 
@@ -20,50 +21,28 @@ public class ManagerSound
     private final Sound ibEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/iceball.mp3"));
     private final Sound healEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/heal.mp3"));
     private final Sound meteorEffect =Gdx.audio.newSound(Gdx.files.internal("music/effects/meteora.mp3"));
+    private Array<Sound> sounds;
     
+    private ManagerSound()
+    {
+        sounds = new Array<Sound>();
+        sounds.add(fbEffect);
+        sounds.add(ibEffect);
+        sounds.add(healEffect);
+        sounds.add(meteorEffect);
+    }
+    
+    public void addSound(String path)
+    {
+        sounds.add(Gdx.audio.newSound(Gdx.files.internal(path)));
+    }
     
     public void selectSound(int sound)
-    {
-        switch(sound)
-        {
-            case 0:
-                if(soundOn)
-                {
-                    fbEffect.play(volume);
-                    break;
-                }
-                
-            case 1:
-                 
-                if(soundOn)
-                {
-                    ibEffect.play(volume);
-                    break;
-                }
-                
-            case 2:
-                
-                if(soundOn)
-                {
-                    if(Player.getHP() < 1)
-                    {
-                        healEffect.play(volume);
-                    }
-                    break;
-                }
-
-            case 3:
-                
-                if(soundOn)
-                {
-                    meteorEffect.play(volume);
-                    break;
-                }
-                
-            default:
-                System.out.println("no effect found");
-                break;
-        }
+    { 
+        if(sound >= sounds.size)
+            return;
+        if(soundOn)
+            sounds.get(sound).play();
     }
     
     public void setVolume(float v)

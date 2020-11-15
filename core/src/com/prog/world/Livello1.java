@@ -48,12 +48,13 @@ public class Livello1 extends Livello implements Screen{
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(map.getLayers().get("enemy_spawn").getObjects());
+            ManagerMusic.getInstance().selectMusic(1);
+
         }
         
         //bisogna distruggere il mouse altrimenti il mouse nel livello1 avrebbe la gravita' applicata essendo un body
         mouse.getBody().setActive(false);
         
-        ManagerMusic.getInstance().selectMusic(1);
         
         //diamo un po' di zoom alla telecamera per un gameplay migliore
         cam.zoom-=0.5;
