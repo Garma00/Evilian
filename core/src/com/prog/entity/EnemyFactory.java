@@ -2,7 +2,7 @@ package com.prog.entity;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.prog.world.StateContainer;
 
 public class EnemyFactory {
@@ -15,41 +15,22 @@ public class EnemyFactory {
         B
     };
     
-    private final Pool<EnemyA> EnemyAPool = new Pool<EnemyA>() {
-        @Override
-        protected EnemyA newObject() {
-            return new EnemyA();
-        }
-    };
-    
-    
-    private final Pool<EnemyB> EnemyBPool = new Pool<EnemyB>() {
-        @Override
-        protected EnemyB newObject() {
-            return new EnemyB();
-        }
-    };
-    
     //chiamala quando vuoi creare una spell
     public Enemy createEnemy(EnemyType t){
        switch(t){
          case A:
-            return EnemyAPool.obtain();
+            return Pools.obtain(EnemyA.class);
          case B:
-             return EnemyBPool.obtain();
+             return Pools.obtain(EnemyB.class);
         }
         //altrimenti ritorno null
         return null;
     }
     
      //chiamala quando vuoi distruggere una spell
-    public void destroyEnemy(Enemy e){
-       if(e instanceof EnemyA){
-         EnemyAPool.free((EnemyA)e);
-       }
-       else if(e instanceof EnemyB){
-         EnemyBPool.free((EnemyB)e);
-       }
+    public void destroyEnemy(Enemy e)
+    {
+       Pools.free(e);
     }
     
     public void update(float delta)
