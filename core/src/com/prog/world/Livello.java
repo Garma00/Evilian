@@ -69,7 +69,7 @@ public class Livello {
     Evilian root;
     private static TextureAtlas atlas;
     Mouse mouse;
-    protected static final ManagerVfx mvfx=ManagerVfx.getInstance();
+    private static final ManagerVfx mvfx=ManagerVfx.getInstance();
     UI level_ui;
     boolean resume;
     File file;//file per il caricamento dello stato

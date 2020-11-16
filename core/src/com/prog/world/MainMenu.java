@@ -16,8 +16,9 @@ import static com.prog.evilian.Evilian.batch;
 //dichiara una istanza di custom contact listener
 public class MainMenu extends Livello implements Screen
 {
-    MenuContactListener c;
-    Texture bg;
+    private MenuContactListener c;
+    private Texture bg;
+    private static final ManagerVfx mvfx=ManagerVfx.getInstance();
     
     public MainMenu(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian game)
     {

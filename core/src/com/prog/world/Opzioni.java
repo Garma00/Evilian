@@ -14,8 +14,9 @@ import static com.prog.world.Livello.world;
 
 public class Opzioni extends Livello implements Screen {
 
-    OpzioniContactListener c;
-    Texture bg;
+    private OpzioniContactListener c;
+    private Texture bg;
+    private static final ManagerVfx mvfx=ManagerVfx.getInstance();
     
     public Opzioni(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian root)
     {
