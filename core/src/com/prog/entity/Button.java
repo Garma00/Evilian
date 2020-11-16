@@ -3,7 +3,6 @@ package com.prog.entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.prog.collision.OpzioniContactListener;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.ManagerMusic;
@@ -13,7 +12,6 @@ public class Button extends Entity
 {
     Texture img;
     Texture img_off;
-    OpzioniContactListener c;
     private boolean isActive;
     private boolean hasDouble;
     public Button(float x, float y, float width, float height, String userData, String path, boolean isDouble)

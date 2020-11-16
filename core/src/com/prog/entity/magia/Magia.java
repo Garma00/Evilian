@@ -9,13 +9,10 @@ import com.prog.entity.Entity;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.Livello;
 
-
-
 public abstract class Magia extends Entity implements Poolable{
     
     float potenza;
     Vector2 impulso;
-    //pos lo rendo publico per richiamarlo nel momento in cui voglio verificare la posizione della skill 
     float angle;
     long COOLDOWN;
     boolean alive;

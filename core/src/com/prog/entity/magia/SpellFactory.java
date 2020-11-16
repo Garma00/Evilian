@@ -7,10 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.entity.Mouse;
-import com.prog.evilian.Evilian;
-import com.prog.world.ManagerMusic;
 import com.prog.world.ManagerSound;
-
 
 public class SpellFactory{
 
