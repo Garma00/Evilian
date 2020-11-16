@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public abstract class Enemy extends Entity implements Poolable{
-    float life;
+    protected float life;
     //public perche' dovra' essere accessibile dal level contact listener
     protected boolean alive;
     protected boolean walkLeft;

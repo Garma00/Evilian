@@ -9,7 +9,7 @@ import static com.prog.evilian.Evilian.batch;
 public class HealthBar extends Bar implements UIElement
 {
     //lo dichiaro una volta sola e lo uso nel codice
-    private Texture tex;
+    private final Texture tex;
     
     public HealthBar(float x,float y,float width,float height,String path)
     {

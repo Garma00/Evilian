@@ -18,7 +18,7 @@ public class SpellFactory{
     private long[] lastLaunch;
     private boolean selectorPressed;
 
-    public SpellFactory()
+    private SpellFactory()
     {
         spellSelector=0;
         activeSpells=new Array<Magia>();

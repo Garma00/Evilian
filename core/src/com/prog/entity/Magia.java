@@ -10,14 +10,15 @@ import com.prog.world.Livello;
 
 public abstract class Magia extends Entity implements Poolable{
     
-    float potenza;
-    Vector2 impulso;
-    float angle;
-    long COOLDOWN;
-    boolean alive;
-    long time;
+    protected float potenza;
+    protected Vector2 impulso;
+    protected float angle;
+    protected long COOLDOWN;
+    protected boolean alive;
+    protected long time;
+    
     //lastlaunch dentro la magia e' solo per i buff
-    long lastLaunch;
+    protected long lastLaunch;
     
     public Magia()
     {

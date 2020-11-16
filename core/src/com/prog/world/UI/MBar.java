@@ -8,7 +8,7 @@ import static com.prog.evilian.Evilian.batch;
 
 public class MBar extends Bar implements UIElement
 {
-    private Texture tex;
+    private final Texture tex;
     private float cd;
     
     public MBar(float x,float y,float width,float height,String path)

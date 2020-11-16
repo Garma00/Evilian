@@ -20,8 +20,8 @@ public abstract class Entity {
     protected boolean flipX;
     protected boolean flipY;
     private Body body;
-    short CATEGORY_BIT;
-    short MASK_BIT;
+    private short CATEGORY_BIT;
+    private short MASK_BIT;
     
     public class userDataContainer
     {
@@ -79,8 +79,7 @@ public abstract class Entity {
         attachFixture(body,new Vector2(0,0),false,userData,width,height,density,restitution,friction);
     }
     
-    //overloading
-    public Body createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction,short categoria,short mask)
+    public void createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction,short categoria,short mask)
     {
         BodyDef bdef= new BodyDef();
         CATEGORY_BIT=categoria;
@@ -104,9 +103,6 @@ public abstract class Entity {
         body=Livello.getWorld().createBody(bdef);
         
         attachFixture(body,new Vector2(0,0),false,userData,radius,density,restitution,friction);
-        
-        return body;
-        
     }
     
     public void attachFixture(Body b,Vector2 relativePos, boolean isSensor,String userData, float width, float height,float density, float restitution, float friction)
@@ -130,7 +126,6 @@ public abstract class Entity {
         shape.dispose();
     }
     
-    //overloading
     public void attachFixture(Body b,Vector2 relativePos, boolean isSensor,String userData,float radius, float density, float restitution, float friction)
     {
         CircleShape shape=new CircleShape();

@@ -9,7 +9,7 @@ import static com.prog.evilian.Evilian.batch;
 
 public class UIText implements UIElement
 {
-    private BitmapFont font;
+    private final BitmapFont font;
     final Rectangle pos=new Rectangle();
     //ElementType type;
     
@@ -18,14 +18,15 @@ public class UIText implements UIElement
         //disegnamo il testo usando la posizione in pixel con una nuova telecamera 
         pos.set(x,y,width,height);
         font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
-    
     }
     
+    @Override
     public void draw()
     {
         font.draw(batch, String.valueOf((int)Livello.getGameplayTime()), pos.x, pos.y);
     }
     
+    @Override
     public void dispose()
     {
         font.dispose();
