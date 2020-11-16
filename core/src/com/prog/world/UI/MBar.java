@@ -2,7 +2,7 @@ package com.prog.world.UI;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.prog.entity.magia.Meteora;
+import com.prog.entity.Meteora;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 

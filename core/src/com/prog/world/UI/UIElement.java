@@ -1,6 +1,6 @@
 package com.prog.world.UI;
 
-import com.prog.entity.magia.SpellFactory;
+import com.prog.entity.SpellFactory;
 
 public interface UIElement
 {

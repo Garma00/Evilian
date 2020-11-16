@@ -1,11 +1,10 @@
-package com.prog.entity.magia;
+package com.prog.entity;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.prog.entity.Player;
 import com.prog.evilian.Evilian;
 import com.prog.world.Livello;
 

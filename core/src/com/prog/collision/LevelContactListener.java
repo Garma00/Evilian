@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Enemy;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Player;
-import com.prog.entity.magia.Magia;
-import com.prog.entity.magia.Meteora;
-import com.prog.entity.magia.PallaDiFuoco;
-import com.prog.entity.magia.PallaDiGhiaccio;
+import com.prog.entity.Magia;
+import com.prog.entity.Meteora;
+import com.prog.entity.PallaDiFuoco;
+import com.prog.entity.PallaDiGhiaccio;
 
 public class LevelContactListener implements ContactListener{
     private userDataContainer a,b;

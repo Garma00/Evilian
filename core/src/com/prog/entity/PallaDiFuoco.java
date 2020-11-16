@@ -1,4 +1,4 @@
-package com.prog.entity.magia;
+package com.prog.entity;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
