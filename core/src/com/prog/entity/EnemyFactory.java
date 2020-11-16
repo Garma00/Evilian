@@ -8,6 +8,11 @@ import com.prog.world.StateContainer;
 public class EnemyFactory {
     //l'array va reso publico perchè serve conoscere il numero di elementi e iterarli per salvare lo stato
     private Array<Enemy> activeEnemies=new Array<Enemy>();
+    private static EnemyFactory INSTANCE=null;
+    
+    private EnemyFactory()
+    {
+    }
     
     //da aggiungere altri tipi
     public enum EnemyType {
@@ -98,5 +103,12 @@ public class EnemyFactory {
     public Array<Enemy> getActiveEnemies()
     {
         return activeEnemies;
+    }
+    
+    public static EnemyFactory getInstance()
+    {
+        if(INSTANCE==null)
+            INSTANCE=new EnemyFactory();
+        return INSTANCE;
     }
 }

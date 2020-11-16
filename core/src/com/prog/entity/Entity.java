@@ -14,7 +14,7 @@ import com.prog.world.Livello;
 
 public abstract class Entity {
     protected Animation<TextureAtlas.AtlasRegion> anim;
-    private Rectangle pos;
+    private final Rectangle pos;
     //protected per farlo accedere alle sottoclassi
     protected float animationTime;
     protected boolean flipX;

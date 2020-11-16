@@ -42,21 +42,21 @@ public class ManagerScreen
                 break;
 
             case 3:
-                if(clear(entities))                    
+                if(clear(entities))
                     game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.getScreenWidth(), 525,800,75, game, true));
                 else
                     return;
                 break;  
                 
             case 4:
-                if(clear(entities))                    
+                if(clear(entities))
                     game.setScreen(new MainMenu(game.getScreenWidth(), game.getScreenHeight(), game));
                 else
                     return;
                 break;
                 
             case 5:
-                if(clear(entities))                    
+                if(clear(entities))
                     game.setScreen(new EndLevel(game.getScreenWidth(), game.getScreenHeight(), game));
                 else
                     return;

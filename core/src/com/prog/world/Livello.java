@@ -73,7 +73,7 @@ public class Livello {
     UI level_ui;
     boolean resume;
     File file;//file per il caricamento dello stato
-    EnemyFactory ef;
+    static EnemyFactory ef;
     private static int points;
     protected static float gameplayTime;
 
@@ -110,11 +110,9 @@ public class Livello {
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        ef = new EnemyFactory();
+        ef = EnemyFactory.getInstance();
         gameplayTime = 0;
         points = 0;
-
-        
     }
     
     public Livello(boolean Sleep, int cameraWidth, int cameraHeight, Evilian game)

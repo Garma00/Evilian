@@ -92,9 +92,4 @@ public class EnemyB extends Enemy{
         this.anim=walking;
         SPEED=0.6f;
     }
-
-    public void debuffVelocita()
-    {
-        this.SPEED = 0.2f;
-    }
 }

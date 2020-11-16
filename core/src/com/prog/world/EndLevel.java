@@ -47,9 +47,7 @@ public class EndLevel extends Livello implements Screen {
 
     @Override
     public void render(float f)
-    {
-        //resetto la viewport
-        
+    {   
         cam.update();
         batch.setProjectionMatrix(cam.combined);
         try {
@@ -57,6 +55,8 @@ public class EndLevel extends Livello implements Screen {
         } catch (IOException ex) {
             Logger.getLogger(EndLevel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //resetto la viewport di OpenGL
         Gdx.gl.glViewport(0,0,800,600);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -94,7 +94,6 @@ public class EndLevel extends Livello implements Screen {
     public void dispose() {
     }
     
-    //punteggi() causa throws FileNotFoundException
     public void draw() throws FileNotFoundException
     {
         font.setColor(Color.RED);
