@@ -11,7 +11,7 @@ public class Mouse extends Entity
     private boolean toReposition;
     private static Mouse INSTANCE=null;
     
-    public Mouse()
+    private Mouse()
     {
         toReposition=false;
     }
