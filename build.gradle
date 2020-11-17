@@ -17,7 +17,13 @@ buildscript {
 
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: "java"
+    apply plugin: "java-library"
 
+    configurations {
+        umlDoclet
+    }
+    
     version = '1.0'
     ext {
         appName = "Evilian"
@@ -38,11 +44,20 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
+    
+    dependencies{
+        umlDoclet 'nl.talsmasoftware:umldoclet:2.0.12'
+    }
+    
+    javadoc {
+        options.docletpath = configurations.umlDoclet.files.asType(List)
+        options.doclet = 'nl.talsmasoftware.umldoclet.UMLDoclet'
+        options.addStringOption "umlImageFormat", "svg"
+        options.addStringOption "umlImageDirectory", "uml"
+    }
 }
 
 project(":desktop") {
-    apply plugin: "java-library"
-
 
     dependencies {
         implementation project(":core")
@@ -54,8 +69,6 @@ project(":desktop") {
 }
 
 project(":core") {
-    apply plugin: "java-library"
-
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"

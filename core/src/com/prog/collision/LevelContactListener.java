@@ -7,10 +7,10 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Enemy;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Player;
-import com.prog.entity.magia.Magia;
-import com.prog.entity.magia.Meteora;
-import com.prog.entity.magia.PallaDiFuoco;
-import com.prog.entity.magia.PallaDiGhiaccio;
+import com.prog.entity.Magia;
+import com.prog.entity.Meteora;
+import com.prog.entity.PallaDiFuoco;
+import com.prog.entity.PallaDiGhiaccio;
 
 public class LevelContactListener implements ContactListener{
     private userDataContainer a,b;
@@ -57,7 +57,7 @@ public class LevelContactListener implements ContactListener{
                 ((Enemy)b.e).damage(0.4f);
             else if(a.e instanceof PallaDiGhiaccio)
             {
-                ((Enemy)b.e).debuffVelocita();
+                ((Enemy)b.e).setSpeed(0.2f);
                 ((Enemy)b.e).damage(0.2f);
             }
             else if(a.e instanceof Meteora)
@@ -71,7 +71,7 @@ public class LevelContactListener implements ContactListener{
             else if(b.e instanceof PallaDiGhiaccio)
             {
                 ((Enemy)a.e).damage(0.2f);
-                ((Enemy)a.e).debuffVelocita();
+                ((Enemy)a.e).setSpeed(0.2f);
             }
             else if(b.e instanceof Meteora)
                 ((Enemy)a.e).damage(0.8f);

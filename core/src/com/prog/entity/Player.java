@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.prog.entity.magia.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.Livello;
@@ -32,7 +31,7 @@ public class Player extends Entity{
         super();
         Rectangle r=getPos();
         setPos(spawnX,spawnY,Livello.getAtlas().findRegion("knight_m_idle_anim", 0).getRegionWidth(),(Livello.getAtlas().findRegion("knight_m_idle_anim", 0).getRegionHeight()));
-        this.anim=stand;
+        setAnim(stand);
         //true perche' il player starta in aria
         inAir=true;
         createBody(r.x, r.y, r.width, r.height, 1, "player", 1f,  0, 1f,(short)4,(short)(8|32|64|128));
@@ -41,7 +40,8 @@ public class Player extends Entity{
         setPosHeight(r.height/Evilian.PPM);
         //attacco una fixture di tipo sensor come piede
         attachFixture(getBody(),new Vector2(0,-0.15f), true,"player_foot", 12f, 5f, 0, 0, 0);
-        this.flipX=this.flipY=false;
+        setFlipX(false);
+        setFlipY(false);
         
         this.hp = hp;
         this.hpMax = 1.0f;
@@ -57,7 +57,7 @@ public class Player extends Entity{
         Body b=getBody();
         Rectangle r=getPos();
         
-        animationTime+=delta;
+        addToAnimationTime(delta);
         //NOTA: getPosition di body mi ritorna il centro del corpo
         setPosX((b.getPosition().x)-(r.width/2));
         setPosY((b.getPosition().y)-(r.height/2));
@@ -94,20 +94,20 @@ public class Player extends Entity{
             res=spellFactory.computeDistanceVector(b.getWorldCenter());
 
             //giriamo il personaggio in base al lancio della magia
-            flipX=res.x<0;
+            setFlipX(res.x<0);
         }
         
         if (Gdx.input.isKeyPressed(Keys.A)) {
-            anim=walking;
+            setAnim(walking);
             forza-=1.5;
-            flipX=true;
+            setFlipX(true);
         }
         else if (Gdx.input.isKeyPressed(Keys.D)) {
-            anim=walking;
+            setAnim(walking);
             forza+=1.5;
-            flipX=false;
+            setFlipX(false);
         }else
-            anim=stand;
+            setAnim(stand);
 
         //logica salto
         if(Gdx.input.isKeyPressed(Keys.W)){
@@ -130,10 +130,10 @@ public class Player extends Entity{
     @Override
     public void draw() {
         Rectangle r=getPos();
-        if(anim!=null)
+        if(getAnim()!=null)
         {
-            TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
-            batch.draw(region,r.x,r.y - 0.03f,r.width/2,r.height/2,r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
+            TextureAtlas.AtlasRegion region = getAnim().getKeyFrame(getAnimationTime());
+            batch.draw(region,r.x,r.y - 0.03f,r.width/2,r.height/2,r.width,r.height,(getFlipX()?-1:1)*1,(getFlipY()?-1:1)*1,0);
         }
         
         spellFactory.draw();

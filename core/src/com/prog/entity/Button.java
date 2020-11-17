@@ -3,7 +3,6 @@ package com.prog.entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.prog.collision.OpzioniContactListener;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.ManagerMusic;
@@ -11,11 +10,11 @@ import com.prog.world.ManagerSound;
 
 public class Button extends Entity 
 {
-    Texture img;
-    Texture img_off;
-    OpzioniContactListener c;
+    private Texture img;
+    private Texture img_off;
     private boolean isActive;
-    private boolean hasDouble;
+    private final boolean hasDouble;
+    
     public Button(float x, float y, float width, float height, String userData, String path, boolean isDouble)
     {
         super();
@@ -27,10 +26,10 @@ public class Button extends Entity
         switch(((userDataContainer)getBody().getFixtureList().get(0).getUserData()).type)
         {
             case "sound":
-                isActive=ManagerSound.getInstance().getVolume() == 0?false:true;
+                isActive=ManagerSound.getInstance().getVolume() != 0;
                 break;
             case "music":
-                isActive=ManagerMusic.getInstance().getVolume() == 0?false:true;
+                isActive=ManagerMusic.getInstance().getVolume() != 0;
                 break;
         }
         

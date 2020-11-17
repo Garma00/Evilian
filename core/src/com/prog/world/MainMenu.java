@@ -16,15 +16,16 @@ import static com.prog.evilian.Evilian.batch;
 //dichiara una istanza di custom contact listener
 public class MainMenu extends Livello implements Screen
 {
-    MenuContactListener c;
-    Texture bg;
+    private MenuContactListener c;
+    private Texture bg;
+    private static final ManagerVfx mvfx=ManagerVfx.getInstance();
     
     public MainMenu(int SCREEN_WIDTH, int SCREEN_HEIGHT, Evilian game)
     {
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, game);
         
         c = new MenuContactListener();//istanzio il contactlistener
-        world.setContactListener(c);
+        getWorld().setContactListener(c);
 
         entities.add(mouse);
         entities.add(new Button(root.getScreenWidth() / 2 , root.getScreenHeight() / 2 , 150, 50, "gioca", "images/gioca.png", false));
@@ -45,8 +46,8 @@ public class MainMenu extends Livello implements Screen
     public void render(float f)
     {
         
-        cam.update();
-        batch.setProjectionMatrix(cam.combined);
+        getCam().update();
+        batch.setProjectionMatrix(getCam().combined);
         
         mouse.handleInput();
         //se il mouse collide con qualche button
@@ -60,7 +61,7 @@ public class MainMenu extends Livello implements Screen
             e.update(f);
         
         draw();
-        world.step(1/60f, 6, 2);
+        getWorld().step(1/60f, 6, 2);
        
     }
 
@@ -81,13 +82,11 @@ public class MainMenu extends Livello implements Screen
             e.draw();
         batch.end();
         
-        debug.render(world, cam.combined);
+        getDebug().render(getWorld(), getCam().combined);
     }
     
     @Override
     public void resize(int width, int height) {
-        camvp.update(width, height);
-        mvfx.resize(width, height);
     }
 
     @Override

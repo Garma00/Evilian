@@ -1,32 +1,23 @@
-package com.prog.entity.magia;
+package com.prog.entity;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.prog.entity.Entity;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.Livello;
 
-
-
 public abstract class Magia extends Entity implements Poolable{
     
-    float potenza;
-    Vector2 impulso;
-    //pos lo rendo publico per richiamarlo nel momento in cui voglio verificare la posizione della skill 
-    float angle;
-    long COOLDOWN;
-    boolean alive;
-    long time;
-    //lastlaunch dentro la magia e' solo per i buff
-    long lastLaunch;
+    private float potenza;
+    private float angle;
+    private boolean alive;
+    private long time;
+    private long COOLDOWN;
     
-    public Magia()
-    {
-        super();
-    }
+    //lastlaunch dentro la magia e' solo per i buff
+    protected long lastLaunch;
     
     public abstract void init(Vector2 position, Vector2 impulso);
     
@@ -42,12 +33,12 @@ public abstract class Magia extends Entity implements Poolable{
     {
         Rectangle r=getPos();
         if(alive)
-            if(anim!=null)
+            if(getAnim()!=null)
             {
-                TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
+                TextureAtlas.AtlasRegion region = getAnim().getKeyFrame(getAnimationTime());
                 //System.out.println("player in:"+body.getPosition());
                 //System.out.println(pos.x+"\t"+pos.y);
-                batch.draw(region,r.x,r.y,r.width/2,r.height/2,r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,angle);
+                batch.draw(region,r.x,r.y,r.width/2,r.height/2,r.width,r.height,(getFlipX()?-1:1)*1,(getFlipY()?-1:1)*1,angle);
             }
     }
 
@@ -68,8 +59,13 @@ public abstract class Magia extends Entity implements Poolable{
         time=0;
     }
     
-    public void setAlive(boolean f)
-    {
-        alive=f;
-    }
+    protected float getPower()          {return this.potenza;}
+    protected void setPower(float f)    {this.potenza=f;}
+    protected void setAngle(float f)    {this.angle=f;}
+    protected boolean isAlive()         {return this.alive;}
+    public void setAlive(boolean b)     {this.alive=b;}
+    protected long getTime()            {return this.time;}
+    protected void setTime(long l)      {this.time=l;}
+    protected void setCoolDown(long l)  {this.COOLDOWN=l;}
+    protected long getCoolDown()        {return this.COOLDOWN;}
 }

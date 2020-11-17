@@ -26,9 +26,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.prog.entity.Enemy;
 import com.prog.entity.EnemyFactory;
 import com.prog.entity.EnemyFactory.EnemyType;
@@ -57,25 +54,24 @@ import java.util.logging.Logger;
 public class Livello {
     Player p;
     FileWriter wr;
-    protected static World world;
-    protected static Box2DDebugRenderer debug;
+    private static World world;
+    private static Box2DDebugRenderer debug;
     //mappa tiled
-    TiledMap map;
+    private TiledMap map;
     //renderer mappa ortogonale(esiste anche l'isometric ma non serve al nostro gioco)
-    OrthogonalTiledMapRenderer mapRenderer;
-    OrthographicCamera cam;
-    Viewport camvp;
+    private OrthogonalTiledMapRenderer mapRenderer;
+    private OrthographicCamera cam;
     Array<Entity> entities;
     Evilian root;
     private static TextureAtlas atlas;
     Mouse mouse;
-    protected static final ManagerVfx mvfx=ManagerVfx.getInstance();
-    UI level_ui;
+    private static final ManagerVfx mvfx=ManagerVfx.getInstance();
+    private UI level_ui;
     boolean resume;
-    File file;//file per il caricamento dello stato
-    EnemyFactory ef;
+    private File file;//file per il caricamento dello stato
+    static EnemyFactory ef;
     private static int points;
-    protected static float gameplayTime;
+    private static float gameplayTime;
 
     public Livello(float gravity, boolean Sleep, String path, float cameraWidth, float cameraHeight,float uiWidth,float uiHeight,Evilian game) throws IOException
     {
@@ -99,7 +95,6 @@ public class Livello {
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         
         //inizializzo la viewport come fit (non importa la grandezza della finestra, vedremo sempre la stessa regione(con barre nere se neceessarie ai lati))
-        camvp=new ExtendViewport(cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM,cam);
         level_ui=new UI(uiWidth,uiHeight);
         
         atlas=new TextureAtlas("atlas/game.atlas");
@@ -110,11 +105,9 @@ public class Livello {
         //NOTA: ogni frame nel render dovremo chiamare mapRenderer.setView(camera) e poi mapRenderer.render()
     
         //da fare un metodo che richiama dalle opzioni quali effetti sono attivi
-        ef = new EnemyFactory();
+        ef = EnemyFactory.getInstance();
         gameplayTime = 0;
         points = 0;
-
-        
     }
     
     public Livello(boolean Sleep, int cameraWidth, int cameraHeight, Evilian game)
@@ -127,7 +120,6 @@ public class Livello {
         cam = new OrthographicCamera();
         cam.setToOrtho(false,cameraWidth/Evilian.PPM,cameraHeight/Evilian.PPM);
         
-        camvp=new FitViewport(game.getScreenWidth()/Evilian.PPM,game.getScreenHeight()/Evilian.PPM,cam);
         atlas=new TextureAtlas("atlas/game.atlas");
 
         mouse.addCamToMouse(cam);
@@ -454,4 +446,10 @@ public class Livello {
     {
         return gameplayTime;
     }
+    
+    protected void addToGPTime(float f)                     {gameplayTime+=f;}
+    protected TiledMap getMap()                             {return this.map;}
+    protected OrthogonalTiledMapRenderer getMapRenderer()   {return mapRenderer;}
+    protected OrthographicCamera getCam()                   {return cam;}
+    protected UI getLevelUI()                               {return level_ui;}
 }

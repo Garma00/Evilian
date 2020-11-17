@@ -1,4 +1,4 @@
-package com.prog.entity.magia;
+package com.prog.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -6,23 +6,19 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.prog.entity.Mouse;
-import com.prog.evilian.Evilian;
-import com.prog.world.ManagerMusic;
 import com.prog.world.ManagerSound;
 
-
-public class SpellFactory{
+public final class SpellFactory{
 
     private static SpellFactory INSTANCE=null;
-    final Mouse mouse=Mouse.getInstance();
+    private final Mouse mouse=Mouse.getInstance();
     private long time;
     private int spellSelector;
-    private Array<Magia> activeSpells;
-    private long[] lastLaunch;
+    private final Array<Magia> activeSpells;
+    private final long[] lastLaunch;
     private boolean selectorPressed;
 
-    public SpellFactory()
+    private SpellFactory()
     {
         spellSelector=0;
         activeSpells=new Array<Magia>();
@@ -32,7 +28,7 @@ public class SpellFactory{
     }
 
     //chiamala quando vuoi creare una spell
-    public Magia createSpell(int spell){
+    private Magia createSpell(int spell){
        switch(spell)
        {
          case 0:
@@ -49,7 +45,7 @@ public class SpellFactory{
     }
 
     //chiamala quando vuoi distruggere una spell
-    public void destroySpell(Magia spell)
+    private void destroySpell(Magia spell)
     {
        Pools.free(spell);
     }
@@ -82,7 +78,7 @@ public class SpellFactory{
         
         m.init(pg_pos, res);
         //logica cooldown magie
-        if(time-lastLaunch[spellSelector]>m.COOLDOWN)
+        if(time-lastLaunch[spellSelector]>m.getCoolDown())
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
@@ -107,7 +103,7 @@ public class SpellFactory{
         for(int i=0;i<activeSpells.size;i++)
         {
             Magia item=activeSpells.get(i);
-            if(!item.alive)
+            if(!item.isAlive())
             {
                 activeSpells.removeIndex(i);
                 destroySpell(item);

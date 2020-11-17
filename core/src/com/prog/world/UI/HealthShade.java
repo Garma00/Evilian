@@ -9,11 +9,12 @@ import static com.prog.evilian.Evilian.batch;
 
 public class HealthShade implements UIElement
 {
-    private Texture tex;
-    final Rectangle pos=new Rectangle();
+    private final Texture tex;
+    private final Rectangle pos;
     
     public HealthShade(float x,float y,float width,float height,String path)
     {
+        this.pos = new Rectangle();
         pos.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
     }
