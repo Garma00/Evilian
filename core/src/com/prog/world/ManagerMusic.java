@@ -5,7 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.Array;
 
 
-public class ManagerMusic 
+public final class ManagerMusic 
 {
     private static ManagerMusic INSTANCE = null;
     private Array<Music> songs;

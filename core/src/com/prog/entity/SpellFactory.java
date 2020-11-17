@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.prog.world.ManagerSound;
 
-public class SpellFactory{
+public final class SpellFactory{
 
     private static SpellFactory INSTANCE=null;
     private final Mouse mouse=Mouse.getInstance();

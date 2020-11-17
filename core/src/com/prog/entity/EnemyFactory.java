@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.prog.world.StateContainer;
 
-public class EnemyFactory {
+public final class EnemyFactory {
     //l'array va reso publico perchè serve conoscere il numero di elementi e iterarli per salvare lo stato
     private Array<Enemy> activeEnemies=new Array<Enemy>();
     private static EnemyFactory INSTANCE=null;

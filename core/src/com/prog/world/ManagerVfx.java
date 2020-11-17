@@ -12,7 +12,7 @@ import com.crashinvaders.vfx.effects.OldTvEffect;
 import com.crashinvaders.vfx.effects.util.MixEffect;
 import com.crashinvaders.vfx.framebuffer.VfxFrameBuffer;
 
-public class ManagerVfx {
+public final class ManagerVfx {
     public static final int BLOOM_EFFECT=1;
     public static final int GBLUR_EFFECT=2;
     public static final int MBLUR_EFFECT=4;

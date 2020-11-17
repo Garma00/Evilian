@@ -3,10 +3,8 @@ package com.prog.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
-import com.prog.entity.Player;
 
-
-public class ManagerSound 
+public final class ManagerSound 
 {
     /*
     0       fireball

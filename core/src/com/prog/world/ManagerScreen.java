@@ -8,7 +8,7 @@ import static com.prog.world.Livello.debug;
 import static com.prog.world.Livello.world;
 import java.io.IOException;
 
-public class ManagerScreen 
+public final class ManagerScreen 
 {
     //valori di index con screen corrispondenti
     //main menu default
