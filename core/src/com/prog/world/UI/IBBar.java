@@ -9,7 +9,7 @@ import static com.prog.evilian.Evilian.batch;
 public class IBBar extends Bar implements UIElement
 {
     private float cd;
-    private Texture tex;
+    private final Texture tex;
     
     public IBBar(float x,float y,float width,float height,String path)
     {

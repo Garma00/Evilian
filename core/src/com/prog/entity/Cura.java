@@ -10,13 +10,8 @@ import com.prog.world.Livello;
 
 public class Cura extends Magia{
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,Livello.getAtlas().findRegions("heal"),Animation.PlayMode.LOOP_PINGPONG);
-    long durata;
+    private long durata;
     private static long UI_CD;
-    
-    public Cura()
-    {
-        super();
-    }
     
     @Override
     public void init(Vector2 position,Vector2 impulso) {

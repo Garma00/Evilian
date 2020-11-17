@@ -13,7 +13,6 @@ public class Mouse extends Entity
     
     public Mouse()
     {
-        super();
         toReposition=false;
     }
     

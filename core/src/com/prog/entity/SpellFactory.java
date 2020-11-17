@@ -11,11 +11,11 @@ import com.prog.world.ManagerSound;
 public class SpellFactory{
 
     private static SpellFactory INSTANCE=null;
-    final Mouse mouse=Mouse.getInstance();
+    private final Mouse mouse=Mouse.getInstance();
     private long time;
     private int spellSelector;
-    private Array<Magia> activeSpells;
-    private long[] lastLaunch;
+    private final Array<Magia> activeSpells;
+    private final long[] lastLaunch;
     private boolean selectorPressed;
 
     private SpellFactory()
@@ -28,7 +28,7 @@ public class SpellFactory{
     }
 
     //chiamala quando vuoi creare una spell
-    public Magia createSpell(int spell){
+    private Magia createSpell(int spell){
        switch(spell)
        {
          case 0:
@@ -45,7 +45,7 @@ public class SpellFactory{
     }
 
     //chiamala quando vuoi distruggere una spell
-    public void destroySpell(Magia spell)
+    private void destroySpell(Magia spell)
     {
        Pools.free(spell);
     }

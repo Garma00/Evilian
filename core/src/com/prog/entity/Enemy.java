@@ -14,12 +14,8 @@ public abstract class Enemy extends Entity implements Poolable{
     protected boolean walkLeft;
     protected float SPEED;
     
-    public Enemy()
-    {
-        super();
-    }
+    abstract void init(Vector2 loadingPosition, float hp);
     
-    public abstract void init(Vector2 loadingPosition, float hp);
     public void damage(float dmg)
     {
         life -= dmg;

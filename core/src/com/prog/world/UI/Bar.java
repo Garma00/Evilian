@@ -5,8 +5,13 @@ import com.prog.entity.SpellFactory;
 
 public class Bar
 {
-    final Rectangle pos=new Rectangle();
+    protected final Rectangle pos;
     protected final static SpellFactory sp=SpellFactory.getInstance();
+    
+    protected Bar()
+    {
+        this.pos=new Rectangle();
+    }
     
     public float map(float value,float istart,float iend,float ostart,float oend)
     {

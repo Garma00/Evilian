@@ -19,7 +19,7 @@ public class ManagerScreen
     
     private ManagerScreen()
     {
-        index = 0;
+        
     }
     
     public void changeScreen(Array<Entity> entities, Evilian game) throws IOException

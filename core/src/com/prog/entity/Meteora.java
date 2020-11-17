@@ -11,13 +11,9 @@ import com.prog.world.Livello;
 
 public class Meteora extends Magia{
     
-    public Meteora()
-    {
-        super();
-    }
-    
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,Livello.getAtlas().findRegions("meteor"),Animation.PlayMode.LOOP);
     private static long UI_CD;
+    
     @Override
     public void init(Vector2 position, Vector2 impulso)
     {

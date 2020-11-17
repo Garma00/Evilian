@@ -20,11 +20,6 @@ public abstract class Magia extends Entity implements Poolable{
     //lastlaunch dentro la magia e' solo per i buff
     protected long lastLaunch;
     
-    public Magia()
-    {
-        super();
-    }
-    
     public abstract void init(Vector2 position, Vector2 impulso);
     
     @Override

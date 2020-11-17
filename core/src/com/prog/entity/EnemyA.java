@@ -12,11 +12,6 @@ import com.prog.world.Livello;
 public class EnemyA extends Enemy{
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,Livello.getAtlas().findRegions("pig_run"),Animation.PlayMode.LOOP);
     
-    public EnemyA()
-    {
-        super();
-    }
-    
     @Override
     public void update(float delta) {
         //mando in avanti l'animazione
@@ -72,7 +67,8 @@ public class EnemyA extends Enemy{
             }
     }
     
-    public void init(Vector2 loadingPosition, float hp)
+    @Override
+    void init(Vector2 loadingPosition, float hp)
     {
         Body b;
         Rectangle r=getPos();

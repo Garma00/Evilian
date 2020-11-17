@@ -13,11 +13,6 @@ public class PallaDiGhiaccio extends Magia{
     private final static Animation<TextureAtlas.AtlasRegion> moving=new Animation<>(1/20f,Livello.getAtlas().findRegions("ice_ball"),Animation.PlayMode.LOOP);
     private static long UI_CD;
     
-    public PallaDiGhiaccio()
-    {
-        super();
-    }
-    
     @Override
     public void init(Vector2 position, Vector2 impulso)
     {

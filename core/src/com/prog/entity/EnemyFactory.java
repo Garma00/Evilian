@@ -10,10 +10,6 @@ public class EnemyFactory {
     private Array<Enemy> activeEnemies=new Array<Enemy>();
     private static EnemyFactory INSTANCE=null;
     
-    private EnemyFactory()
-    {
-    }
-    
     //da aggiungere altri tipi
     public enum EnemyType {
         A,
@@ -21,7 +17,7 @@ public class EnemyFactory {
     };
     
     //chiamala quando vuoi creare una spell
-    public Enemy createEnemy(EnemyType t){
+    private Enemy createEnemy(EnemyType t){
        switch(t){
          case A:
             return Pools.obtain(EnemyA.class);
@@ -33,7 +29,7 @@ public class EnemyFactory {
     }
     
      //chiamala quando vuoi distruggere una spell
-    public void destroyEnemy(Enemy e)
+    private void destroyEnemy(Enemy e)
     {
        Pools.free(e);
     }

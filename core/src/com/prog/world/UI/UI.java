@@ -12,8 +12,8 @@ public class UI
     private final OrthographicCamera textCamera;
     private final OrthographicCamera cam;
     private final Viewport camvp;
-    float UI_WIDTH;
-    float UI_HEIGHT;
+    private final float UI_WIDTH;
+    private final float UI_HEIGHT;
     //utilizzo 2 array per differenziare tra elementi di sfondo ed elementi in primo piano
     //elementi in background
     Array<UIElement> elements;
