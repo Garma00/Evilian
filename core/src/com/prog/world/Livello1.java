@@ -33,7 +33,10 @@ public class Livello1 extends Livello implements Screen{
         if(this.resume)
         {
             StateContainer playerContainer = caricaStatoPlayer();
-            p=new Player(playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
+            if(playerContainer == null)
+                p = new Player(50, 150, 1f);
+            else
+                p=new Player(playerContainer.pos.x * Evilian.PPM, playerContainer.pos.y * Evilian.PPM, playerContainer.hp);
             entities.add(p);
             
             //instanzio n nemici 

@@ -295,6 +295,7 @@ public class Livello {
             Scanner scan = new Scanner(file);
             //scan del timer
             String line = scan.nextLine();
+           
             this.gameplayTime=Float.parseFloat(line);
             //scan riga del player
             line = scan.nextLine();
