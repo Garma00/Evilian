@@ -422,31 +422,11 @@ public class Livello {
         }
     }
     
-    public static void addPoints(int toAdd)
-    {
-        points+=toAdd;
-    }
-    
-    public static World getWorld()
-    {
-        return world;
-    }
-    
-    public static Box2DDebugRenderer getDebug()
-    {
-        return debug;
-    }
-    
-    public static TextureAtlas getAtlas()
-    {
-        return atlas;
-    }
-    
-    public static float getGameplayTime()
-    {
-        return gameplayTime;
-    }
-    
+    public static void addPoints(int toAdd)                 {points+=toAdd;}    
+    public static World getWorld()                          {return world;}    
+    protected static Box2DDebugRenderer getDebug()          {return debug;}
+    public static TextureAtlas getAtlas()                   {return atlas;}
+    public static float getGameplayTime()                   {return gameplayTime;}
     protected void addToGPTime(float f)                     {gameplayTime+=f;}
     protected TiledMap getMap()                             {return this.map;}
     protected OrthogonalTiledMapRenderer getMapRenderer()   {return mapRenderer;}

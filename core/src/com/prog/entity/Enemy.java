@@ -41,43 +41,12 @@ public abstract class Enemy extends Entity implements Poolable{
             wr.write(toWrite);
     }
     
-    public void setWalkLeft(boolean f)
-    {
-        walkLeft=f;
-    }
-    
-    protected boolean getWalk()
-    {
-        return walkLeft;
-    }
-    
-    protected boolean isAlive()
-    {
-        return alive;
-    }
-    
-    public void setAlive(boolean f)
-    {
-        alive=f;
-    }
-    
-    protected float getSpeed()
-    {
-        return SPEED;
-    }
-    
-    public void setSpeed(float f)
-    {
-        this.SPEED=f;
-    }
-    
-    protected void setLife(float f)
-    {
-        this.life=f;
-    }
-    
-    protected float getLife()
-    {
-        return this.life;
-    }
+    public void setWalkLeft(boolean f)  {walkLeft=f;}
+    protected boolean getWalk()         {return walkLeft;}
+    protected boolean isAlive()         {return alive;}
+    protected void setAlive(boolean f)  {alive=f;}
+    protected float getSpeed()          {return SPEED;}
+    public void setSpeed(float f)       {this.SPEED=f;}
+    protected void setLife(float f)     {this.life=f;}
+    protected float getLife()           {return this.life;}
 }

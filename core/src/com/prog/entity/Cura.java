@@ -63,8 +63,5 @@ public class Cura extends Magia{
         setPosY( Player.getHealPosY() );
     }
     
-    public static long getCD()
-    {
-        return UI_CD;
-    }
+    public static long getCD(){return UI_CD;}
 }

@@ -59,10 +59,6 @@ public class Mouse extends Entity
     public void dispose() {
     }
     
-    public OrthographicCamera getCam()
-    {
-        return this.cam;
-    }
     
     public static Mouse getInstance()
     {
@@ -72,14 +68,9 @@ public class Mouse extends Entity
         return INSTANCE;
     }
     
-    public void addToWorld()
-    {
-        super.createBody(0, 0, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);
-    }
-    
-    public void setToReposition(boolean f)
-    {
-        toReposition=f;
-    }
+    public void addToWorld()                {super.createBody(0, 0, 16, 16, 1, "mouse", 0,  0, 0,(short)2,(short)1);}
+    public void setToReposition(boolean f)  {toReposition=f;}
+    protected OrthographicCamera getCam()   {return this.cam;}
+
     
 }

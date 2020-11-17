@@ -91,15 +91,9 @@ public final class EnemyFactory {
         }
     }
     
-    public int getSize()
-    {
-        return activeEnemies.size;
-    }
+    public int getSize()                    {return activeEnemies.size;}
     
-    public Array<Enemy> getActiveEnemies()
-    {
-        return activeEnemies;
-    }
+    public Array<Enemy> getActiveEnemies()  {return activeEnemies;}
     
     public static EnemyFactory getInstance()
     {
