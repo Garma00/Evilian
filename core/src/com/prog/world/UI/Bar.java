@@ -5,8 +5,8 @@ import com.prog.entity.SpellFactory;
 
 public class Bar
 {
-    protected final Rectangle pos;
-    protected final static SpellFactory sp=SpellFactory.getInstance();
+    private final Rectangle pos;
+    private final static SpellFactory sp=SpellFactory.getInstance();
     
     protected Bar()
     {
@@ -27,4 +27,7 @@ public class Bar
         
         return v;  
     }
+    
+    protected Rectangle getPos()    {return this.pos;}
+    protected SpellFactory getSP()  {return this.sp;}
 }

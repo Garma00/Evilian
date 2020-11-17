@@ -30,7 +30,7 @@ public class EndLevel extends Livello implements Screen {
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, game);
         
         bestScores = new Array<Score>();
-        cam.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        getCam().setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         //leggo lo score dal file
         score = readScore();
         font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
@@ -48,8 +48,8 @@ public class EndLevel extends Livello implements Screen {
     @Override
     public void render(float f)
     {   
-        cam.update();
-        batch.setProjectionMatrix(cam.combined);
+        getCam().update();
+        batch.setProjectionMatrix(getCam().combined);
         try {
             handleInput();
         } catch (IOException ex) {

@@ -2,7 +2,9 @@ package com.prog.world.UI;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.prog.entity.Player;
+import com.prog.entity.SpellFactory;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 
@@ -10,11 +12,15 @@ public class HealthBar extends Bar implements UIElement
 {
     //lo dichiaro una volta sola e lo uso nel codice
     private final Texture tex;
+    private final SpellFactory sp;
+    private final Rectangle r;
     
     public HealthBar(float x,float y,float width,float height,String path)
     {
-        pos.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
+        r=getPos();
+        r.set(x/Evilian.PPM,y/Evilian.PPM,width/Evilian.PPM,height/Evilian.PPM);
         this.tex=new Texture(path);
+        sp=getSP();
     }
     
     @Override
@@ -29,7 +35,7 @@ public class HealthBar extends Bar implements UIElement
         else
             batch.setColor(0f,0.76f,0.45f,1f);
 
-        batch.draw(tex,pos.x,pos.y,pos.width*playerHP,pos.height);
+        batch.draw(tex,r.x,r.y,r.width*playerHP,r.height);
 
         batch.setColor(Color.WHITE);
     }

@@ -4,8 +4,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
-import static com.prog.world.Livello.debug;
-import static com.prog.world.Livello.world;
+import static com.prog.world.Livello.getDebug;
+import static com.prog.world.Livello.getWorld;
 import java.io.IOException;
 
 public final class ManagerScreen 
@@ -79,7 +79,7 @@ public final class ManagerScreen
         boolean  done = false;
         
         
-        if(!world.isLocked())
+        if(!getWorld().isLocked())
         {
             //entities e' null quando passiamo da endLevel a main menu
             if(entities != null)
@@ -90,7 +90,7 @@ public final class ManagerScreen
                     done = true;
                     //System.out.println("entrato" + e.body);
                     b.setActive(false);
-                    world.destroyBody(b);
+                    getWorld().destroyBody(b);
                 }
 
                 entities.clear();
@@ -99,8 +99,8 @@ public final class ManagerScreen
             else
                 done = true;
             
-            debug.dispose();
-            world.dispose();
+            getDebug().dispose();
+            getWorld().dispose();
         }
             return done;
     }

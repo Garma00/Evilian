@@ -57,7 +57,7 @@ public class LevelContactListener implements ContactListener{
                 ((Enemy)b.e).damage(0.4f);
             else if(a.e instanceof PallaDiGhiaccio)
             {
-                ((Enemy)b.e).debuffVelocita();
+                ((Enemy)b.e).setSpeed(0.2f);
                 ((Enemy)b.e).damage(0.2f);
             }
             else if(a.e instanceof Meteora)
@@ -71,7 +71,7 @@ public class LevelContactListener implements ContactListener{
             else if(b.e instanceof PallaDiGhiaccio)
             {
                 ((Enemy)a.e).damage(0.2f);
-                ((Enemy)a.e).debuffVelocita();
+                ((Enemy)a.e).setSpeed(0.2f);
             }
             else if(b.e instanceof Meteora)
                 ((Enemy)a.e).damage(0.8f);

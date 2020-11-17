@@ -10,12 +10,11 @@ import com.prog.world.Livello;
 
 public abstract class Magia extends Entity implements Poolable{
     
-    protected float potenza;
-    protected Vector2 impulso;
-    protected float angle;
-    protected long COOLDOWN;
-    protected boolean alive;
-    protected long time;
+    private float potenza;
+    private float angle;
+    private boolean alive;
+    private long time;
+    private long COOLDOWN;
     
     //lastlaunch dentro la magia e' solo per i buff
     protected long lastLaunch;
@@ -34,12 +33,12 @@ public abstract class Magia extends Entity implements Poolable{
     {
         Rectangle r=getPos();
         if(alive)
-            if(anim!=null)
+            if(getAnim()!=null)
             {
-                TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
+                TextureAtlas.AtlasRegion region = getAnim().getKeyFrame(getAnimationTime());
                 //System.out.println("player in:"+body.getPosition());
                 //System.out.println(pos.x+"\t"+pos.y);
-                batch.draw(region,r.x,r.y,r.width/2,r.height/2,r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,angle);
+                batch.draw(region,r.x,r.y,r.width/2,r.height/2,r.width,r.height,(getFlipX()?-1:1)*1,(getFlipY()?-1:1)*1,angle);
             }
     }
 
@@ -60,8 +59,13 @@ public abstract class Magia extends Entity implements Poolable{
         time=0;
     }
     
-    public void setAlive(boolean f)
-    {
-        alive=f;
-    }
+    protected float getPower()          {return this.potenza;}
+    protected void setPower(float f)    {this.potenza=f;}
+    protected void setAngle(float f)    {this.angle=f;}
+    protected boolean isAlive()         {return this.alive;}
+    public void setAlive(boolean b)     {this.alive=b;}
+    protected long getTime()            {return this.time;}
+    protected void setTime(long l)      {this.time=l;}
+    protected void setCoolDown(long l)  {this.COOLDOWN=l;}
+    protected long getCoolDown()        {return this.COOLDOWN;}
 }

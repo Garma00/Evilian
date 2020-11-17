@@ -78,7 +78,7 @@ public final class SpellFactory{
         
         m.init(pg_pos, res);
         //logica cooldown magie
-        if(time-lastLaunch[spellSelector]>m.COOLDOWN)
+        if(time-lastLaunch[spellSelector]>m.getCoolDown())
         {
             activeSpells.add(m);
             lastLaunch[spellSelector]=time;
@@ -103,7 +103,7 @@ public final class SpellFactory{
         for(int i=0;i<activeSpells.size;i++)
         {
             Magia item=activeSpells.get(i);
-            if(!item.alive)
+            if(!item.isAlive())
             {
                 activeSpells.removeIndex(i);
                 destroySpell(item);

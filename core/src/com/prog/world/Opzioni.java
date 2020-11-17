@@ -4,12 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 import com.prog.collision.OpzioniContactListener;
 import com.prog.entity.Button;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
-import static com.prog.world.Livello.world;
 
 
 public class Opzioni extends Livello implements Screen {
@@ -24,7 +24,7 @@ public class Opzioni extends Livello implements Screen {
         c = new OpzioniContactListener();
         entities.add(mouse);
         bg = new Texture("images/menu.png");
-        world.setContactListener(c);
+        getWorld().setContactListener(c);
         
         entities.add(new Button(root.getScreenWidth() / 2, root.getScreenHeight() -75, 150, 50, "riprendi", "images/riprendi.png", false));
         entities.add(new Button(root.getScreenWidth() / 2, root.getScreenHeight() -150, 150, 50, "music", "images/musica.png", true));
@@ -44,8 +44,8 @@ public class Opzioni extends Livello implements Screen {
     @Override
     public void render(float f)
     {
-        cam.update();
-        batch.setProjectionMatrix(cam.combined);
+        getCam().update();
+        batch.setProjectionMatrix(getCam().combined);
         mouse.handleInput();
         
         if(c.getCollided())
@@ -59,7 +59,7 @@ public class Opzioni extends Livello implements Screen {
             e.update(f);
             
         draw();
-        world.step(1/60f, 6, 2);
+        getWorld().step(1/60f, 6, 2);
     }
 
     public void draw()
@@ -79,13 +79,11 @@ public class Opzioni extends Livello implements Screen {
             e.draw();
         batch.end();
         
-        debug.render(world, cam.combined);
+        getDebug().render(getWorld(), getCam().combined);
     }
     
     @Override
     public void resize(int width, int height) {
-        camvp.update(width, height);
-        mvfx.resize(width, height);
     }
 
     @Override

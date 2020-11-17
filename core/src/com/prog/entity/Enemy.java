@@ -8,11 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public abstract class Enemy extends Entity implements Poolable{
-    protected float life;
+    private float life;
     //public perche' dovra' essere accessibile dal level contact listener
-    protected boolean alive;
-    protected boolean walkLeft;
-    protected float SPEED;
+    private boolean alive;
+    private boolean walkLeft;
+    private float SPEED;
     
     abstract void init(Vector2 loadingPosition, float hp);
     
@@ -41,17 +41,17 @@ public abstract class Enemy extends Entity implements Poolable{
             wr.write(toWrite);
     }
     
-    public void debuffVelocita()
-    {
-        this.SPEED = 0.2f;
-    }
-    
     public void setWalkLeft(boolean f)
     {
         walkLeft=f;
     }
     
-    public boolean isAlive()
+    protected boolean getWalk()
+    {
+        return walkLeft;
+    }
+    
+    protected boolean isAlive()
     {
         return alive;
     }
@@ -59,5 +59,25 @@ public abstract class Enemy extends Entity implements Poolable{
     public void setAlive(boolean f)
     {
         alive=f;
+    }
+    
+    protected float getSpeed()
+    {
+        return SPEED;
+    }
+    
+    public void setSpeed(float f)
+    {
+        this.SPEED=f;
+    }
+    
+    protected void setLife(float f)
+    {
+        this.life=f;
+    }
+    
+    protected float getLife()
+    {
+        return this.life;
     }
 }

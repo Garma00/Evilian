@@ -37,7 +37,7 @@ public final class EnemyFactory {
     public void update(float delta)
     {
         for(Enemy e : activeEnemies)
-            if(!e.alive)
+            if(!e.isAlive())
             {
                 destroyEnemy(e);
                 activeEnemies.removeValue(e, true);

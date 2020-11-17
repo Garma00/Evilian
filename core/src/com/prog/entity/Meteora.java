@@ -18,24 +18,21 @@ public class Meteora extends Magia{
     public void init(Vector2 position, Vector2 impulso)
     {
         Rectangle r=getPos();
-        COOLDOWN=10000;
-        UI_CD=COOLDOWN;
+        UI_CD=10000;
+        setCoolDown(UI_CD);
         //position e' la posizione del personaggio in metri da convertire in pixel
         setPos(impulso.x, impulso.y, 100, 20);
         setPosWidth(r.width/Evilian.PPM);
         setPosHeight(r.height/Evilian.PPM);
-        this.impulso = impulso;
-        this.potenza=0.05f;
+        setPower(0.05f);
         
         //System.out.println("sto spawnando il cerchio in "+pos);
         createBody(r.x*Evilian.PPM, r.y*Evilian.PPM, 20, 100, 1, "magia", 0.6f, 0, 1,(short)16,(short)(32|8));
         
-        //body.applyLinearImpulse(impulso.scl(potenza),new Vector2(pos.x,pos.y),true);
+        setAnim(moving);
+        setAlive(true);
         
-        this.anim=moving;
-        alive=true;
-        
-        angle = 269;
+        setAngle(269);
     }
 
     @Override
@@ -43,10 +40,9 @@ public class Meteora extends Magia{
     {
         Body b=getBody();
         Rectangle r=getPos();
-        if(alive)
+        if(isAlive())
         {
-            animationTime += delta;
-            //dare impulso con parametro tmp
+            addToAnimationTime(delta);
             setPosX( b.getPosition().x - (r.width / 2));
             setPosY(b.getPosition().y - (r.height / 2));
         }

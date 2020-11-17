@@ -16,27 +16,27 @@ public class Cura extends Magia{
     @Override
     public void init(Vector2 position,Vector2 impulso) {
         Rectangle r=getPos();
-        COOLDOWN=5000;
-        UI_CD=COOLDOWN;
+        UI_CD=5000;
+        setCoolDown(UI_CD);
         //position e' la posizione del personaggio in metri da convertire in pixel
         setPos((position.x) - r.width/2, (position.y), 25, 18);
         setPosWidth(r.width/Evilian.PPM);
         setPosHeight(r.height/Evilian.PPM);
-        this.potenza=0.1f;
+        setPower(0.1f);
         durata=3000;
-        this.anim=moving;
-        time=TimeUtils.millis();
+        setAnim(moving);
+        setTime(TimeUtils.millis());
         //solo per i buff
-        lastLaunch=time;
-        alive=true;
+        lastLaunch=getTime();
+        setAlive(true);
     }
 
     @Override
     public void update(float delta) {
         Rectangle r=getPos();
         
-        animationTime+=delta;
-        time=TimeUtils.millis();
+        addToAnimationTime(delta);
+        setTime(TimeUtils.millis());
         float playerHP=Player.getHP();
         float playerMaxHP=Player.getMaxHp();
         
@@ -44,18 +44,18 @@ public class Cura extends Magia{
         {
             Player.setHP(playerMaxHP);
             //System.out.println("hp gia' al massimo, non uso la cura");
-            alive = false;
+            setAlive(false);
         }
             
-        if(alive && playerHP < playerMaxHP)
+        if(isAlive() && playerHP < playerMaxHP)
         {
-            Player.setHP(playerHP+potenza*delta);
+            Player.setHP(playerHP+getPower()*delta);
             //System.out.println("HP:\t" + pg.getHp() + "/" + pg.getHp()Max);
         }
         
-        if(time-lastLaunch>durata)
+        if(getTime()-lastLaunch>durata)
         {
-            alive=false;
+            setAlive(false);
         }
         
         
