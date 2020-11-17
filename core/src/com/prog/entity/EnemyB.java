@@ -12,32 +12,27 @@ import com.prog.world.Livello;
 public class EnemyB extends Enemy{
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,Livello.getAtlas().findRegions("king_pig_run"),Animation.PlayMode.LOOP);
     
-    public EnemyB()
-    {
-        super();
-    }
-    
     @Override
     public void update(float delta) {
         Body b=getBody();
         Rectangle r=getPos();
         //mando in avanti l'animazione
-        this.animationTime+=delta;
+        addToAnimationTime(delta);
         
         setPos((b.getPosition().x)-(r.width/2),(b.getPosition().y)-(r.height/2));
         
-        if(SPEED < 0.6f)
-            SPEED += 0.2f * delta;
+        if(getSpeed() < 0.6f)
+            setSpeed(getSpeed()+0.2f * delta);
         
-        if(walkLeft)
+        if(getWalk())
         {
-            b.setLinearVelocity(-SPEED,b.getLinearVelocity().y);
-            this.flipX=false;
+            b.setLinearVelocity(-getSpeed(),b.getLinearVelocity().y);
+            this.setFlipX(false);
         }
         else
         {
-            b.setLinearVelocity(SPEED,b.getLinearVelocity().y);
-            this.flipX=true;
+            b.setLinearVelocity(getSpeed(),b.getLinearVelocity().y);
+            this.setFlipX(true);
         }
     }
 
@@ -48,10 +43,10 @@ public class EnemyB extends Enemy{
     @Override
     public void draw() {
         Rectangle r=getPos();
-        if(anim!=null)
+        if(getAnim()!=null)
         {
-            TextureAtlas.AtlasRegion region = anim.getKeyFrame(animationTime);
-            batch.draw(region, r.x,r.y - 0.03f,r.width/2,r.height/2, r.width,r.height,(flipX?-1:1)*1,(flipY?-1:1)*1,0);
+            TextureAtlas.AtlasRegion region = getAnim().getKeyFrame(getAnimationTime());
+            batch.draw(region, r.x,r.y - 0.03f,r.width/2,r.height/2, r.width,r.height,(getFlipX()?-1:1)*1,(getFlipY()?-1:1)*1,0);
         }
     }
 
@@ -64,7 +59,7 @@ public class EnemyB extends Enemy{
         Body b=getBody();
         //setto la vita uguale a 1 e pronto per essere rispawnato
         //NOTA: il nemico non viene spawnato affinche' non verra' settato alive=true nella init successiva
-        this.life=1f;
+        setLife(1f);
         if(!Livello.getWorld().isLocked())
             if(b != null)
             {
@@ -72,13 +67,14 @@ public class EnemyB extends Enemy{
             }
     }
     
-    public void init(Vector2 loadingPosition, float hp)
+    @Override
+    void init(Vector2 loadingPosition, float hp)
     {
         Body b;
         Rectangle r=getPos();
         
-        this.alive=true;
-        this.life=hp;
+        setAlive(true);
+        setLife(hp);
         setPos(loadingPosition.x * Evilian.PPM, loadingPosition.y * Evilian.PPM, 19f,22f);
         createBody(r.x,r.y,r.width,r.height,1,"enemyB",1f,0f,0f,(short)32,(short)(4|8|16|64));
         b=getBody();
@@ -86,15 +82,10 @@ public class EnemyB extends Enemy{
         this.attachFixture(b, new Vector2(0.1f,-0.15f),  true, "enemyRightFoot", 5, 3, 0, 0, 0);
         setPosWidth(r.width/Evilian.PPM);
         setPosHeight(r.height/Evilian.PPM);
-        walkLeft=true;
+        setWalkLeft(true);
         //nello sprite il nemico e' rivolto gia' verso sinistra
-        this.flipX=false;
-        this.anim=walking;
-        SPEED=0.6f;
-    }
-
-    public void debuffVelocita()
-    {
-        this.SPEED = 0.2f;
+        this.setFlipX(false);
+        setAnim(walking);
+        setSpeed(0.6f);
     }
 }

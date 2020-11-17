@@ -13,15 +13,15 @@ import com.prog.evilian.Evilian;
 import com.prog.world.Livello;
 
 public abstract class Entity {
-    protected Animation<TextureAtlas.AtlasRegion> anim;
-    private Rectangle pos;
+    private Animation<TextureAtlas.AtlasRegion> anim;
+    private final Rectangle pos;
     //protected per farlo accedere alle sottoclassi
-    protected float animationTime;
-    protected boolean flipX;
-    protected boolean flipY;
+    private float animationTime;
+    private boolean flipX;
+    private boolean flipY;
     private Body body;
-    short CATEGORY_BIT;
-    short MASK_BIT;
+    private short CATEGORY_BIT;
+    private short MASK_BIT;
     
     public class userDataContainer
     {
@@ -79,8 +79,7 @@ public abstract class Entity {
         attachFixture(body,new Vector2(0,0),false,userData,width,height,density,restitution,friction);
     }
     
-    //overloading
-    public Body createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction,short categoria,short mask)
+    public void createBody(float x, float y,float radius,int bodyType, String userData,float density, float restitution, float friction,short categoria,short mask)
     {
         BodyDef bdef= new BodyDef();
         CATEGORY_BIT=categoria;
@@ -104,9 +103,6 @@ public abstract class Entity {
         body=Livello.getWorld().createBody(bdef);
         
         attachFixture(body,new Vector2(0,0),false,userData,radius,density,restitution,friction);
-        
-        return body;
-        
     }
     
     public void attachFixture(Body b,Vector2 relativePos, boolean isSensor,String userData, float width, float height,float density, float restitution, float friction)
@@ -130,7 +126,6 @@ public abstract class Entity {
         shape.dispose();
     }
     
-    //overloading
     public void attachFixture(Body b,Vector2 relativePos, boolean isSensor,String userData,float radius, float density, float restitution, float friction)
     {
         CircleShape shape=new CircleShape();
@@ -170,27 +165,39 @@ public abstract class Entity {
     
     public void setPosX(float x)
     {
-        pos.x=x;
+        pos.setX(x);
     }
     
     public void setPosY(float y)
     {
-        pos.y=y;
+        pos.setY(y);
     }
     
     public void setPosWidth(float w)
     {
-        pos.width=w;
+        pos.setWidth(w);
     }
     
     public void setPosHeight(float h)
     {
-        pos.height=h;
+        pos.setHeight(h);
     }
     
     public void setPos(float x,float y)
     {
-        pos.x=x;
-        pos.y=y;
+        pos.setPosition(x, y);
     }
+    
+    protected void setAnim(Animation<TextureAtlas.AtlasRegion> a)
+    {
+        anim=a;
+    }
+    
+    protected Animation<TextureAtlas.AtlasRegion> getAnim()         {return anim;}
+    protected float getAnimationTime()                              {return animationTime;}
+    protected void addToAnimationTime(float f)                      {this.animationTime+=f;}
+    protected boolean getFlipX()                                    {return this.flipX;}
+    protected boolean getFlipY()                                    {return this.flipY;}
+    protected void setFlipX(boolean b)                              {this.flipX=b;}
+    protected void setFlipY(boolean b)                              {this.flipY=b;}
 }

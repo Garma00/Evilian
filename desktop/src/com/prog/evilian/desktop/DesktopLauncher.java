@@ -11,6 +11,7 @@ public class DesktopLauncher
                 config.setWindowedMode(800, 600);
                 config.setIdleFPS(60);
                 config.setResizable(false);
+                config.setWindowIcon("images/icon/Icon_16x16.png","images/icon/Icon_32x32.png");
 		new Lwjgl3Application(new Evilian(), config);
 	}
 }

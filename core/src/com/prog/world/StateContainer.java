@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 public class StateContainer
 {
     
-    float hp;
-    Vector2 pos;
-    String type;
+    private float hp;
+    private Vector2 pos;
+    private String type;
     
     public StateContainer(Vector2 pos, float hp)
     {

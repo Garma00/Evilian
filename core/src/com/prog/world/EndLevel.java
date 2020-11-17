@@ -30,7 +30,7 @@ public class EndLevel extends Livello implements Screen {
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, game);
         
         bestScores = new Array<Score>();
-        cam.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
+        getCam().setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         //leggo lo score dal file
         score = readScore();
         font = new BitmapFont(Gdx.files.internal("fonts/heinzheinrich.fnt"));
@@ -47,16 +47,16 @@ public class EndLevel extends Livello implements Screen {
 
     @Override
     public void render(float f)
-    {
-        //resetto la viewport
-        
-        cam.update();
-        batch.setProjectionMatrix(cam.combined);
+    {   
+        getCam().update();
+        batch.setProjectionMatrix(getCam().combined);
         try {
             handleInput();
         } catch (IOException ex) {
             Logger.getLogger(EndLevel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //resetto la viewport di OpenGL
         Gdx.gl.glViewport(0,0,800,600);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -94,7 +94,6 @@ public class EndLevel extends Livello implements Screen {
     public void dispose() {
     }
     
-    //punteggi() causa throws FileNotFoundException
     public void draw() throws FileNotFoundException
     {
         font.setColor(Color.RED);

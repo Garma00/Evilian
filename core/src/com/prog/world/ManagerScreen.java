@@ -4,11 +4,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.prog.entity.Entity;
 import com.prog.evilian.Evilian;
-import static com.prog.world.Livello.debug;
-import static com.prog.world.Livello.world;
+import static com.prog.world.Livello.getDebug;
+import static com.prog.world.Livello.getWorld;
 import java.io.IOException;
 
-public class ManagerScreen 
+public final class ManagerScreen 
 {
     //valori di index con screen corrispondenti
     //main menu default
@@ -19,7 +19,7 @@ public class ManagerScreen
     
     private ManagerScreen()
     {
-        index = 0;
+        
     }
     
     public void changeScreen(Array<Entity> entities, Evilian game) throws IOException
@@ -42,21 +42,21 @@ public class ManagerScreen
                 break;
 
             case 3:
-                if(clear(entities))                    
+                if(clear(entities))
                     game.setScreen(new Livello1(-9, false, "tsx/map2.tmx", game.getScreenWidth(), 525,800,75, game, true));
                 else
                     return;
                 break;  
                 
             case 4:
-                if(clear(entities))                    
+                if(clear(entities))
                     game.setScreen(new MainMenu(game.getScreenWidth(), game.getScreenHeight(), game));
                 else
                     return;
                 break;
                 
             case 5:
-                if(clear(entities))                    
+                if(clear(entities))
                     game.setScreen(new EndLevel(game.getScreenWidth(), game.getScreenHeight(), game));
                 else
                     return;
@@ -79,7 +79,7 @@ public class ManagerScreen
         boolean  done = false;
         
         
-        if(!world.isLocked())
+        if(!getWorld().isLocked())
         {
             //entities e' null quando passiamo da endLevel a main menu
             if(entities != null)
@@ -90,7 +90,7 @@ public class ManagerScreen
                     done = true;
                     //System.out.println("entrato" + e.body);
                     b.setActive(false);
-                    world.destroyBody(b);
+                    getWorld().destroyBody(b);
                 }
 
                 entities.clear();
@@ -99,8 +99,8 @@ public class ManagerScreen
             else
                 done = true;
             
-            debug.dispose();
-            world.dispose();
+            getDebug().dispose();
+            getWorld().dispose();
         }
             return done;
     }

@@ -5,9 +5,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.prog.world.StateContainer;
 
-public class EnemyFactory {
+public final class EnemyFactory {
     //l'array va reso publico perchè serve conoscere il numero di elementi e iterarli per salvare lo stato
     private Array<Enemy> activeEnemies=new Array<Enemy>();
+    private static EnemyFactory INSTANCE=null;
     
     //da aggiungere altri tipi
     public enum EnemyType {
@@ -16,7 +17,7 @@ public class EnemyFactory {
     };
     
     //chiamala quando vuoi creare una spell
-    public Enemy createEnemy(EnemyType t){
+    private Enemy createEnemy(EnemyType t){
        switch(t){
          case A:
             return Pools.obtain(EnemyA.class);
@@ -28,7 +29,7 @@ public class EnemyFactory {
     }
     
      //chiamala quando vuoi distruggere una spell
-    public void destroyEnemy(Enemy e)
+    private void destroyEnemy(Enemy e)
     {
        Pools.free(e);
     }
@@ -36,7 +37,7 @@ public class EnemyFactory {
     public void update(float delta)
     {
         for(Enemy e : activeEnemies)
-            if(!e.alive)
+            if(!e.isAlive())
             {
                 destroyEnemy(e);
                 activeEnemies.removeValue(e, true);
@@ -98,5 +99,12 @@ public class EnemyFactory {
     public Array<Enemy> getActiveEnemies()
     {
         return activeEnemies;
+    }
+    
+    public static EnemyFactory getInstance()
+    {
+        if(INSTANCE==null)
+            INSTANCE=new EnemyFactory();
+        return INSTANCE;
     }
 }

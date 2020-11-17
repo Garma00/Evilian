@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.prog.entity.Button;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Mouse;
-import com.prog.evilian.Evilian;
 import com.prog.world.ManagerMusic;
 import com.prog.world.ManagerScreen;
 import com.prog.world.ManagerSound;

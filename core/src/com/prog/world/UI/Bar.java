@@ -1,10 +1,17 @@
 package com.prog.world.UI;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.prog.entity.SpellFactory;
 
 public class Bar
 {
-    final Rectangle pos=new Rectangle();
+    private final Rectangle pos;
+    private final static SpellFactory sp=SpellFactory.getInstance();
+    
+    protected Bar()
+    {
+        this.pos=new Rectangle();
+    }
     
     public float map(float value,float istart,float iend,float ostart,float oend)
     {
@@ -20,4 +27,7 @@ public class Bar
         
         return v;  
     }
+    
+    protected Rectangle getPos()    {return this.pos;}
+    protected SpellFactory getSP()  {return this.sp;}
 }
