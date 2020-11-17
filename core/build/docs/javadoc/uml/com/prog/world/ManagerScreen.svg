@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="141px" preserveAspectRatio="none" style="width:259px;height:141px;" version="1.1" viewBox="0 0 259 141" width="259px" zoomAndPan="magnify"><defs><filter height="300%" id="f3x43umfcujbh" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[b31ecdc8febd6347b98e7a5a0bdec353]
+class com.prog.world.ManagerScreen--><a href="..\..\..\..\com\prog\world\ManagerScreen.html" target="_top" title="..\..\..\..\com\prog\world\ManagerScreen.html" xlink:actuate="onRequest" xlink:href="..\..\..\..\com\prog\world\ManagerScreen.html" xlink:show="new" xlink:title="..\..\..\..\com\prog\world\ManagerScreen.html" xlink:type="simple"><rect codeLine="5" fill="#FEFECE" filter="url(#f3x43umfcujbh)" height="103.5313" id="com.prog.world.ManagerScreen" style="stroke: #A80036; stroke-width: 1.5;" width="233" x="7" y="7"/><ellipse cx="68.75" cy="27.0938" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M71.5156,22.9688 Q71.6719,22.75 71.8594,22.6406 Q72.0469,22.5313 72.2656,22.5313 Q72.6406,22.5313 72.875,22.7969 Q73.1094,23.0469 73.1094,23.6563 L73.1094,25.1094 Q73.1094,25.7188 72.875,25.9844 Q72.6406,26.25 72.2656,26.25 Q71.9219,26.25 71.7188,26.0469 Q71.5156,25.8594 71.4063,25.3438 Q71.3594,24.9844 71.1719,24.7969 Q70.8438,24.4219 70.2344,24.2031 Q69.625,23.9844 69,23.9844 Q68.2344,23.9844 67.5938,24.3125 Q66.9688,24.6406 66.4688,25.3906 Q65.9844,26.1406 65.9844,27.1719 L65.9844,28.2656 Q65.9844,29.5 66.875,30.3281 Q67.7656,31.1406 69.3594,31.1406 Q70.2969,31.1406 70.9531,30.8906 Q71.3438,30.7344 71.7656,30.2969 Q72.0313,30.0313 72.1719,29.9531 Q72.3281,29.875 72.5313,29.875 Q72.8594,29.875 73.1094,30.1406 Q73.375,30.3906 73.375,30.7344 Q73.375,31.0781 73.0313,31.4844 Q72.5313,32.0625 71.7344,32.3906 Q70.6563,32.8438 69.3594,32.8438 Q67.8438,32.8438 66.6406,32.2188 Q65.6563,31.7188 64.9688,30.6563 Q64.2813,29.5781 64.2813,28.2969 L64.2813,27.1406 Q64.2813,25.8125 64.8906,24.6719 Q65.5156,23.5156 66.6094,22.9063 Q67.7031,22.2813 68.9375,22.2813 Q69.6719,22.2813 70.3125,22.4531 Q70.9688,22.6094 71.5156,22.9688 Z "/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="101" x="89.25" y="26.5332">ManagerScreen</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="73" x="103.25" y="39.9902">com.prog.world</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="8" x2="239" y1="47.1875" y2="47.1875"/><ellipse cx="18" cy="58.1875" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="207" x="27" y="62.6064">changeScreen(Array&lt;Entity&gt;, Evilian): void</text><ellipse cx="18" cy="72.0234" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="142" x="27" y="76.4424">clear(Array&lt;Entity&gt;): boolean</text><ellipse cx="18" cy="85.8594" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="86" x="27" y="90.2783">setIndex(int): void</text><ellipse cx="18" cy="99.6953" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="147" x="27" y="104.1143">getInstance(): ManagerScreen</text></a><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="190" x="28.5" y="127.9121">UMLDoclet 2.0.12, PlantUML 1.2020.16</text><!--MD5=[5d5c1d4c6d7e07d0fefd52377da071d0]
+@startuml
+    set namespaceSeparator none
+    hide empty fields
+    hide empty methods
+
+    class "<size:14>ManagerScreen\n<size:10>com.prog.world" as com.prog.world.ManagerScreen [[..\..\..\..\com\prog\world\ManagerScreen.html]] {
+        +changeScreen(Array<Entity>, Evilian): void
+        +clear(Array<Entity>): boolean
+        {static} +setIndex(int): void
+        {static} +getInstance(): ManagerScreen
+    }
+
+    center footer UMLDoclet 2.0.12, PlantUML 1.2020.16
+@enduml
+
+PlantUML version 1.2020.16(Sun Aug 23 22:20:43 CEST 2020)
+(APACHE source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: it
+Country: IT
+--></g></svg>
