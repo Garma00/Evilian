@@ -111,10 +111,7 @@ public final class SpellFactory{
         }
     }
     
-    public long getTime()
-    {
-        return time;
-    }
+
     
     
     public void setSelectorPressed(boolean b) 
@@ -129,20 +126,7 @@ public final class SpellFactory{
             m.draw();
     }
     
-    public long[] getLastLaunch()
-    {
-        return lastLaunch;
-    }
-    
-    public boolean getSelectorPressed()
-    {
-        return selectorPressed;
-    }
-    
-    public int getSpellSelector()
-    {
-        return spellSelector;
-    }
+
     
     public void clearActiveSpells()
     {
@@ -156,4 +140,9 @@ public final class SpellFactory{
             INSTANCE=new SpellFactory();
         return INSTANCE;
     }
+    
+    public long[] getLastLaunch()               {return lastLaunch;}
+    public boolean getSelectorPressed()         {return selectorPressed;}
+    public int getSpellSelector()               {return spellSelector;}
+    public long getTime()                       {return time;}
 }

@@ -26,19 +26,8 @@ public class Score
     }
 
     
-    public int getPoints()
-    {
-        return this.points;
-    }
-
-    public String getDate()
-    {
-        return this.date;
-    }
-    
-    public String getTime()
-    {
-        return this.time;
-    }
+    protected int getPoints()  {return this.points;}
+    protected String getDate() {return this.date;}
+    protected String getTime() {return this.time;}
     
 }

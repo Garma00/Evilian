@@ -1,0 +1,14 @@
+non abbiamo previsto getter e setter per gli attributi protected anche se 
+alcuni protected hanno il setter per poter essere modificati anche da altre 
+classi ad esempio walk left.
+
+per questioni di computazione abbiamo utilizzato rettangoli e body locali
+per evitare di chiamare più volte getter e setter.
+
+specificare il perchè di ENUM public in enemFactory
+
+il batch è public per non chiamare ogni volta il get batch
+
+possibile interfaccia con batch e ppm
+
+
