@@ -58,8 +58,5 @@ public class PallaDiGhiaccio extends Magia{
         }
     }
     
-    public static long getCD()
-    {
-        return UI_CD;
-    }
+    public static long getCD(){return UI_CD;}
 }

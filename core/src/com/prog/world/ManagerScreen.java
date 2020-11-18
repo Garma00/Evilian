@@ -106,10 +106,7 @@ public final class ManagerScreen
     }
     
     
-    public static void setIndex(int i)
-    {
-        index=i;
-    }
+    public static void setIndex(int i)  {index=i;}
     
     public static ManagerScreen getInstance()
     {

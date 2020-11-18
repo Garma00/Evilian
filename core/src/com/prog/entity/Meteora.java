@@ -48,9 +48,6 @@ public class Meteora extends Magia{
         }
     }
     
-    public static long getCD()
-    {
-        return UI_CD;
-    }
+    public static long getCD(){return UI_CD;}
     
 }

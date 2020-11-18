@@ -28,7 +28,6 @@ public class Player extends Entity{
     
     public Player(float spawnX, float spawnY, float hp)
     {
-        super();
         Rectangle r=getPos();
         setPos(spawnX,spawnY,Livello.getAtlas().findRegion("knight_m_idle_anim", 0).getRegionWidth(),(Livello.getAtlas().findRegion("knight_m_idle_anim", 0).getRegionHeight()));
         setAnim(stand);
@@ -175,7 +174,7 @@ public class Player extends Entity{
         return levelCompleted;
     }
     
-    public boolean isInAir()
+    protected boolean isInAir()
     {
         return inAir;
     }
@@ -185,34 +184,10 @@ public class Player extends Entity{
         return alive;
     }
     
-    public static float getMaxHp()
-    {
-        return hpMax;
-    }
-    
-    public static float getHealPosX()
-    {
-        return healPosX;
-    }
-    
-    public static float getHealPosY()
-    {
-        return healPosY;
-    }
-
-    public void setInAir(boolean f) 
-    {
-        inAir=f;
-    }
-    
-    public static float getHP() 
-    {
-        return hp;
-    }
-    
-    
-    public static void setHP(float newhp) 
-    {
-        hp=newhp;
-    }
+    protected static float getMaxHp()       {return hpMax;}
+    protected static float getHealPosX()    {return healPosX;}
+    protected static float getHealPosY()    {return healPosY;}
+    public void setInAir(boolean f)         {inAir=f;}
+    public static float getHP()             {return hp;}
+    protected static void setHP(float newhp){hp=newhp;}
 }

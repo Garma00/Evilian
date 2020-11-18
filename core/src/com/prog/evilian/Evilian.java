@@ -31,14 +31,7 @@ public class Evilian extends Game
             batch.dispose();
 	}
         
-        public int getScreenWidth()
-        {
-            return SCREEN_WIDTH;
-        }
-        
-        public int getScreenHeight()
-        {
-            return SCREEN_HEIGHT;
-        }
+        public int getScreenWidth()     {return SCREEN_WIDTH;}
+        public int getScreenHeight()    {return SCREEN_HEIGHT;}
         
 }

@@ -23,20 +23,9 @@ public class StateContainer
         this.type = type;
     }
     
-    public float getHp()
-    {
-        return this.hp;
-    }
-
-    public Vector2 getPos()
-    {
-        return this.pos;
-    }
-    
-    public String getType()
-    {
-        return this.type;
-    }
+    public float getHp()    {return this.hp;}
+    public Vector2 getPos() {return this.pos;}
+    public String getType() {return this.type;}
 
 
 }

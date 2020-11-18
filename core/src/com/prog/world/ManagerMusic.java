@@ -38,6 +38,23 @@ public final class ManagerMusic
         musica.setLooping(true);
         musica.play();
     }
+
+    
+    public void dispose()
+    {
+        if(musica.isPlaying())
+            musica.pause();
+        musica.dispose();
+    }
+    
+    
+
+    public static ManagerMusic getInstance()
+    {
+        if(INSTANCE == null)
+            INSTANCE = new ManagerMusic();
+        return INSTANCE;
+    }
     
     public void setVolume(float volume)
     {
@@ -47,28 +64,7 @@ public final class ManagerMusic
             System.out.println("volume errato");
     }
 
-    public float getVolume() 
-    {
-        return musica.getVolume();
-    }
-    
-    public void dispose()
-    {
-        if(musica.isPlaying())
-            musica.pause();
-        musica.dispose();
-    }
-    
-    public void setMusicOn(boolean b)
-    {
-        this.musicOn = b;
-    }
-
-    public static ManagerMusic getInstance()
-    {
-        if(INSTANCE == null)
-            INSTANCE = new ManagerMusic();
-        return INSTANCE;
-    }
+    public float getVolume()            {return musica.getVolume();}
+    public void setMusicOn(boolean b)   {this.musicOn = b;}
     
 }

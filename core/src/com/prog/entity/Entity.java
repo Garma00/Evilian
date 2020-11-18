@@ -15,7 +15,7 @@ import com.prog.world.Livello;
 public abstract class Entity {
     private Animation<TextureAtlas.AtlasRegion> anim;
     private final Rectangle pos;
-    //protected per farlo accedere alle sottoclassi
+    
     private float animationTime;
     private boolean flipX;
     private boolean flipY;
@@ -148,56 +148,20 @@ public abstract class Entity {
         shape.dispose();
     }
     
-    public Body getBody()
-    {
-        return body;
-    }
-    
-    public Rectangle getPos()
-    {
-        return pos;
-    }
-    
-    public void setPos(float x, float y, float width, float height)
-    {
-        pos.set(x, y, width, height);
-    }
-    
-    public void setPosX(float x)
-    {
-        pos.setX(x);
-    }
-    
-    public void setPosY(float y)
-    {
-        pos.setY(y);
-    }
-    
-    public void setPosWidth(float w)
-    {
-        pos.setWidth(w);
-    }
-    
-    public void setPosHeight(float h)
-    {
-        pos.setHeight(h);
-    }
-    
-    public void setPos(float x,float y)
-    {
-        pos.setPosition(x, y);
-    }
-    
-    protected void setAnim(Animation<TextureAtlas.AtlasRegion> a)
-    {
-        anim=a;
-    }
-    
-    protected Animation<TextureAtlas.AtlasRegion> getAnim()         {return anim;}
-    protected float getAnimationTime()                              {return animationTime;}
-    protected void addToAnimationTime(float f)                      {this.animationTime+=f;}
-    protected boolean getFlipX()                                    {return this.flipX;}
-    protected boolean getFlipY()                                    {return this.flipY;}
-    protected void setFlipX(boolean b)                              {this.flipX=b;}
-    protected void setFlipY(boolean b)                              {this.flipY=b;}
+    public Body getBody()                                               {return body;}
+    public Rectangle getPos()                                           {return pos;}
+    protected void setPos(float x, float y, float width, float height)  {pos.set(x, y, width, height);}
+    protected void setPosX(float x)                                     {pos.setX(x);}
+    protected void setPosY(float y)                                     {pos.setY(y);}
+    protected void setPosWidth(float w)                                 {pos.setWidth(w);}
+    public void setPosHeight(float h)                                   {pos.setHeight(h);}
+    protected void setPos(float x,float y)                              {pos.setPosition(x, y);}
+    protected void setAnim(Animation<TextureAtlas.AtlasRegion> a)       {anim=a;}
+    protected Animation<TextureAtlas.AtlasRegion> getAnim()             {return anim;}
+    protected float getAnimationTime()                                  {return animationTime;}
+    protected void addToAnimationTime(float f)                          {this.animationTime+=f;}
+    protected boolean getFlipX()                                        {return this.flipX;}
+    protected boolean getFlipY()                                        {return this.flipY;}
+    protected void setFlipX(boolean b)                                  {this.flipX=b;}
+    protected void setFlipY(boolean b)                                  {this.flipY=b;}
 }

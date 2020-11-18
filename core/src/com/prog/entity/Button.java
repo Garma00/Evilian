@@ -70,9 +70,6 @@ public class Button extends Entity
     public void dispose() {
     }
     
-    public void setActive(boolean f)
-    {
-        isActive=f;
-    }
+    public void setActive(boolean f){isActive=f;}
     
 }

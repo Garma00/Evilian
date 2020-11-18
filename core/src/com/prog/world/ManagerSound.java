@@ -43,7 +43,18 @@ public final class ManagerSound
             sounds.get(sound).play();
     }
     
-    public void setVolume(float v)
+    public void dispose()
+    {
+        fbEffect.dispose();
+        ibEffect.dispose();
+        healEffect.dispose();
+        meteorEffect.dispose();
+    }
+    
+    public boolean isSoundOn()          {return soundOn;}
+    public void setSoundOn(boolean f)   {soundOn=f;}
+    
+    protected void setVolume(float v)
     {
         if(v >=0 && v <=1)
             this.volume=v;
@@ -55,24 +66,6 @@ public final class ManagerSound
             return volume;
         else
             return 0f;
-    }
-    
-    public void dispose()
-    {
-        fbEffect.dispose();
-        ibEffect.dispose();
-        healEffect.dispose();
-        meteorEffect.dispose();
-    }
-    
-    public boolean isSoundOn()
-    {
-        return soundOn;
-    }
-    
-    public void setSoundOn(boolean f)
-    {
-        soundOn=f;
     }
     
     public static ManagerSound getInstance()
