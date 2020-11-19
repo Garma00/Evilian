@@ -48,7 +48,7 @@ public class Livello1 extends Livello implements Screen{
         }
         else
         {
-            p = new Player(50, 150, 1f);
+            p = new Player(3000, 800, 1f);
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(getMap().getLayers().get("enemy_spawn").getObjects());
@@ -88,6 +88,7 @@ public class Livello1 extends Livello implements Screen{
         if(!p.isAlive() || p.isLevelCompleted())
             try {
                 super.endLevel();
+                ef.clearEnemies();
             } catch (IOException ex) {
                 Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
             }

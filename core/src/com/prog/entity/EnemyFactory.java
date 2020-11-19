@@ -16,7 +16,7 @@ public final class EnemyFactory {
         B
     };
     
-    //chiamala quando vuoi creare una spell
+    //chiamala quando vuoi creare un nemico
     private Enemy createEnemy(EnemyType t){
        switch(t){
          case A:
@@ -28,7 +28,7 @@ public final class EnemyFactory {
         return null;
     }
     
-     //chiamala quando vuoi distruggere una spell
+     //chiamala quando vuoi distruggere un nemico
     private void destroyEnemy(Enemy e)
     {
        Pools.free(e);
@@ -100,5 +100,10 @@ public final class EnemyFactory {
         if(INSTANCE==null)
             INSTANCE=new EnemyFactory();
         return INSTANCE;
+    }
+    
+    public void clearEnemies()
+    {
+        this.activeEnemies.clear();
     }
 }

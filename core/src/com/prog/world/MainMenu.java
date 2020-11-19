@@ -82,7 +82,7 @@ public class MainMenu extends Livello implements Screen
             e.draw();
         batch.end();
         
-        getDebug().render(getWorld(), getCam().combined);
+        //getDebug().render(getWorld(), getCam().combined);
     }
     
     @Override
