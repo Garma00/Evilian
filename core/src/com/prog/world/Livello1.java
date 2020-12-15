@@ -37,10 +37,10 @@ public class Livello1 extends Livello implements Screen{
                 p = new Player(50, 150, 1f);
             else
                 p=new Player(playerContainer.getPos().x * Evilian.PPM, playerContainer.getPos().y * Evilian.PPM, playerContainer.getHp());
-            p=new Player(playerContainer.getPos().x * Evilian.PPM, playerContainer.getPos().y * Evilian.PPM, playerContainer.getHp());
             entities.add(p);
             
-            //instanzio n nemici 
+            //instanzio n nemici
+            ef.clearEnemies();
             Array<StateContainer> arr = caricaStatoNemico();
             ef.addEnemies(arr);
             //pulisci tutte le magie
@@ -88,6 +88,7 @@ public class Livello1 extends Livello implements Screen{
         if(!p.isAlive() || p.isLevelCompleted())
             try {
                 super.endLevel();
+                ef.clearEnemies();
             } catch (IOException ex) {
                 Logger.getLogger(Livello1.class.getName()).log(Level.SEVERE, null, ex);
             }

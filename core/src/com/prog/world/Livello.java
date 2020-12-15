@@ -327,6 +327,7 @@ public class Livello {
     //salva lo stato per ogni nemico ed il numero di nemici come primo valore 
     public void saveEnemyState() throws IOException
     {
+        //polimorfismo per inclusione (enemy assume ogni volta la forma di enemyA o enemyB o qualsiasi altro enemy futuro)
         Array <Enemy> list = ef.getActiveEnemies();
         int size = ef.getSize();
         FileWriter wr = new FileWriter("enemy_state.txt");

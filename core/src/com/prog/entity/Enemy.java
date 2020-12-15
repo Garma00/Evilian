@@ -27,19 +27,7 @@ public abstract class Enemy extends Entity implements Poolable{
         }
     }
 
-    public void salvStato(FileWriter wr) throws IOException
-    {
-        String toWrite=null;
-        Rectangle r=getPos();
-        /*posizione, vita, velocità, id*/
-        if(this instanceof EnemyA)
-            toWrite = "E " + r.x + " " + r.y + " " + life + "\n";
-        else if(this instanceof EnemyB)
-            toWrite = "E2 " + r.x + " " + r.y + " " + life + "\n";
-        
-        if(toWrite != null)
-            wr.write(toWrite);
-    }
+    public abstract void salvStato(FileWriter wr) throws IOException;
     
     public void setWalkLeft(boolean f)  {walkLeft=f;}
     protected boolean getWalk()         {return walkLeft;}

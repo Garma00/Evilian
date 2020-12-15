@@ -66,7 +66,9 @@ com_crashlytics_export_strings.xml
 
 /build/
 /android/build/
-/core/build/
+/core/build/classes
+/core/build/generated
+/core/build/tmp
 /desktop/build/
 /html/build/
 /ios/build/
@@ -106,7 +108,6 @@ nb-configuration.xml
 gradle-app.setting
 /build/
 /android/build/
-/core/build/
 /desktop/build/
 /html/build/
 /ios/build/

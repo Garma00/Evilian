@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="141px" preserveAspectRatio="none" style="width:236px;height:141px;" version="1.1" viewBox="0 0 236 141" width="236px" zoomAndPan="magnify"><defs><filter height="300%" id="f5l0hpunupzo8" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[fa953ba6f1424a493565f0502dda7b16]
+class com.prog.world.UI.Bar--><a href="..\..\..\..\..\com\prog\world\UI\Bar.html" target="_top" title="..\..\..\..\..\com\prog\world\UI\Bar.html" xlink:actuate="onRequest" xlink:href="..\..\..\..\..\com\prog\world\UI\Bar.html" xlink:show="new" xlink:title="..\..\..\..\..\com\prog\world\UI\Bar.html" xlink:type="simple"><rect codeLine="5" fill="#FEFECE" filter="url(#f5l0hpunupzo8)" height="103.5313" id="com.prog.world.UI.Bar" style="stroke: #A80036; stroke-width: 1.5;" width="210" x="7" y="7"/><ellipse cx="64.75" cy="27.0938" fill="#ADD1B2" rx="11" ry="11" style="stroke: #A80036; stroke-width: 1.0;"/><path d="M67.5156,22.9688 Q67.6719,22.75 67.8594,22.6406 Q68.0469,22.5313 68.2656,22.5313 Q68.6406,22.5313 68.875,22.7969 Q69.1094,23.0469 69.1094,23.6563 L69.1094,25.1094 Q69.1094,25.7188 68.875,25.9844 Q68.6406,26.25 68.2656,26.25 Q67.9219,26.25 67.7188,26.0469 Q67.5156,25.8594 67.4063,25.3438 Q67.3594,24.9844 67.1719,24.7969 Q66.8438,24.4219 66.2344,24.2031 Q65.625,23.9844 65,23.9844 Q64.2344,23.9844 63.5938,24.3125 Q62.9688,24.6406 62.4688,25.3906 Q61.9844,26.1406 61.9844,27.1719 L61.9844,28.2656 Q61.9844,29.5 62.875,30.3281 Q63.7656,31.1406 65.3594,31.1406 Q66.2969,31.1406 66.9531,30.8906 Q67.3438,30.7344 67.7656,30.2969 Q68.0313,30.0313 68.1719,29.9531 Q68.3281,29.875 68.5313,29.875 Q68.8594,29.875 69.1094,30.1406 Q69.375,30.3906 69.375,30.7344 Q69.375,31.0781 69.0313,31.4844 Q68.5313,32.0625 67.7344,32.3906 Q66.6563,32.8438 65.3594,32.8438 Q63.8438,32.8438 62.6406,32.2188 Q61.6563,31.7188 60.9688,30.6563 Q60.2813,29.5781 60.2813,28.2969 L60.2813,27.1406 Q60.2813,25.8125 60.8906,24.6719 Q61.5156,23.5156 62.6094,22.9063 Q63.7031,22.2813 64.9375,22.2813 Q65.6719,22.2813 66.3125,22.4531 Q66.9688,22.6094 67.5156,22.9688 Z "/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="22" x="117.25" y="26.5332">Bar</text><text fill="#000000" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="86" x="85.25" y="39.9902">com.prog.world.UI</text><line style="stroke: #A80036; stroke-width: 1.5;" x1="8" x2="216" y1="47.1875" y2="47.1875"/><ellipse cx="18" cy="58.1875" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="184" x="27" y="62.6064">map(float, float, float, float, float): float</text><ellipse cx="18" cy="72.0234" fill="#84BE84" rx="3" ry="3" style="stroke: #038048; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="138" x="27" y="76.4424">clamp(float, float, float): float</text><polygon fill="#FFFF44" points="18,80.8594,22,84.8594,18,88.8594,14,84.8594" style="stroke: #B38D22; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="95" x="27" y="90.2783">getPos(): Rectangle</text><polygon fill="#FFFF44" points="18,94.6953,22,98.6953,18,102.6953,14,98.6953" style="stroke: #B38D22; stroke-width: 1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacingAndGlyphs" textLength="102" x="27" y="104.1143">getSP(): SpellFactory</text></a><text fill="#888888" font-family="sans-serif" font-size="10" lengthAdjust="spacingAndGlyphs" textLength="190" x="17" y="127.9121">UMLDoclet 2.0.12, PlantUML 1.2020.16</text><!--MD5=[19fb7cdd5ec2e1f2ed58ca492716b668]
+@startuml
+    set namespaceSeparator none
+    hide empty fields
+    hide empty methods
+
+    class "<size:14>Bar\n<size:10>com.prog.world.UI" as com.prog.world.UI.Bar [[..\..\..\..\..\com\prog\world\UI\Bar.html]] {
+        +map(float, float, float, float, float): float
+        +clamp(float, float, float): float
+        #getPos(): Rectangle
+        #getSP(): SpellFactory
+    }
+
+    center footer UMLDoclet 2.0.12, PlantUML 1.2020.16
+@enduml
+
+PlantUML version 1.2020.16(Sun Aug 23 22:20:43 CEST 2020)
+(APACHE source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: it
+Country: IT
+--></g></svg>
