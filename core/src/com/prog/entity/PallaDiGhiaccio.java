@@ -59,4 +59,11 @@ public class PallaDiGhiaccio extends Magia{
     }
     
     public static long getCD(){return UI_CD;}
+
+    @Override
+    public void applyDamage(Enemy e)
+    {
+        e.damage(0.2f);
+        e.setSpeed(0.2f);
+    }
 }

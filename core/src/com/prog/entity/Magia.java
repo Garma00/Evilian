@@ -59,6 +59,8 @@ public abstract class Magia extends Entity implements Poolable{
         time=0;
     }
     
+    public abstract void applyDamage(Enemy e);
+    
     protected float getPower()          {return this.potenza;}
     protected void setPower(float f)    {this.potenza=f;}
     protected void setAngle(float f)    {this.angle=f;}
