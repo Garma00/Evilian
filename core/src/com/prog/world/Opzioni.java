@@ -23,7 +23,7 @@ public class Opzioni extends Livello implements Screen {
         super(false, SCREEN_WIDTH, SCREEN_HEIGHT, root);
         c = new OpzioniContactListener();
         entities.add(mouse);
-        bg = new Texture("images/menu.png");
+        bg = new Texture("images/bg2.png");
         getWorld().setContactListener(c);
         
         entities.add(new Button(root.getScreenWidth() / 2, root.getScreenHeight() -75, 150, 50, "riprendi", "images/riprendi.png", false));

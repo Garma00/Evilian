@@ -30,7 +30,7 @@ public class MainMenu extends Livello implements Screen
         entities.add(mouse);
         entities.add(new Button(root.getScreenWidth() / 2 , root.getScreenHeight() / 2 , 150, 50, "gioca", "images/gioca.png", false));
         entities.add(new Button(root.getScreenWidth() / 2 , root.getScreenHeight() / 4 , 150, 50, "opzioni","images/opzioni.png", false));
-        bg = new Texture("images/menu.png");
+        bg = new Texture("images/bg2.png");
         //0 = main theme
         ManagerMusic.getInstance().selectMusic(0);
         mvfx.enableBlend(true);
