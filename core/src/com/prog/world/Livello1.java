@@ -37,10 +37,10 @@ public class Livello1 extends Livello implements Screen{
                 p = new Player(50, 150, 1f);
             else
                 p=new Player(playerContainer.getPos().x * Evilian.PPM, playerContainer.getPos().y * Evilian.PPM, playerContainer.getHp());
-            p=new Player(playerContainer.getPos().x * Evilian.PPM, playerContainer.getPos().y * Evilian.PPM, playerContainer.getHp());
             entities.add(p);
             
-            //instanzio n nemici 
+            //instanzio n nemici
+            ef.clearEnemies();
             Array<StateContainer> arr = caricaStatoNemico();
             ef.addEnemies(arr);
             //pulisci tutte le magie
@@ -48,7 +48,7 @@ public class Livello1 extends Livello implements Screen{
         }
         else
         {
-            p = new Player(3000, 800, 1f);
+            p = new Player(50, 150, 1f);
             entities.add(p);
             //carico le posizioni dei nemici
             super.parseEnemiesSpawnPoints(getMap().getLayers().get("enemy_spawn").getObjects());

@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.prog.evilian.Evilian;
 import static com.prog.evilian.Evilian.batch;
 import com.prog.world.Livello;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class EnemyB extends Enemy{
     private final static Animation<TextureAtlas.AtlasRegion> walking=new Animation<>(1/10f,Livello.getAtlas().findRegions("king_pig_run"),Animation.PlayMode.LOOP);
@@ -87,5 +89,15 @@ public class EnemyB extends Enemy{
         this.setFlipX(false);
         setAnim(walking);
         setSpeed(0.6f);
+    }
+
+    @Override
+    public void salvStato(FileWriter wr) throws IOException 
+    {
+        String toWrite=null;
+        Rectangle r=getPos();
+        /*posizione, vita, velocità, id*/
+        toWrite = "E2 " + r.x + " " + r.y + " " + getLife() + "\n";
+        wr.write(toWrite);
     }
 }
