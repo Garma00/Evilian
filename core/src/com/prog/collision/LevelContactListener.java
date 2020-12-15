@@ -8,9 +8,6 @@ import com.prog.entity.Enemy;
 import com.prog.entity.Entity.userDataContainer;
 import com.prog.entity.Player;
 import com.prog.entity.Magia;
-import com.prog.entity.Meteora;
-import com.prog.entity.PallaDiFuoco;
-import com.prog.entity.PallaDiGhiaccio;
 
 public class LevelContactListener implements ContactListener{
     private userDataContainer a,b;
@@ -53,28 +50,12 @@ public class LevelContactListener implements ContactListener{
         
         if(!isSensorB && !isSensorA && a != null && a.type == "magia" &&  b != null && (b.type == "enemyA" || b.type == "enemyB"))
         {
-            if(a.e instanceof PallaDiFuoco)
-                ((Enemy)b.e).damage(0.4f);
-            else if(a.e instanceof PallaDiGhiaccio)
-            {
-                ((Enemy)b.e).setSpeed(0.2f);
-                ((Enemy)b.e).damage(0.2f);
-            }
-            else if(a.e instanceof Meteora)
-                ((Enemy)b.e).damage(0.8f); 
+            ((Magia)a.e).applyDamage((Enemy)b.e);
         }
         
         if(!isSensorA && !isSensorB && b != null && a != null &&  b.type == "magia" && (a.type == "enemyA" || a.type == "enemyB"))
         {
-            if(b.e instanceof PallaDiFuoco)
-                ((Enemy)a.e).damage(0.4f);
-            else if(b.e instanceof PallaDiGhiaccio)
-            {
-                ((Enemy)a.e).damage(0.2f);
-                ((Enemy)a.e).setSpeed(0.2f);
-            }
-            else if(b.e instanceof Meteora)
-                ((Enemy)a.e).damage(0.8f);
+           ((Magia)b.e).applyDamage((Enemy)a.e);
         }
         
         

@@ -64,4 +64,7 @@ public class Cura extends Magia{
     }
     
     public static long getCD(){return UI_CD;}
+
+    @Override
+    public void applyDamage(Enemy e){}
 }

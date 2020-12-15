@@ -60,5 +60,11 @@ public class PallaDiFuoco extends Magia{
     }
     
     public static long getCD(){return UI_CD;}
+
+    @Override
+    public void applyDamage(Enemy e)
+    {
+        e.damage(0.4f);
+    }
     
 }

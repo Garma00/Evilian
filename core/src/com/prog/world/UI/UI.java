@@ -16,11 +16,11 @@ public class UI
     private final float UI_HEIGHT;
     //utilizzo 2 array per differenziare tra elementi di sfondo ed elementi in primo piano
     //elementi in background
-    Array<UIElement> elements;
+    private Array<UIElement> elements;
     //elementi in foreground
     //uitext viene trattata separatamente perche' ha bisogno di avere la telecamera
     //impostata in modo diverso(per evitare testo troppo piccolo e sfocato)
-    UIText timer;
+    private UIText timer;
     
     public UI(float uiWidth,float uiHeight)
     {
