@@ -281,45 +281,35 @@ public class Livello {
     //legge dal file del player posizione e vita e le ritorna dentro uno state container
     public StateContainer caricaStatoPlayer() throws FileNotFoundException
     {
-        try
-        {
-            float x = 50, y = 100, hp = 1;
-            Scanner scan = new Scanner(file);
-            //scan del timer
-            String line = scan.nextLine();
-           
-            this.gameplayTime=Float.parseFloat(line);
-            //scan riga del player
-            line = scan.nextLine();
-            String[] words = line.split(" ");
-            x = Float.parseFloat(words[0]);
-            y = Float.parseFloat(words[1]);
-            hp = Float.parseFloat(words[2]);  
-            scan.close();
-            return new StateContainer(new Vector2(x, y), hp);
-        }
-        catch(FileNotFoundException e)
-        {
-                System.out.println("no file found");
-                return null;
-        }
-            
+        float x = 50, y = 100, hp = 1;
+        Scanner scan = new Scanner(file);
+        //scan del timer
+        String line = scan.nextLine();
+
+        this.gameplayTime=Float.parseFloat(line);
+        //scan riga del player
+        line = scan.nextLine();
+        String[] words = line.split(" ");
+        x = Float.parseFloat(words[0]);
+        y = Float.parseFloat(words[1]);
+        hp = Float.parseFloat(words[2]);  
+        scan.close();
+        return new StateContainer(new Vector2(x, y), hp);  
     }
     
     public Array<StateContainer> caricaStatoNemico() throws FileNotFoundException
     {
         Array<StateContainer> arr;
         File f = new File("enemy_state.txt");
-        try (Scanner scan = new Scanner(f)){
-            int n = scan.nextInt();
-            scan.nextLine();
-            arr = new Array<>();
-            for(int i = 0; i < n; i++)
-            {
-                String line = scan.nextLine();
-                String[] words = line.split(" ");
-                arr.add(new StateContainer(new Vector2(Float.parseFloat(words[1]), Float.parseFloat(words[2])), Float.parseFloat(words[3]), words[0]));
-            }
+        Scanner scan = new Scanner(f);
+        int n = scan.nextInt();
+        scan.nextLine();
+        arr = new Array<>();
+        for(int i = 0; i < n; i++)
+        {
+            String line = scan.nextLine();
+            String[] words = line.split(" ");
+            arr.add(new StateContainer(new Vector2(Float.parseFloat(words[1]), Float.parseFloat(words[2])), Float.parseFloat(words[3]), words[0]));
         }
         return arr;
     }
@@ -414,7 +404,7 @@ public class Livello {
         }
     }
 
-    void changeScreenTo() 
+    void changeScreenTo()
     {
         try {
             ManagerScreen.getInstance().changeScreen(entities, root);
